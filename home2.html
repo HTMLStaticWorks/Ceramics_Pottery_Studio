@@ -205,6 +205,18 @@
             text-shadow: 0 2px 12px rgba(0,0,0,0.8);
             font-size: clamp(3rem, 10vw, 8rem);
         }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card, .service-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="light">
@@ -233,7 +245,11 @@
         </div>
 
         <div class="lg:hidden">
-            <button id="mobile-toggle" class="text-xs font-bold tracking-widest uppercase py-2 px-4 border-2 border-current">Menu</button>
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
+                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-current"></span>
+            </button>
         </div>
     </nav>
 
@@ -286,7 +302,7 @@
                 </div>
                 
                 <div class="row g-5">
-                    <div class="col-lg-4 slide-left">
+                    <div class="col-12 col-md-6 col-lg-4 slide-left">
                         <!-- Card 1 -->
                         <div class="service-card group cursor-pointer relative reveal">
                             <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=700&q=80" alt="Service 1" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
@@ -306,11 +322,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 slide-left delay-[200ms]">
-                        <div class="group relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=700&q=80" class="w-full aspect-[4/5] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700" alt="Glaze">
-                            <div class="pt-8">
-                                <h3 class="text-3xl mb-4 italic">Experimental Glazing</h3>
+                    <div class="col-12 col-md-6 col-lg-4 slide-left delay-[200ms]">
+                        <!-- Card 3 -->
+                        <div class="service-card group cursor-pointer relative reveal">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM2LZ5IFoq34qhKWy9dQ52JT3BO8FAp2jMxA&s" alt="Experimental Glazing" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="service-card-text absolute bottom-6 right-6 p-8 max-w-[80%] transition-all duration-500 group-hover:bottom-10 group-hover:right-10">
+                                <h3 class="text-3xl font-serif mb-4 italic">Experimental Glazing</h3>
                                 <p class="opacity-70 text-sm">Push the boundaries of color and texture with our proprietary reactive chemicals.</p>
                             </div>
                         </div>
@@ -360,7 +377,7 @@
                 </div>
                 
                 <div class="row g-4 align-items-stretch" style="display:flex; flex-wrap:wrap; align-items:stretch;">
-                    <div class="col-lg-4 scale-up" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4 scale-up" style="display:flex;">
                         <div class="bg-white/10 backdrop-blur-md p-10 border border-white/20 text-white h-100 d-flex flex-column" style="display:flex; flex-direction:column; width:100%;">
                             <h3 class="text-4xl mb-4 italic">Casual Artisan</h3>
                             <div class="text-6xl font-serif mb-8">$29</div>
@@ -478,7 +495,7 @@
         <section id="testimonials" class="py-24 lg:py-48 px-6 lg:px-24 bg-clay-main/5 dark:bg-white/5 scale-up">
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-12 border-2 border-current relative">
                              <div class="absolute -top-10 -left-10 text-9xl font-serif italic text-current opacity-10">"</div>
                              <p class="text-2xl italic mb-10 font-medium">"An asymmetric haven. Sarah's teaching style is as bold as it is technically brilliant."</p>
@@ -491,7 +508,7 @@
                              </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-12 border-2 border-current relative lg:mt-24 reveal scale-up">
                              <p class="text-2xl italic mb-10 font-medium">"The lab is my second home. 24/7 access meant I could finish my sculptural series at my own pace."</p>
                              <div class="flex items-center space-x-4">

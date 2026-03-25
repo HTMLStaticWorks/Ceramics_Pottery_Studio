@@ -167,7 +167,20 @@
         .btn-luxury:hover { color: var(--bg-color); }
         .btn-luxury:hover::before { width: 100%; }
 
+        /* RTL Support */
         [dir="rtl"] { text-align: right; }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="light">
@@ -197,7 +210,7 @@
         </div>
 
         <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
@@ -255,7 +268,7 @@
             <div class="container mx-auto">
                 <div class="row g-5 align-items-stretch" style="display:flex; flex-wrap:wrap; align-items:stretch;">
                     <!-- Basic -->
-                    <div class="col-lg-4" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
                         <div class="price-card p-12 text-center border-earth-tone/20" style="display:flex; flex-direction:column; width:100%;">
                             <div class="aspect-video overflow-hidden mb-8" style="height:200px;">
                                 <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=600&q=80" class="w-full h-full object-cover" alt="Basic" style="height:200px; object-fit:cover;">
@@ -274,7 +287,7 @@
                         </div>
                     </div>
                     <!-- Premium (Featured) -->
-                    <div class="col-lg-4" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
                         <div class="price-card featured p-12 text-center shadow-2xl" style="display:flex; flex-direction:column; width:100%;">
                             <div class="aspect-video overflow-hidden mb-8" style="height:200px;">
                                 <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" class="w-full h-full object-cover" alt="Premium" style="height:200px; object-fit:cover;">
@@ -294,7 +307,7 @@
                         </div>
                     </div>
                     <!-- Pro -->
-                    <div class="col-lg-4" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4 text-center" style="display:flex;">
                         <div class="price-card dark-plan p-12 text-center" style="display:flex; flex-direction:column; width:100%;">
                             <div class="aspect-video overflow-hidden mb-8" style="height:200px;">
                                 <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80" class="w-full h-full object-cover" alt="Pro" style="height:200px; object-fit:cover;">
@@ -373,10 +386,10 @@
         <section id="benefits" class="py-24 px-6 md:px-12 bg-earth-tone/5 reveal">
             <div class="container mx-auto">
                 <div class="row align-items-center g-5">
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Benefits" class="w-full h-[600px] object-cover rounded-sm">
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <div class="ps-lg-12">
                             <h2 class="text-4xl md:text-5xl mb-12 font-light italic">Why Join Clay&Craft?</h2>
                             <div class="space-y-10">
@@ -418,14 +431,14 @@
                     <h2 class="text-4xl md:text-5xl font-light">Member Voices</h2>
                 </div>
                 <div class="row g-5">
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <div class="p-12 border border-current/10 text-center">
                             <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" class="w-20 h-20 rounded-full mx-auto mb-8 grayscale" alt="Member 1">
                             <p class="text-2xl font-serif italic mb-8">"Since joining the Premium tier, my production quality has doubled. Having a dedicated drying shelf is a game changer."</p>
                             <h4 class="text-xs uppercase tracking-[3px] font-bold">Daniel Row - Member since 2018</h4>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <div class="p-12 border border-current/10 text-center">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" class="w-20 h-20 rounded-full mx-auto mb-8 grayscale" alt="Member 2">
                             <p class="text-2xl font-serif italic mb-8">"The community here is so generous with their knowledge. It's the most supportive studio I've ever worked in."</p>

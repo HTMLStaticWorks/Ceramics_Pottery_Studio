@@ -179,7 +179,20 @@
         .btn-luxury:hover { color: var(--bg-color); }
         .btn-luxury:hover::before { width: 100%; }
 
+        /* RTL support */
         [dir="rtl"] { text-align: right; }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card, .press-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="light">
@@ -209,7 +222,7 @@
         </div>
 
         <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
@@ -331,7 +344,7 @@
             </div>
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-4 border border-current/10">
                             <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600&q=80" class="w-full h-64 object-cover mb-8" alt="Press 1">
                             <h3 class="text-2xl mb-4 italic">Artisan Monthly</h3>
@@ -339,7 +352,7 @@
                             <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current">Read Feature</a>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-4 border border-current/10">
                             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" class="w-full h-64 object-cover mb-8" alt="Press 2">
                             <h3 class="text-2xl mb-4 italic">Design Daily</h3>
@@ -395,7 +408,7 @@
             </div>
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <div class="relative group cursor-pointer">
                             <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="Workshop 1" class="w-full h-[400px] object-cover rounded-sm">
                             <div class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">

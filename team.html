@@ -131,6 +131,18 @@
 
         /* RTL support */
         [dir="rtl"] { text-align: right; }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="light">
@@ -159,7 +171,7 @@
         </div>
 
         <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
@@ -223,7 +235,7 @@
                     <h2 class="text-4xl md:text-5xl font-light">Leadership</h2>
                 </div>
                 <div class="row g-5">
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="team-card text-center">
                             <div class="aspect-[3/4] overflow-hidden mb-6">
                                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&q=80" alt="Sarah" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
@@ -232,7 +244,7 @@
                             <p class="text-xs uppercase tracking-[3px] opacity-60">Founder & Creative Director</p>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="team-card text-center">
                             <div class="aspect-[3/4] overflow-hidden mb-6">
                                 <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=500&q=80" alt="James" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
@@ -261,7 +273,7 @@
                     <h2 class="text-4xl md:text-5xl font-light">The Instructors</h2>
                 </div>
                 <div class="row g-5">
-                    <div class="col-lg-4 text-center">
+                    <div class="col-12 col-md-6 col-lg-4 text-center">
                         <div class="team-card">
                             <div class="aspect-[3/4] overflow-hidden mb-6">
                                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80" alt="Lila" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
@@ -271,7 +283,7 @@
                             <p class="text-xs uppercase tracking-[3px] opacity-60">Senior Mentor</p>
                         </div>
                     </div>
-                    <div class="col-lg-4 text-center">
+                    <div class="col-12 col-md-6 col-lg-4 text-center">
                         <div class="team-card">
                             <div class="aspect-[3/4] overflow-hidden mb-6">
                                 <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80" alt="Marcus" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
@@ -301,15 +313,15 @@
             <div class="absolute inset-0 bg-black/60"></div>
             <div class="relative z-10 container mx-auto">
                 <div class="row g-5">
-                    <div class="col-6 col-md-3">
+                    <div class="col-12 col-md-3">
                         <div class="text-5xl md:text-7xl font-light mb-2">12</div>
                         <p class="text-xs uppercase tracking-[3px] opacity-70">Instructors</p>
                     </div>
-                    <div class="col-6 col-md-3">
+                    <div class="col-12 col-md-3">
                         <div class="text-5xl md:text-7xl font-light mb-2">500+</div>
                         <p class="text-xs uppercase tracking-[3px] opacity-70">Members</p>
                     </div>
-                    <div class="col-6 col-md-3">
+                    <div class="col-12 col-md-3">
                         <div class="text-5xl md:text-7xl font-light mb-2">8</div>
                         <p class="text-xs uppercase tracking-[3px] opacity-70">Studios</p>
                     </div>
@@ -345,7 +357,7 @@
         <section id="team-quotes" class="py-24 px-6 bg-earth-tone/5 dark:bg-white/5 reveal">
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <div class="p-12 border border-current/10 dark:border-white/10 text-center">
                             <p class="text-2xl italic mb-6">"Clay&Craft isn't just a workplace; it's a sanctuary for continuous artistic growth."</p>
                             <p class="text-xs uppercase tracking-[3px] font-bold">- Elena Vo</p>

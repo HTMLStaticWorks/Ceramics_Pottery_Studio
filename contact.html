@@ -137,6 +137,18 @@
         }
 
         [dir="rtl"] { text-align: right; }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="light">
@@ -166,7 +178,7 @@
         </div>
 
         <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
@@ -220,15 +232,15 @@
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-4xl md:text-5xl mb-12 font-light italic">Reach Our Studio</h2>
                 <div class="row g-5">
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Location</span>
                         <p class="text-sm font-bold tracking-widest">123 POTTERY LANE<br>ARTISAN QUARTER</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Inquiries</span>
                         <p class="text-sm font-bold tracking-widest">HELLO@CLAYANDCRAFT.COM<br>+1 (555) 829-3049</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Hours</span>
                         <p class="text-sm font-bold tracking-widest">MON — FRI: 09:00 - 21:00<br>SAT — SUN: 10:00 - 18:00</p>
                     </div>
@@ -350,13 +362,13 @@
         <section id="quick-faq" class="py-24 px-6 reveal">
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-8 border border-current/10 h-full text-center">
                             <h4 class="text-xl mb-4 italic">Is there parking?</h4>
                             <p class="text-sm opacity-60">Yes, members have access to our private yard. Public parking is available on Pottery Lane.</p>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-8 border border-current/10 h-full text-center">
                             <h4 class="text-xl mb-4 italic">Can I tour the studio?</h4>
                             <p class="text-sm opacity-60">Absolutely. Tours are available every Friday at 16:00. No booking required.</p>

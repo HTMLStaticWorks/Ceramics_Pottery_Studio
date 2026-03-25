@@ -144,8 +144,18 @@
         }
 
         /* RTL support */
-        [dir="rtl"] {
-            text-align: right;
+        [dir="rtl"] { text-align: right; }
+
+        @media (max-width: 767px) {
+            .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .card, .membership-card, .team-card, .price-card, .testimonial-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
         }
         [dir="rtl"] .ms-auto { margin-left: 0 !important; margin-right: auto !important; }
         [dir="rtl"] .me-auto { margin-right: 0 !important; margin-left: auto !important; }
@@ -231,7 +241,7 @@
 
         <!-- Mobile Toggle -->
         <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
                 <span class="w-6 h-[1px] bg-current"></span>
@@ -302,6 +312,39 @@
                 </div>
             </div>
         </section>
+        
+        <!-- SECTION 2.5: FEATURED SPECIALTY -->
+        <section id="specialty" class="py-24 md:py-32 px-6 md:px-12 reveal">
+            <div class="container mx-auto">
+                <div class="row items-center g-5">
+                    <div class="col-12 col-lg-6">
+                        <div class="relative group overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=1000&q=80" alt="Experimental Glazing" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 border-2 border-current m-4 opacity-20"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="ps-lg-12">
+                            <span class="uppercase tracking-[6px] text-xs mb-6 block opacity-50">Advanced Techniques</span>
+                            <h2 class="text-5xl md:text-7xl mb-10 font-serif italic">Experimental Glazing</h2>
+                            <p class="text-xl opacity-80 leading-relaxed mb-12">
+                                Push the boundaries of color and texture with our proprietary reactive chemicals. Our dedicated glaze lab allows members to experiment with rare minerals and high-fire atmospheres, producing pieces that are impossible to replicate.
+                            </p>
+                            <div class="flex space-x-12 pt-8 border-t border-current/20">
+                                <div>
+                                    <span class="text-3xl font-serif">40+</span>
+                                    <p class="text-[10px] uppercase tracking-widest opacity-50">Custom Bases</p>
+                                </div>
+                                <div>
+                                    <span class="text-3xl font-serif">Reactive</span>
+                                    <p class="text-[10px] uppercase tracking-widest opacity-50">Chemistry</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- SECTION 3: MEMBERSHIP CARDS -->
         <section id="membership" class="py-24 md:py-32 px-6 md:px-12 bg-black/[0.02] dark:bg-white/[0.02] reveal">
@@ -313,7 +356,7 @@
                 
                 <div class="row g-4 flex-md-center" style="display:flex; flex-wrap:wrap; align-items:stretch;">
                     <!-- Basic -->
-                    <div class="col-lg-4 col-md-12" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
                         <div class="membership-card h-full bg-white dark:bg-slate-800 p-8 md:p-12 text-center border dark:border-slate-700" style="display:flex; flex-direction:column; width:100%;">
                             <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=600&q=80" alt="Basic" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
                             <h3 class="text-3xl mb-4">Artisan Basic</h3>
@@ -328,10 +371,10 @@
                         </div>
                     </div>
                     <!-- Premium -->
-                    <div class="col-lg-4 col-md-12" style="display:flex;">
+                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
                         <div class="membership-card h-full bg-white dark:bg-slate-800 p-8 md:p-12 text-center border-2 border-current shadow-xl relative mt-4 lg:mt-[-20px]" style="display:flex; flex-direction:column; width:100%;">
                             <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-current text-white dark:text-night-bg px-4 py-1 text-[10px] tracking-[3px] uppercase">Most Popular</span>
-                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=600&q=80" alt="Premium" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
+                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Premium" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
                             <h3 class="text-3xl mb-4">Studio Premium</h3>
                             <div class="text-5xl font-light mb-6">$59<span class="text-sm opacity-60">/mo</span></div>
                             <ul class="list-none p-0 mb-10 space-y-4 text-sm opacity-80 font-medium">
