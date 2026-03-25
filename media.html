@@ -42,6 +42,7 @@
     <style>
         :root {
             --bg-color: #ffffff;
+            --nav-bg-rgb: 255, 255, 255;
             --text-color: #1a1208;
             --clay-accent: #4a3728;
             --transition-speed: 0.5s;
@@ -49,6 +50,7 @@
 
         .dark {
             --bg-color: #0f172a;
+            --nav-bg-rgb: 15, 23, 42;
             --text-color: #f1ece6;
         }
 
@@ -62,9 +64,47 @@
 
         h1, h2, h3, h4, h5, h6, .display-font { font-family: 'Cormorant Garamond', serif; }
 
+        /* Navbar Refinements */
+        #main-nav {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            background-color: transparent;
+        }
+
         .nav-scrolled {
-            background-color: var(--bg-color) !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: rgba(var(--nav-bg-rgb), 0.8) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+        }
+        
+        .dark .nav-scrolled {
+            background-color: rgba(15, 23, 42, 0.8) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Nav Link Hover Effects */
+        .nav-link-custom {
+            position: relative;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+        .nav-link-custom:hover {
+            opacity: 0.7;
         }
 
         .reveal {
@@ -125,9 +165,10 @@
             cursor: pointer;
             position: relative;
             color: var(--text-color);
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
+            opacity: 0.7;
+            transition: all 0.3s ease;
         }
+        .filter-btn:hover { opacity: 1; }
         .filter-btn.active { opacity: 1; font-weight: 700; }
         .filter-btn.active::after {
             content: '';
@@ -198,34 +239,40 @@
 <body class="light">
 
     <!-- NAVIGATION -->
-    <nav id="main-nav" class="fixed-top w-100 transition-all duration-500 py-4 px-6 md:px-12 flex items-center justify-between z-[1500]">
+    <!-- NAVIGATION -->
+    <nav id="main-nav" class="fixed-top w-100 py-6 px-6 md:px-6 xl:px-12 flex items-center justify-between z-[1550]">
         <div class="flex items-center">
-            <a href="index.html" class="display-font text-3xl font-semibold no-underline text-current">Clay&Craft</a>
+            <a href="index.html" class="display-font text-xl xl:text-3xl font-semibold no-underline text-gray-900 dark:text-white">Clay&Craft</a>
         </div>
 
-        <div class="hidden lg:flex items-center space-x-10 uppercase text-xs tracking-[3px] font-medium">
-            <a href="index.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home</a>
-            <a href="home2.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home 2</a>
-            <a href="team.html" class="no-underline text-current hover:opacity-60 transition-opacity">Team</a>
-            <a href="membership.html" class="no-underline text-current hover:opacity-60 transition-opacity">Membership</a>
-            <a href="media.html" class="no-underline text-current hover:opacity-60 transition-opacity">Media</a>
-            <a href="contact.html" class="no-underline text-current hover:opacity-60 transition-opacity border-b border-transparent hover:border-current transition-all">Contact</a>
-            <a href="about.html" class="no-underline text-current hover:opacity-60 transition-opacity">Studio</a>
-            <a href="history.html" class="no-underline text-current hover:opacity-60 transition-opacity">History</a>
-            <a href="register.html" class="no-underline text-current hover:opacity-60 transition-opacity">Join</a>
-            <div class="flex items-center space-x-4 border-l border-current pl-8 ml-4">
-                <button id="theme-toggle" class="p-2 border border-current rounded-full transition-all hover:scale-110" title="Toggle Theme">
-                   <div class="w-4 h-4 rounded-full bg-current"></div>
+        <div class="hidden lg:flex items-center lg:space-x-2 xl:space-x-8 uppercase lg:text-[9px] xl:text-xs lg:tracking-wider xl:tracking-[2.5px] font-medium">
+            <a href="index.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home</a>
+            <a href="home2.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home 2</a>
+            <a href="team.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Team</a>
+            <a href="membership.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Membership</a>
+            <a href="media.html" class="nav-link-custom no-underline text-gray-900 dark:text-white border-b border-current font-bold">Media</a>
+            <a href="contact.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Contact</a>
+            <a href="about.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Studio</a>
+            <a href="register.html" class="px-2 xl:px-5 py-2 border border-gray-900 dark:border-white text-gray-900 dark:text-white no-underline text-[8px] xl:text-[10px] tracking-wide xl:tracking-[2px] hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-night-bg transition-all uppercase font-bold">Join</a>
+            <div class="flex items-center space-x-1 xl:space-x-4 border-l border-gray-300 dark:border-gray-600 lg:pl-2 xl:pl-8 lg:ml-1 xl:ml-4">
+                <a href="dashboard.html" title="Dashboard" class="p-2 border border-gray-300 dark:border-gray-700 rounded-full transition-all hover:scale-110">
+                    <svg class="w-4 h-4 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                </a>
+                <button id="theme-toggle" class="p-2 border border-gray-300 dark:border-gray-600 rounded-full transition-all hover:scale-110" title="Toggle Theme">
+                   <div class="w-4 h-4 rounded-full bg-gray-900 dark:bg-white"></div>
                 </button>
-                <button id="rtl-toggle" class="text-[10px] border border-current px-2 py-1 rounded hover:bg-current hover:text-white transition-all">RTL</button>
+                <button id="rtl-toggle" class="text-[10px] border border-gray-300 dark:border-gray-600 px-2 py-1 rounded hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all">RTL</button>
             </div>
         </div>
 
+        <!-- Mobile Toggle -->
         <div class="lg:hidden flex items-center space-x-4">
             <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
-                <span class="w-6 h-[1px] bg-current"></span>
-                <span class="w-6 h-[1px] bg-current"></span>
-                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
             </button>
         </div>
     </nav>
@@ -233,7 +280,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu">
         <button id="mobile-close" class="absolute top-8 right-8 text-4xl display-font">&times;</button>
-        <div class="flex flex-col items-center space-y-6 text-xl tracking-widest uppercase display-font">
+        <div class="flex flex-col items-center space-y-4 text-2xl display-font">
             <a href="index.html" class="no-underline text-current">Home</a>
             <a href="home2.html" class="no-underline text-current">Home 2</a>
             <a href="team.html" class="no-underline text-current">Team</a>
@@ -241,8 +288,7 @@
             <a href="media.html" class="no-underline text-current font-bold">Media</a>
             <a href="contact.html" class="no-underline text-current">Contact</a>
             <a href="about.html" class="no-underline text-current">Studio</a>
-            <a href="history.html" class="no-underline text-current">History</a>
-            <a href="register.html" class="no-underline text-current">Join</a>
+            <a href="register.html" class="w-full py-4 border border-current no-underline text-current text-center uppercase text-sm tracking-[3px] font-bold">Join</a>
             <div class="flex space-x-6 pt-6">
                 <button id="theme-toggle-mobile" class="p-3 border border-current rounded-full text-[10px] uppercase tracking-[2px]">Theme</button>
                 <button id="rtl-toggle-mobile" class="p-3 border border-current rounded px-4 text-[10px] uppercase tracking-[2px]">RTL</button>
@@ -253,12 +299,12 @@
     <main>
         
         <!-- SECTION 1: BANNER -->
-        <section id="banner" class="relative h-[50vh] flex items-center justify-center text-white text-center overflow-hidden">
+        <section id="banner" class="relative h-[50vh] flex items-center justify-center text-white dark:text-white text-center overflow-hidden pt-24">
             <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1600&q=80" alt="Media Banner" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/40"></div>
             <div class="relative z-10">
-                <h1 class="text-6xl md:text-8xl font-light mb-4">Media & Gallery</h1>
-                <p class="text-xs uppercase tracking-[5px] opacity-70">A Visual Dialogue</p>
+                <h1 class="text-6xl md:text-8xl font-light mb-4 text-gray-900 dark:text-white group-hover:tracking-wider transition-all duration-700">Media & Gallery</h1>
+                <p class="text-xs uppercase tracking-[5px] opacity-70 dark:text-white dark:opacity-90">We believe clay is the language of the soul.</p>
             </div>
         </section>
 
@@ -272,49 +318,61 @@
                 <button class="filter-btn uppercase tracking-widest text-[10px] px-6 py-2">Events</button>
             </div>
             <div class="max-w-xl mx-auto">
-                <p class="text-lg opacity-60 italic font-light">Explore the moments captured within our walls. From the quiet focus of the wheel to the vibrant energy of our seasonal showcase.</p>
+                <p class="text-xl text-gray-800 dark:text-gray-200 italic font-medium leading-relaxed">Explore the moments captured within our walls. From the quiet focus of the wheel to the vibrant energy of our seasonal showcase.</p>
             </div>
         </section>
 
         <!-- SECTION 3: MAIN GALLERY GRID -->
         <section id="gallery-grid" class="pb-24 px-6 md:px-12 reveal">
-            <div class="gallery-grid">
+            <div class="row g-4">
                 <!-- Row 1 -->
-                <div class="gallery-item tall">
-                    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80" alt="Studio Life">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">Studio Focus</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80" alt="Studio Life" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">Studio Focus</span>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Workshops">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">Morning Session</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Workshops" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">Morning Session</span>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item wide">
-                    <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=700&q=80" alt="Artistry">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">The Form</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=700&q=80" alt="Artistry" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">The Form</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Row 2 -->
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=700&q=80" alt="Details">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">Raw Texture</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://img.freepik.com/free-vector/gray-cement-wall-texture_1409-2958.jpg?semt=ais_hybrid&amp;w=740&amp;q=80" alt="Details" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">Raw Texture</span>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item tall">
-                    <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=700&q=80" alt="Glazing">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">Glaze Chemistry</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=700&q=80" alt="Glazing" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">Glaze Chemistry</span>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80" alt="Final Pieces">
-                    <div class="gallery-overlay">
-                        <span class="text-white uppercase tracking-[3px] text-xs">Kiln Opening</span>
+                <div class="col-12 col-md-4">
+                    <div class="gallery-item h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80" alt="Final Pieces" class="h-full w-full object-cover">
+                        <div class="gallery-overlay">
+                            <span class="text-white uppercase tracking-[3px] text-xs dark:text-white">Kiln Opening</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -344,28 +402,28 @@
             </div>
             <div class="container mx-auto">
                 <div class="row g-5">
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="p-4 border border-current/10">
+                    <div class="col-12 col-md-4">
+                        <div class="p-6 border border-current/10 h-100 flex flex-col">
                             <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600&q=80" class="w-full h-64 object-cover mb-8" alt="Press 1">
                             <h3 class="text-2xl mb-4 italic">Artisan Monthly</h3>
                             <p class="opacity-70 text-sm leading-relaxed mb-6">"Clay&Craft is redefining the membership studio model for the modern era."</p>
-                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current">Read Feature</a>
+                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current mt-auto inline-block w-fit">Read Feature</a>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="p-4 border border-current/10">
+                    <div class="col-12 col-md-4">
+                        <div class="p-6 border border-current/10 h-100 flex flex-col">
                             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" class="w-full h-64 object-cover mb-8" alt="Press 2">
                             <h3 class="text-2xl mb-4 italic">Design Daily</h3>
                             <p class="opacity-70 text-sm leading-relaxed mb-6">"A sanctuary for those looking to disconnect and create with intention."</p>
-                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current">Read Feature</a>
+                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current mt-auto inline-block w-fit">Read Feature</a>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="p-4 border border-current/10">
+                    <div class="col-12 col-md-4">
+                        <div class="p-6 border border-current/10 h-100 flex flex-col">
                             <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" class="w-full h-64 object-cover mb-8" alt="Press 3">
                             <h3 class="text-2xl mb-4 italic">The Ceramicist</h3>
                             <p class="opacity-70 text-sm leading-relaxed mb-6">"Mastery and community coexist beautifully in this historic space."</p>
-                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current">Read Feature</a>
+                            <a href="#" class="text-xs uppercase tracking-[2px] font-bold no-underline text-current border-b border-current mt-auto inline-block w-fit">Read Feature</a>
                         </div>
                     </div>
                 </div>
@@ -389,7 +447,7 @@
                         <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" alt="Insta 3">
                     </div>
                     <div class="col-4 col-md-2 aspect-square overflow-hidden cursor-pointer relative group">
-                        <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" alt="Insta 4">
+                        <img src="https://img.freepik.com/free-vector/gray-cement-wall-texture_1409-2958.jpg?semt=ais_hybrid&amp;w=740&amp;q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" alt="Insta 4">
                     </div>
                     <div class="col-4 col-md-2 aspect-square overflow-hidden cursor-pointer relative group">
                         <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" alt="Insta 5">
@@ -444,33 +502,47 @@
 
     <!-- FOOTER -->
     <footer class="bg-night-bg text-night-text py-20 px-6 md:px-12 border-t border-white/5">
-        <div class="container mx-auto text-center lg:text-start">
+        <div class="container mx-auto">
             <div class="row g-5">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-12 text-md-center">
                     <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
-                    <p class="opacity-60 font-light max-w-xs mx-auto lg:mx-0">Capturing the evolution of ceramics through every frame.</p>
+                    <p class="opacity-60 max-w-xs mx-md-auto leading-relaxed mb-8">
+                        A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994.
+                    </p>
                 </div>
-                <div class="col-lg-2">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Quick Links</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 uppercase tracking-[2px]">
-                        <li><a href="index.html" class="no-underline text-current">Home</a></li>
-                        <li><a href="media.html" class="no-underline text-current">Media</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2">
+                <div class="col-lg-2 col-md-4 col-6 text-md-center">
                     <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 uppercase tracking-[2px]">
-                        <li><a href="about.html" class="no-underline text-current">About</a></li>
-                        <li><a href="team.html" class="no-underline text-current">Team</a></li>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2 col-md-4 col-6 text-md-center">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Members</h4>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 text-md-center mt-md-5 mt-lg-0">
                     <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
+                    <p class="text-xs opacity-60 mb-2">122 Artisan Alley, Creative District</p>
+                    <p class="text-xs opacity-60 mb-8">San Francisco, CA 94103</p>
                     <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
+                    <p class="text-xl display-font font-light">+1 (555) 234-9088</p>
                 </div>
             </div>
-            <div class="mt-20 pt-8 border-t border-white/5 opacity-40 text-[10px] tracking-[2px] uppercase text-center">
-                <p>© 2026 Clay&Craft Studio.</p>
+            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 opacity-40 text-[10px] tracking-[2px] uppercase">
+                <p>© 2026 Clay&Craft Studio. All Rights Reserved.</p>
+                <div class="flex space-x-8">
+                    <a href="#" class="no-underline text-current">Privacy</a>
+                    <a href="#" class="no-underline text-current">Terms</a>
+                    <a href="#" class="no-underline text-current">Cookies</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -478,10 +550,10 @@
     <!-- SCRIPTS -->
     <script>
         const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
-        const body = document.body;
+        const html = document.documentElement;
 
         function setTheme(isDark) {
-            body.classList.toggle('dark', isDark);
+            html.classList.toggle('dark', isDark);
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
@@ -489,10 +561,9 @@
         if (storedTheme === 'dark') setTheme(true);
         else if (storedTheme === 'light') setTheme(false);
 
-        themeToggles.forEach(btn => btn.addEventListener('click', () => setTheme(!body.classList.contains('dark'))));
+        themeToggles.forEach(btn => btn.addEventListener('click', () => setTheme(!html.classList.contains('dark'))));
 
         const rtlToggles = [document.getElementById('rtl-toggle'), document.getElementById('rtl-toggle-mobile')];
-        const html = document.documentElement;
 
         function setRTL(isRTL) {
             html.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
@@ -502,20 +573,41 @@
         if (localStorage.getItem('rtl') === 'true') setRTL(true);
         rtlToggles.forEach(btn => btn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl')));
 
+        // --- NAVBAR SCROLL EFFECT ---
         const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
-                nav.classList.remove('py-4'); nav.classList.add('py-2');
-                if (!body.classList.contains('dark')) nav.classList.add('text-black');
-                else nav.classList.add('text-white');
+        function updateNavStyles() {
+            const isScrolled = window.scrollY > 50;
+            const isDark = html.classList.contains('dark');
+            
+            nav.classList.toggle('nav-scrolled', isScrolled);
+            nav.classList.toggle('bg-white', !isDark);
+            nav.classList.toggle('bg-night-bg', isDark);
+            nav.classList.toggle('text-gray-900', !isDark);
+            nav.classList.toggle('text-white', isDark);
+            
+            if (isScrolled) {
+                nav.classList.remove('py-6');
+                nav.classList.add('py-4');
             } else {
-                nav.classList.remove('nav-scrolled');
-                nav.classList.remove('text-black'); nav.classList.add('text-white');
-                nav.classList.add('py-4'); nav.classList.remove('py-2');
+                nav.classList.remove('py-4');
+                nav.classList.add('py-6');
             }
+        }
+        
+        window.addEventListener('scroll', updateNavStyles);
+        
+        // Listen for theme changes to update nav colors
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateNavStyles();
+                }
+            });
         });
-        if (window.scrollY < 50) nav.classList.add('text-white');
+        observer.observe(html, { attributes: true });
+        
+        // Initial call
+        updateNavStyles();
 
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileClose = document.getElementById('mobile-close');

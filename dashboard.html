@@ -68,6 +68,9 @@
             z-index: 1000;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .dark .sidebar {
+            color: white;
+        }
 
         .nav-link-custom {
             padding: 1rem 2rem;
@@ -85,6 +88,9 @@
             color: white;
             background: rgba(255,255,255,0.05);
             border-left-color: var(--clay-accent);
+        }
+        .dark .nav-link-custom:hover, .dark .nav-link-custom.active {
+            color: white;
         }
 
         .main-content {
@@ -141,7 +147,7 @@
     <!-- SIDEBAR -->
     <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full flex flex-col pt-12 pb-8">
         <div class="px-8 mb-16">
-            <a href="index.html" class="display-font text-3xl font-bold text-white no-underline tracking-tighter">
+            <a href="index.html" class="display-font text-3xl font-bold text-white dark:text-white no-underline tracking-tighter">
                 Clay<span class="text-clay-main">&</span>Craft
             </a>
         </div>
@@ -157,7 +163,7 @@
         </nav>
 
         <div class="px-8 flex flex-col space-y-4">
-            <a href="index.html" class="text-xs uppercase font-black tracking-[4px] py-4 bg-clay-main text-white text-center rounded-sm no-underline hover:opacity-90 transition-all">Logout</a>
+            <a href="index.html" class="text-xs uppercase font-black tracking-[4px] py-4 bg-clay-main text-white dark:text-white text-center rounded-sm no-underline hover:opacity-90 transition-all">Logout</a>
         </div>
     </aside>
 
@@ -296,7 +302,7 @@
                             <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 3">
                         </div>
                         <div class="aspect-square overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 4">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1-tZpIqD-SfJmSUvVF1l0kDJHFdkJ_f0n4g&s" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 4">
                         </div>
                     </div>
                 </div>
@@ -438,6 +444,15 @@
             if (window.innerWidth <= 1024 && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
                 sidebar.classList.remove('open');
             }
+        });
+
+        // Close sidebar when a link is clicked (mobile)
+        sidebar.querySelectorAll('.nav-link-custom').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.remove('open');
+                }
+            });
         });
 
         // --- PROGRESS ANIMATION ---

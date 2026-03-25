@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clay&Craft | Bold Editorial Ceramics Studio</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+        rel="stylesheet">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Tailwind CSS (Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -42,6 +46,7 @@
     <style>
         :root {
             --bg-color: #ffffff;
+            --nav-bg-rgb: 255, 255, 255;
             --text-color: #1a1208;
             --clay-accent: #8B4513;
             --transition-speed: 0.6s;
@@ -49,6 +54,7 @@
 
         .dark {
             --bg-color: #0f172a;
+            --nav-bg-rgb: 15, 23, 42;
             --text-color: #f1ece6;
         }
 
@@ -60,20 +66,57 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6, .display-font {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .display-font {
             font-family: 'Playfair Display', serif;
         }
 
-        /* Navbar transitions */
+        /* Navbar Refinements */
+        #main-nav {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            background-color: transparent;
+        }
+
         .nav-scrolled {
-            background-color: var(--bg-color) !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            padding-top: 0.5rem !important;
-            padding-bottom: 0.5rem !important;
+            background-color: rgba(var(--nav-bg-rgb), 0.8) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
         }
         
         .dark .nav-scrolled {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            background-color: rgba(15, 23, 42, 0.8) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Nav Link Hover Effects */
+        .nav-link-custom {
+            position: relative;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+        .nav-link-custom:hover {
+            opacity: 0.7;
         }
 
         /* Home 2 Bold Animations */
@@ -82,18 +125,22 @@
             transform: translateX(-50px);
             transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
         }
+
         .slide-right {
             opacity: 0;
             transform: translateX(50px);
             transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
         }
+
         .scale-up {
             opacity: 0;
             transform: scale(0.9);
             transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        .active.slide-left, .active.slide-right, .active.scale-up {
+        .active.slide-left,
+        .active.slide-right,
+        .active.scale-up {
             opacity: 1;
             transform: translate(0) scale(1);
         }
@@ -103,6 +150,7 @@
             position: relative;
             z-index: 1;
         }
+
         .diagonal-bg::before {
             content: '';
             position: absolute;
@@ -122,8 +170,11 @@
             display: flex;
             align-items: stretch;
         }
+
         @media (max-width: 1024px) {
-            .hero-split { flex-direction: column; }
+            .hero-split {
+                flex-direction: column;
+            }
         }
 
         /* Mobile Menu */
@@ -143,6 +194,7 @@
             visibility: hidden;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         #mobile-menu.open {
             opacity: 1;
             visibility: visible;
@@ -159,10 +211,12 @@
             border: 2px solid var(--text-color);
             transition: all 0.4s ease;
         }
+
         .btn-bold:hover {
             background: transparent;
             color: var(--text-color);
         }
+
         .btn-outline-bold {
             padding: 1rem 3rem;
             background: transparent;
@@ -173,6 +227,7 @@
             border: 2px solid var(--text-color);
             transition: all 0.4s ease;
         }
+
         .btn-outline-bold:hover {
             background: var(--text-color);
             color: var(--bg-color);
@@ -186,32 +241,60 @@
         }
 
         /* RTL support */
-        [dir="rtl"] { text-align: right; }
-        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
+        [dir="rtl"] {
+            text-align: right;
+        }
 
-        .service-card-text { background: rgba(255,255,255,0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-        .dark .service-card-text { background: rgba(15,23,42,0.9); }
+        [dir="rtl"] .ms-auto {
+            margin-right: auto !important;
+            margin-left: 0 !important;
+        }
 
-        .workshop-overlay { background: rgba(0,0,0,0.4); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
-        .featured-overlay { background: rgba(0,0,0,0.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+        .service-card-text {
+            background: rgba(255, 255, 255, 0.9);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .dark .service-card-text {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .workshop-overlay {
+            background: rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+        }
+
+        .featured-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
 
         /* Added Refinements */
         .hero-left-dark {
             background: linear-gradient(135deg, #1a0e05 0%, #3d2010 100%);
             color: #ffffff;
         }
+
         .gallery-number {
             color: #ffffff;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
             font-size: clamp(3rem, 10vw, 8rem);
         }
 
         @media (max-width: 767px) {
-            .row > [class*="col-"] {
+            .row>[class*="col-"] {
                 flex: 0 0 100%;
                 max-width: 100%;
             }
-            .card, .membership-card, .team-card, .price-card, .service-card {
+
+            .card,
+            .membership-card,
+            .team-card,
+            .price-card,
+            .service-card {
                 margin-left: auto;
                 margin-right: auto;
                 text-align: center;
@@ -219,77 +302,89 @@
         }
     </style>
 </head>
+
 <body class="light">
 
     <!-- NAVIGATION (Same as Home 1) -->
-    <nav id="main-nav" class="fixed-top w-100 transition-all duration-500 py-6 px-6 md:px-12 flex items-center justify-between z-[1500]">
+    <!-- NAVIGATION -->
+    <nav id="main-nav" class="fixed-top w-100 py-6 px-6 md:px-6 xl:px-12 flex items-center justify-between z-[1550]">
         <div class="flex items-center">
-            <a href="index.html" class="display-font text-3xl font-bold no-underline text-current">Clay&Craft</a>
+            <a href="index.html" class="display-font text-xl xl:text-3xl font-semibold no-underline text-gray-900 dark:text-white">Clay&Craft</a>
         </div>
-        <div class="hidden lg:flex items-center space-x-10 uppercase text-xs tracking-[3px] font-medium">
-            <a href="index.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home</a>
-            <a href="home2.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home 2</a>
-            <a href="team.html" class="no-underline text-current hover:opacity-60 transition-opacity">Team</a>
-            <a href="membership.html" class="no-underline text-current hover:opacity-60 transition-opacity">Membership</a>
-            <a href="media.html" class="no-underline text-current hover:opacity-60 transition-opacity">Media</a>
-            <a href="contact.html" class="no-underline text-current hover:opacity-60 transition-opacity border-b border-transparent hover:border-current transition-all">Contact</a>
-            <a href="about.html" class="no-underline text-current hover:opacity-60 transition-opacity">Studio</a>
-            <a href="history.html" class="no-underline text-current hover:opacity-60 transition-opacity">History</a>
-            <a href="register.html" class="no-underline text-current hover:opacity-60 transition-opacity">Join</a>
-            <div class="flex items-center space-x-4 border-l border-current pl-8 ml-4">
-                <button id="theme-toggle" class="p-2 border border-current rounded-full transition-all hover:scale-110" title="Toggle Theme">
-                   <div class="w-4 h-4 rounded-full bg-current"></div>
+
+        <div class="hidden lg:flex items-center lg:space-x-2 xl:space-x-8 uppercase lg:text-[9px] xl:text-xs lg:tracking-wider xl:tracking-[2.5px] font-medium">
+            <a href="index.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home</a>
+            <a href="home2.html" class="nav-link-custom no-underline text-gray-900 dark:text-white border-b border-current font-bold">Home 2</a>
+            <a href="team.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Team</a>
+            <a href="membership.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Membership</a>
+            <a href="media.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Media</a>
+            <a href="contact.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Contact</a>
+            <a href="about.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Studio</a>
+            <a href="register.html" class="px-2 xl:px-5 py-2 border border-gray-900 dark:border-white text-gray-900 dark:text-white no-underline text-[8px] xl:text-[10px] tracking-wide xl:tracking-[2px] hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-night-bg transition-all uppercase font-bold">Join</a>
+            <div class="flex items-center space-x-1 xl:space-x-4 border-l border-gray-300 dark:border-gray-600 lg:pl-2 xl:pl-8 lg:ml-1 xl:ml-4">
+                <a href="dashboard.html" title="Dashboard" class="p-2 border border-gray-300 dark:border-gray-700 rounded-full transition-all hover:scale-110">
+                    <svg class="w-4 h-4 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                </a>
+                <button id="theme-toggle" class="p-2 border border-gray-300 dark:border-gray-600 rounded-full transition-all hover:scale-110" title="Toggle Theme">
+                   <div class="w-4 h-4 rounded-full bg-gray-900 dark:bg-white"></div>
                 </button>
-                <button id="rtl-toggle" class="text-[10px] border border-current px-2 py-1 rounded hover:bg-current hover:text-white transition-all">RTL</button>
+                <button id="rtl-toggle" class="text-[10px] border border-gray-300 dark:border-gray-600 px-2 py-1 rounded hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all">RTL</button>
             </div>
         </div>
 
         <div class="lg:hidden">
             <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
-                <span class="w-6 h-[1px] bg-current"></span>
-                <span class="w-6 h-[1px] bg-current"></span>
-                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
+                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu">
-        <button id="mobile-close" class="absolute top-8 right-8 text-xs font-bold tracking-tighter uppercase border border-current p-4 rounded-full">Close</button>
-        <div class="flex lg:hidden flex-col items-center space-y-10 text-4xl font-serif">
+        <button id="mobile-close"
+            class="absolute top-8 right-8 text-xs font-bold tracking-tighter uppercase border border-current p-4 rounded-full">Close</button>
+        <div class="flex flex-col items-center space-y-4 text-2xl display-font">
             <a href="index.html" class="no-underline text-current">Home</a>
-            <a href="home2.html" class="no-underline text-current">Home 2</a>
+            <a href="home2.html" class="no-underline text-current font-bold">Home 2</a>
             <a href="team.html" class="no-underline text-current">Team</a>
             <a href="membership.html" class="no-underline text-current">Membership</a>
             <a href="media.html" class="no-underline text-current">Media</a>
             <a href="contact.html" class="no-underline text-current font-bold">Contact</a>
             <a href="about.html" class="no-underline text-current">Studio</a>
-            <a href="history.html" class="no-underline text-current">History</a>
-            <a href="register.html" class="no-underline text-current">Join</a>
+            <a href="register.html" class="w-full py-4 border border-current no-underline text-current text-center uppercase text-sm tracking-[3px] font-bold">Join</a>
             <a href="login.html" class="no-underline text-current opacity-60 text-sm">Login</a>
             <div class="flex space-x-8 pt-10">
-                <button id="theme-toggle-mobile" class="text-xs uppercase font-bold tracking-widest py-3 px-6 border-2 border-current">Theme</button>
-                <button id="rtl-toggle-mobile" class="text-xs uppercase font-bold tracking-widest py-3 px-6 border-2 border-current">RTL</button>
+                <button id="theme-toggle-mobile"
+                    class="text-xs uppercase font-bold tracking-widest py-3 px-6 border-2 border-current">Theme</button>
+                <button id="rtl-toggle-mobile"
+                    class="text-xs uppercase font-bold tracking-widest py-3 px-6 border-2 border-current">RTL</button>
             </div>
         </div>
     </div>
 
     <main>
-        
+
         <!-- SECTION 1: SPLIT HERO -->
-        <section id="hero" class="hero-split border-b-2 border-current">
-            <div class="w-full lg:w-1/2 flex items-center justify-center py-10 px-5 md:p-12 lg:p-24 relative overflow-hidden hero-left-dark">
+        <section id="hero" class="hero-split border-b-2 border-current pt-24">
+            <div
+                class="w-full lg:w-1/2 flex items-center justify-center py-10 px-5 md:p-12 lg:p-24 relative overflow-hidden hero-left-dark">
                 <div class="max-w-xl slide-left active text-center md:text-start">
                     <h1 class="text-xl-bold mb-10 italic">Craft Your Story <span>in Clay</span></h1>
-                    <p class="text-lg mb-12 opacity-80 leading-relaxed font-medium">Break the mold. Join a studio where raw passion transforms into timeless objects. Asymmetric soul, bold earth.</p>
+                    <p class="text-lg mb-12 opacity-80 leading-relaxed font-medium">Break the mold. Join a studio where
+                        raw passion transforms into timeless objects. Asymmetric soul, bold earth.</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                         <button class="btn-bold border-white">Start Creating</button>
-                        <button class="btn-outline-bold border-white text-white">Our Philosophy</button>
+                        <button class="btn-outline-bold border-white text-white dark:text-white">Our Philosophy</button>
                     </div>
                 </div>
             </div>
             <div class="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-screen scale-up active">
-                <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=900&q=80" alt="Bold Pottery" class="w-full h-full object-cover">
+                <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=900&q=80" alt="Bold Pottery"
+                    class="w-full h-full object-cover">
             </div>
         </section>
 
@@ -298,37 +393,50 @@
             <div class="container-fluid">
                 <div class="flex flex-col lg:flex-row items-end justify-between mb-24 slide-right">
                     <h2 class="text-6xl lg:text-8xl font-serif max-w-2xl">Studio Mastery <span>For The Bold</span></h2>
-                    <p class="text-xs uppercase tracking-[5px] font-bold pb-4 opacity-40 hidden lg:block">Discover Our Skillsets</p>
+                    <p class="text-xs uppercase tracking-[5px] font-bold pb-4 opacity-40 hidden lg:block">Discover Our
+                        Skillsets</p>
                 </div>
-                
+
                 <div class="row g-5">
-                    <div class="col-12 col-md-6 col-lg-4 slide-left">
+                    <div class="col-12 col-md-4 slide-left">
                         <!-- Card 1 -->
                         <div class="service-card group cursor-pointer relative reveal">
-                            <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=700&q=80" alt="Service 1" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="service-card-text absolute bottom-6 right-6 p-8 max-w-[80%] transition-all duration-500 group-hover:bottom-10 group-hover:right-10">
+                            <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=700&q=80"
+                                alt="Service 1"
+                                class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="service-card-text absolute bottom-6 left-1/2 -translate-x-1/2 p-8 max-w-[80%] text-center transition-all duration-500 group-hover:bottom-10">
                                 <h3 class="text-3xl font-serif mb-4 italic">Hand Building</h3>
-                                <p class="opacity-70 text-sm">Master the wheel with precision and speed in our dedicated throwing labs.</p>
+                                <p class="opacity-70 text-sm">Large scale hand-building techniques for interior and
+                                    exterior pieces.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 slide-left delay-[100ms]">
+                    <div class="col-12 col-md-4 slide-left delay-[100ms]">
                         <!-- Card 2 -->
                         <div class="service-card group cursor-pointer relative reveal">
-                            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80" alt="Service 2" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="service-card-text absolute bottom-6 left-6 p-8 max-w-[80%] transition-all duration-500 group-hover:bottom-10 group-hover:left-10">
+                            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80"
+                                alt="Service 2"
+                                class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="service-card-text absolute bottom-6 left-1/2 -translate-x-1/2 p-8 max-w-[80%] text-center transition-all duration-500 group-hover:bottom-10">
                                 <h3 class="text-3xl font-serif mb-4 italic">Wheel Throwing</h3>
-                                <p class="opacity-70 text-sm">Large scale hand-building techniques for interior and exterior pieces.</p>
+                                <p class="opacity-70 text-sm">Master the wheel with precision and speed in our dedicated
+                                    throwing labs.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 slide-left delay-[200ms]">
+                    <div class="col-12 col-md-4 slide-left delay-[200ms]">
                         <!-- Card 3 -->
                         <div class="service-card group cursor-pointer relative reveal">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM2LZ5IFoq34qhKWy9dQ52JT3BO8FAp2jMxA&s" alt="Experimental Glazing" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="service-card-text absolute bottom-6 right-6 p-8 max-w-[80%] transition-all duration-500 group-hover:bottom-10 group-hover:right-10">
+                            <img src="https://images.unsplash.com/photo-1552083375-1447ce886485?w=700&q=80"
+                                alt="Experimental Glazing"
+                                class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="service-card-text absolute bottom-6 left-1/2 -translate-x-1/2 p-8 max-w-[80%] text-center transition-all duration-500 group-hover:bottom-10">
                                 <h3 class="text-3xl font-serif mb-4 italic">Experimental Glazing</h3>
-                                <p class="opacity-70 text-sm">Push the boundaries of color and texture with our proprietary reactive chemicals.</p>
+                                <p class="opacity-70 text-sm">Push the boundaries of color and texture with our
+                                    proprietary reactive chemicals.</p>
                             </div>
                         </div>
                     </div>
@@ -338,27 +446,39 @@
 
         <!-- SECTION 3: GALLERY GRID -->
         <section id="gallery" class="py-24 bg-clay-dark text-clay-light dark:bg-white dark:text-clay-dark scale-up">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-1 px-1">
-                <div class="md:col-span-8 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-1000" alt="Grid 1">
-                    <div class="absolute bottom-10 left-10 text-white mix-blend-difference">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1 px-1">
+                <div class="overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                        alt="Grid 1">
+                    <div class="absolute bottom-10 left-10 text-white dark:text-white mix-blend-difference">
                         <span class="italic font-serif gallery-number">01</span>
                     </div>
                 </div>
-                <div class="md:col-span-4 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=700&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Grid 2">
-                    <div class="absolute top-10 right-10 text-white mix-blend-difference">
+                <div class="overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=700&q=80"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                        alt="Grid 2">
+                    <div class="absolute top-10 right-10 text-white dark:text-white mix-blend-difference">
                         <span class="italic font-serif gallery-number">02</span>
                     </div>
                 </div>
-                <div class="md:col-span-4 overflow-hidden group relative">
-                    <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=700&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Grid 3">
+                <div class="overflow-hidden group relative">
+                    <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=700&q=80"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                        alt="Grid 3">
+                    <div class="absolute bottom-10 right-10 text-white dark:text-white mix-blend-difference">
+                        <span class="italic font-serif gallery-number">03</span>
+                    </div>
                 </div>
-                <div class="md:col-span-8 flex items-center justify-center p-12 lg:p-24">
-                   <div class="text-center">
+            </div>
+            <div class="container-fluid mt-1">
+                <div
+                    class="flex items-center justify-center p-12 lg:p-24 border-t border-white/10 dark:border-black/10">
+                    <div class="text-center">
                         <h2 class="text-5xl lg:text-7xl mb-10 italic">Process Over Perfection</h2>
                         <button class="btn-outline-bold border-current text-current">Full Portfolio</button>
-                   </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -366,33 +486,41 @@
         <!-- SECTION 4: MEMBERSHIP PREVIEW -->
         <section id="membership" class="relative py-32 px-6 lg:px-24 overflow-hidden">
             <div class="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80" class="w-full h-full object-cover grayscale opacity-20" alt="Membership BG">
+                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80"
+                    class="w-full h-full object-cover grayscale opacity-20" alt="Membership BG">
                 <div class="absolute inset-0 bg-black/60 dark:bg-[#0f172a]/80"></div>
             </div>
-            
+
             <div class="container relative z-10">
                 <div class="text-center text-white mb-24 slide-left">
                     <h2 class="text-6xl lg:text-9xl font-serif mb-6">Tiered Freedom</h2>
                     <p class="text-xs tracking-[10px] uppercase font-bold opacity-60">Pick Your Practice</p>
                 </div>
-                
-                <div class="row g-4 align-items-stretch" style="display:flex; flex-wrap:wrap; align-items:stretch;">
-                    <div class="col-12 col-md-6 col-lg-4 scale-up" style="display:flex;">
-                        <div class="bg-white/10 backdrop-blur-md p-10 border border-white/20 text-white h-100 d-flex flex-column" style="display:flex; flex-direction:column; width:100%;">
-                            <h3 class="text-4xl mb-4 italic">Casual Artisan</h3>
+
+                <div class="row g-4 align-items-stretch justify-content-center"
+                    style="display:flex; flex-wrap:wrap; align-items:stretch;">
+                    <div class="col-12 col-md-4 scale-up" style="display:flex;">
+                        <div class="bg-black p-10 border border-white/20 text-white h-100 d-flex flex-column"
+                            style="display:flex; flex-direction:column; width:100%;">
+                            <h3 class="text-4xl mb-4 italic">Artisan Basic</h3>
                             <div class="text-6xl font-serif mb-8">$29</div>
                             <ul class="space-y-4 mb-10 opacity-70 text-sm uppercase tracking-widest font-bold">
                                 <li>— 5h Lab Time</li>
                                 <li>— Shared Kiln</li>
                                 <li>— Tools Included</li>
+                                <li>— Glaze Library</li>
                             </ul>
-                            <button class="btn-bold w-full bg-white text-black border-white mt-auto" style="margin-top:auto;">Select</button>
+                            <button class="btn-bold w-full bg-white text-black border-white mt-auto"
+                                style="margin-top:auto;">Select Plan</button>
                         </div>
                     </div>
-                    <div class="col-lg-4 scale-up delay-[100ms]" style="display:flex;">
-                        <div class="bg-clay-main p-12 border-4 border-white text-white lg:scale-110 h-100 d-flex flex-column" style="display:flex; flex-direction:column; width:100%;">
-                             <span class="text-[10px] uppercase tracking-[4px] font-black bg-black text-white px-3 py-1 inline-block mb-6">Bold Choice</span>
-                            <h3 class="text-5xl mb-4 italic">Studio Heavy</h3>
+                    <div class="col-12 col-md-4 scale-up delay-[100ms]" style="display:flex;">
+                        <div class="bg-black p-12 border-4 border-white text-white h-100 d-flex flex-column"
+                            style="display:flex; flex-direction:column; width:100%;">
+                            <span
+                                class="text-[10px] uppercase tracking-[4px] font-black bg-white text-black px-3 py-1 inline-block mb-6">Bold
+                                Choice</span>
+                            <h3 class="text-5xl mb-4 italic">Studio Premium</h3>
                             <div class="text-8xl font-serif mb-8">$59</div>
                             <ul class="space-y-4 mb-10 text-sm uppercase tracking-[3px] font-black">
                                 <li>— Unlimited Access</li>
@@ -400,19 +528,23 @@
                                 <li>— Kiln Priority</li>
                                 <li>— Glaze Lab</li>
                             </ul>
-                            <button class="btn-bold w-full bg-white text-black border-white mt-auto" style="margin-top:auto;">Join Circle</button>
+                            <button class="btn-bold w-full bg-white text-black border-white mt-auto"
+                                style="margin-top:auto;">Join Circle</button>
                         </div>
                     </div>
-                    <div class="col-lg-4 scale-up delay-[200ms]" style="display:flex;">
-                        <div class="bg-white/10 backdrop-blur-md p-10 border border-white/20 text-white text-center h-100 d-flex flex-column" style="display:flex; flex-direction:column; width:100%;">
+                    <div class="col-12 col-md-4 scale-up delay-[200ms]" style="display:flex;">
+                        <div class="bg-black p-10 border border-white/20 text-white text-center h-100 d-flex flex-column"
+                            style="display:flex; flex-direction:column; width:100%;">
                             <h3 class="text-4xl mb-4 italic">Master Pro</h3>
                             <div class="text-6xl font-serif mb-8">$99</div>
                             <ul class="space-y-4 mb-10 opacity-70 text-sm uppercase tracking-widest font-bold">
                                 <li>— 24/7 Access</li>
                                 <li>— Private Kiln</li>
                                 <li>— Exhibition Pass</li>
+                                <li>— Guest Passes</li>
                             </ul>
-                            <button class="btn-bold w-full bg-white text-black border-white mt-auto" style="margin-top:auto;">Select</button>
+                            <button class="btn-bold w-full bg-white text-black border-white mt-auto"
+                                style="margin-top:auto;">Select Plan</button>
                         </div>
                     </div>
                 </div>
@@ -423,13 +555,15 @@
         <section id="instructor" class="border-y-2 border-current slide-right">
             <div class="flex flex-col lg:flex-row items-stretch">
                 <div class="w-full lg:w-1/2 min-h-[60vh]">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=80" alt="Instructor" class="w-full h-full object-cover grayscale">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=80" alt="Instructor"
+                        class="w-full h-full object-cover grayscale">
                 </div>
                 <div class="w-full lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center bg-transparent">
                     <span class="text-xs uppercase tracking-[8px] font-black mb-8 opacity-40">The Visionary</span>
                     <h2 class="text-7xl lg:text-9xl font-serif italic mb-10">Sarah Vost</h2>
                     <p class="text-xl leading-relaxed mb-12 opacity-80 max-w-lg">
-                        Sarah believes in the dialogue between the hand and the earth. With over two decades in high-fire stoneware, her approach is raw, unapologetic, and profoundly editorial.
+                        Sarah believes in the dialogue between the hand and the earth. With over two decades in
+                        high-fire stoneware, her approach is raw, unapologetic, and profoundly editorial.
                     </p>
                     <div class="border-t-2 border-current pt-10">
                         <div class="flex items-center space-x-10 mb-6">
@@ -449,8 +583,11 @@
         <section id="process" class="py-24 px-6 lg:px-24">
             <div class="flex flex-col lg:flex-row gap-4">
                 <div class="lg:w-1/4 h-[500px] relative group overflow-hidden slide-left">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000" alt="Process 1">
-                    <div class="absolute inset-0 bg-black/40 p-10 flex flex-col justify-between text-white border-r border-white/10">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80"
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000"
+                        alt="Process 1">
+                    <div
+                        class="absolute inset-0 bg-black/40 p-10 flex flex-col justify-between text-white border-r border-white/10">
                         <span class="text-8xl italic font-serif opacity-20">01</span>
                         <div>
                             <h4 class="text-3xl mb-4 italic">Source</h4>
@@ -459,9 +596,12 @@
                     </div>
                 </div>
                 <div class="lg:w-1/4 h-[500px] relative group overflow-hidden slide-left delay-[100ms]">
-                    <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=500&q=80" class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000" alt="Process 2">
-                    <div class="absolute inset-0 bg-black/60 p-10 flex flex-col justify-between text-white border-r border-white/10">
-                         <span class="text-8xl italic font-serif opacity-20">02</span>
+                    <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=500&q=80"
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000"
+                        alt="Process 2">
+                    <div
+                        class="absolute inset-0 bg-black/60 p-10 flex flex-col justify-between text-white border-r border-white/10">
+                        <span class="text-8xl italic font-serif opacity-20">02</span>
                         <div>
                             <h4 class="text-3xl mb-4 italic">Form</h4>
                             <p class="text-xs font-bold tracking-widest opacity-60 uppercase">The Hand's Intent</p>
@@ -469,9 +609,12 @@
                     </div>
                 </div>
                 <div class="lg:w-1/4 h-[500px] relative group overflow-hidden slide-left delay-[200ms]">
-                    <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=500&q=80" class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000" alt="Process 3">
-                    <div class="absolute inset-0 bg-black/40 p-10 flex flex-col justify-between text-white border-r border-white/10">
-                         <span class="text-8xl italic font-serif opacity-20">03</span>
+                    <img src=" https://desert-fire.com/wp-content/uploads/2018/06/pexels-pixabay-207353-scaled.jpg"
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000"
+                        alt="Process 3">
+                    <div
+                        class="absolute inset-0 bg-black/40 p-10 flex flex-col justify-between text-white border-r border-white/10">
+                        <span class="text-8xl italic font-serif opacity-20">03</span>
                         <div>
                             <h4 class="text-3xl mb-4 italic">Fire</h4>
                             <p class="text-xs font-bold tracking-widest opacity-60 uppercase">The Dragon's Breath</p>
@@ -479,9 +622,11 @@
                     </div>
                 </div>
                 <div class="lg:w-1/4 h-[500px] relative group overflow-hidden slide-left delay-[300ms]">
-                    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80" class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000" alt="Process 4">
+                    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80"
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-125 transition-transform duration-1000"
+                        alt="Process 4">
                     <div class="absolute inset-0 bg-black/60 p-10 flex flex-col justify-between text-white">
-                         <span class="text-8xl italic font-serif opacity-20">04</span>
+                        <span class="text-8xl italic font-serif opacity-20">04</span>
                         <div>
                             <h4 class="text-3xl mb-4 italic">Reveal</h4>
                             <p class="text-xs font-bold tracking-widest opacity-60 uppercase">Art Reclaimed</p>
@@ -497,39 +642,46 @@
                 <div class="row g-5">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-12 border-2 border-current relative">
-                             <div class="absolute -top-10 -left-10 text-9xl font-serif italic text-current opacity-10">"</div>
-                             <p class="text-2xl italic mb-10 font-medium">"An asymmetric haven. Sarah's teaching style is as bold as it is technically brilliant."</p>
-                             <div class="flex items-center space-x-4">
-                                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
+                            <div class="absolute -top-10 -left-10 text-9xl font-serif italic text-current opacity-10">"
+                            </div>
+                            <p class="text-2xl italic mb-10 font-medium">"An asymmetric haven. Sarah's teaching style is
+                                as bold as it is technically brilliant."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80"
+                                    class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
                                 <div>
                                     <h5 class="text-xs font-bold uppercase tracking-widest">Marcus Row</h5>
                                     <p class="text-[10px] opacity-40 uppercase font-black">Member Since 2020</p>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="p-12 border-2 border-current relative lg:mt-24 reveal scale-up">
-                             <p class="text-2xl italic mb-10 font-medium">"The lab is my second home. 24/7 access meant I could finish my sculptural series at my own pace."</p>
-                             <div class="flex items-center space-x-4">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
+                            <p class="text-2xl italic mb-10 font-medium">"The lab is my second home. 24/7 access meant I
+                                could finish my sculptural series at my own pace."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80"
+                                    class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
                                 <div>
                                     <h5 class="text-xs font-bold uppercase tracking-widest">Elena Vo</h5>
                                     <p class="text-[10px] opacity-40 uppercase font-black">Professional Sculptor</p>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="p-12 border-2 border-current relative">
-                             <p class="text-2xl italic mb-10 font-medium">"A bold, unapologetic space to grow. Clay&Craft is a sanctuary for the modern artist."</p>
-                             <div class="flex items-center space-x-4">
-                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80" class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
+                            <p class="text-2xl italic mb-10 font-medium">"A bold, unapologetic space to grow. Clay&Craft
+                                is a sanctuary for the modern artist."</p>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80"
+                                    class="w-12 h-12 rounded-full object-cover grayscale" alt="User">
                                 <div>
                                     <h5 class="text-xs font-bold uppercase tracking-widest">Lila Stern</h5>
                                     <p class="text-[10px] opacity-40 uppercase font-black">Experimental Artist</p>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -539,56 +691,61 @@
         <!-- SECTION 8: CTA -->
         <section id="cta" class="py-32 lg:py-64 px-6 bg-clay-dark text-clay-light text-center relative overflow-hidden">
             <!-- Animated gradient background for cta -->
-             <div class="absolute inset-0 bg-gradient-to-br from-clay-main/40 to-black z-0"></div>
-             <div class="relative z-10 slide-right">
+            <div class="absolute inset-0 bg-gradient-to-br from-clay-main/40 to-black z-0"></div>
+            <div class="relative z-10 slide-right">
                 <h2 class="text-6xl lg:text-9xl font-serif italic mb-12">Ready to Leave <br> Your Mark?</h2>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                     <button class="btn-bold bg-white text-black border-white px-12">Claim Your Shelf</button>
                     <button class="btn-outline-bold border-white text-white px-12">Book Evaluation</button>
                 </div>
-             </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- FOOTER (Same as Home 1) -->
-    <footer class="bg-clay-dark text-clay-light py-24 px-6 lg:px-24 border-t border-white/10 dark:bg-white dark:text-clay-dark">
+    <!-- FOOTER -->
+    <footer class="bg-night-bg text-night-text py-20 px-6 md:px-12 border-t border-white/5">
         <div class="container mx-auto">
             <div class="row g-5">
-                <div class="col-lg-4">
-                    <h2 class="display-font text-4xl mb-8 font-bold">Clay&Craft</h2>
-                    <p class="opacity-50 max-w-sm leading-loose">
-                        A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994. Breaking molds, firing souls.
+                <div class="col-lg-4 col-md-12 text-md-center">
+                    <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
+                    <p class="opacity-60 max-w-xs mx-md-auto leading-relaxed mb-8">
+                        A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994.
                     </p>
                 </div>
-                <div class="col-lg-2 col-6">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-8">Studio</h4>
-                    <ul class="list-none p-0 space-y-6 text-sm font-bold uppercase tracking-widest">
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Philosophy</a></li>
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Equipment</a></li>
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Gallery</a></li>
+                <div class="col-lg-2 col-md-4 col-6 text-md-center">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-6">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-8">Connect</h4>
-                    <ul class="list-none p-0 space-y-6 text-sm font-bold uppercase tracking-widest">
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Journal</a></li>
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Careers</a></li>
-                        <li><a href="#" class="no-underline text-current opacity-40 hover:opacity-100">Legal</a></li>
+                <div class="col-lg-2 col-md-4 col-6 text-md-center">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Members</h4>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
+                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-8">Newsletter</h4>
-                    <div class="flex border-b-2 border-current mb-4">
-                        <input type="email" placeholder="YOUR EMAIL" class="bg-transparent border-none py-4 w-full focus:outline-none text-xs font-bold tracking-widest italic">
-                        <button class="p-4 font-black uppercase text-xs">Join</button>
-                    </div>
-                    <p class="text-[10px] opacity-40 uppercase font-black">Get curated clay notes once a month.</p>
+                <div class="col-lg-4 col-md-4 col-12 text-md-center mt-md-5 mt-lg-0">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
+                    <p class="text-xs opacity-60 mb-2">122 Artisan Alley, Creative District</p>
+                    <p class="text-xs opacity-60 mb-8">San Francisco, CA 94103</p>
+                    <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
+                    <p class="text-xl display-font font-light">+1 (555) 234-9088</p>
                 </div>
             </div>
-            <div class="mt-24 pt-10 border-t border-current/10 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[3px] opacity-30">
-                <p>© 2026 Clay&Craft Studio.</p>
-                <p>Designed for the Bold.</p>
+            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 opacity-40 text-[10px] tracking-[2px] uppercase">
+                <p>© 2026 Clay&Craft Studio. All Rights Reserved.</p>
+                <div class="flex space-x-8">
+                    <a href="#" class="no-underline text-current">Privacy</a>
+                    <a href="#" class="no-underline text-current">Terms</a>
+                    <a href="#" class="no-underline text-current">Cookies</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -597,14 +754,14 @@
     <script>
         // --- SHARED LOGIC (Same as Home 1) ---
         const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
-        const body = document.body;
+        const html = document.documentElement;
 
         function setTheme(isDark) {
             if (isDark) {
-                body.classList.add('dark');
+                html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             } else {
-                body.classList.remove('dark');
+                html.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
             }
         }
@@ -614,10 +771,9 @@
         else if (storedTheme === 'light') setTheme(false);
         else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
 
-        themeToggles.forEach(btn => btn.addEventListener('click', () => setTheme(!body.classList.contains('dark'))));
+        themeToggles.forEach(btn => btn.addEventListener('click', () => setTheme(!html.classList.contains('dark'))));
 
         const rtlToggles = [document.getElementById('rtl-toggle'), document.getElementById('rtl-toggle-mobile')];
-        const html = document.documentElement;
 
         function setRTL(isRTL) {
             if (isRTL) {
@@ -632,25 +788,47 @@
         if (localStorage.getItem('rtl') === 'true') setRTL(true);
         rtlToggles.forEach(btn => btn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl')));
 
-        // --- NAVBAR SCROLL ---
+        // --- NAVBAR SCROLL EFFECT ---
         const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
+        function updateNavStyles() {
+            const isScrolled = window.scrollY > 50;
+            const isDark = html.classList.contains('dark');
+            
+            nav.classList.toggle('nav-scrolled', isScrolled);
+            nav.classList.toggle('bg-white', !isDark);
+            nav.classList.toggle('bg-night-bg', isDark);
+            nav.classList.toggle('text-gray-900', !isDark);
+            nav.classList.toggle('text-white', isDark);
+            
+            if (isScrolled) {
                 nav.classList.remove('py-6');
                 nav.classList.add('py-4');
             } else {
-                nav.classList.remove('nav-scrolled');
-                nav.classList.add('py-6');
                 nav.classList.remove('py-4');
+                nav.classList.add('py-6');
             }
+        }
+        
+        window.addEventListener('scroll', updateNavStyles);
+        
+        // Listen for theme changes to update nav colors
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateNavStyles();
+                }
+            });
         });
+        observer.observe(html, { attributes: true });
+        
+        // Initial call
+        updateNavStyles();
 
         // --- MOBILE MENU ---
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileClose = document.getElementById('mobile-close');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         mobileToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
         mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
         mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
@@ -678,4 +856,5 @@
         });
     </script>
 </body>
+
 </html>
