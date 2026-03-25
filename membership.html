@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Plans | Clay&Craft Ceramics Studio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'clay-light': '#ffffff',
+                        'clay-dark': '#1a1208',
+                        'night-bg': '#0f172a',
+                        'night-text': '#f1ece6',
+                        'earth-tone': '#4a3728',
+                    },
+                    fontFamily: {
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'sans': ['Jost', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1208;
+            --clay-accent: #4a3728;
+            --transition-speed: 0.5s;
+        }
+
+        .dark {
+            --bg-color: #0f172a;
+            --text-color: #f1ece6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Jost', sans-serif;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .display-font { font-family: 'Cormorant Garamond', serif; }
+
+        .nav-scrolled {
+            background-color: var(--bg-color) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pricing Cards */
+        .price-card {
+            background: var(--bg-color);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .price-card:hover { transform: translateY(-15px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .price-card.featured {
+            background: var(--clay-accent);
+            color: white;
+            transform: scale(1.05);
+        }
+        .price-card.featured:hover { transform: scale(1.05) translateY(-10px); }
+        .price-card.dark-plan {
+            background: #0f172a;
+            color: #f1ece6;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .dark .comparison-table th, .dark .comparison-table td { border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .comparison-table tr:nth-child(even) { background: rgba(0,0,0,0.02); }
+        .dark .comparison-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+        /* Accordion */
+        .accordion-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .dark .accordion-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .accordion-header {
+            padding: 1.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            opacity: 0;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+            opacity: 0.7;
+        }
+        .accordion-item .plus { transition: transform 0.4s ease; }
+        .accordion-item.active .plus { transform: rotate(45deg); }
+
+        #mobile-menu {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg-color);
+            z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
+        }
+        #mobile-menu.open { opacity: 1; visibility: visible; }
+
+        .btn-luxury {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 0.75rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            position: relative; overflow: hidden; z-index: 1;
+        }
+        .featured .btn-luxury { border-color: white; color: white; }
+        .featured .btn-luxury::before { background: white; }
+        .featured .btn-luxury:hover { color: var(--clay-accent); }
+
+        .btn-luxury::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
+            background: var(--text-color); transition: all 0.3s ease; z-index: -1;
+        }
+        .btn-luxury:hover { color: var(--bg-color); }
+        .btn-luxury:hover::before { width: 100%; }
+
+        [dir="rtl"] { text-align: right; }
+    </style>
+</head>
+<body class="light">
+
+    <!-- NAVIGATION -->
+    <nav id="main-nav" class="fixed-top w-100 transition-all duration-500 py-4 px-6 md:px-12 flex items-center justify-between z-[1500]">
+        <div class="flex items-center">
+            <a href="index.html" class="display-font text-3xl font-semibold no-underline text-current">Clay&Craft</a>
+        </div>
+
+        <div class="hidden lg:flex items-center space-x-10 uppercase text-xs tracking-[3px] font-medium">
+            <a href="index.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home</a>
+            <a href="home2.html" class="no-underline text-current hover:opacity-60 transition-opacity">Home 2</a>
+            <a href="team.html" class="no-underline text-current hover:opacity-60 transition-opacity">Team</a>
+            <a href="membership.html" class="no-underline text-current hover:opacity-60 transition-opacity">Membership</a>
+            <a href="media.html" class="no-underline text-current hover:opacity-60 transition-opacity">Media</a>
+            <a href="contact.html" class="no-underline text-current hover:opacity-60 transition-opacity border-b border-transparent hover:border-current transition-all">Contact</a>
+            <a href="about.html" class="no-underline text-current hover:opacity-60 transition-opacity">Studio</a>
+            <a href="history.html" class="no-underline text-current hover:opacity-60 transition-opacity">History</a>
+            <a href="register.html" class="no-underline text-current hover:opacity-60 transition-opacity">Join</a>
+            <div class="flex items-center space-x-4 border-l border-current pl-8 ml-4">
+                <button id="theme-toggle" class="p-2 border border-current rounded-full transition-all hover:scale-110" title="Toggle Theme">
+                   <div class="w-4 h-4 rounded-full bg-current"></div>
+                </button>
+                <button id="rtl-toggle" class="text-[10px] border border-current px-2 py-1 rounded hover:bg-current hover:text-white transition-all">RTL</button>
+            </div>
+        </div>
+
+        <div class="lg:hidden flex items-center space-x-4">
+            <button id="mobile-toggle" class="flex flex-col space-y-1.5 p-2" title="Open Menu">
+                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-current"></span>
+                <span class="w-6 h-[1px] bg-current"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+        <button id="mobile-close" class="absolute top-8 right-8 text-4xl display-font">&times;</button>
+        <div class="flex flex-col items-center space-y-6 text-xl tracking-widest uppercase display-font">
+            <a href="index.html" class="no-underline text-current">Home</a>
+            <a href="home2.html" class="no-underline text-current">Home 2</a>
+            <a href="team.html" class="no-underline text-current">Team</a>
+            <a href="membership.html" class="no-underline text-current font-bold">Membership</a>
+            <a href="media.html" class="no-underline text-current">Media</a>
+            <a href="contact.html" class="no-underline text-current">Contact</a>
+            <a href="about.html" class="no-underline text-current">Studio</a>
+            <a href="history.html" class="no-underline text-current">History</a>
+            <a href="register.html" class="no-underline text-current">Join</a>
+            <div class="flex space-x-6 pt-6">
+                <button id="theme-toggle-mobile" class="p-3 border border-current rounded-full text-[10px] uppercase tracking-[2px]">Theme</button>
+                <button id="rtl-toggle-mobile" class="p-3 border border-current rounded px-4 text-[10px] uppercase tracking-[2px]">RTL</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        
+        <!-- SECTION 1: BANNER -->
+        <section id="banner" class="relative h-[50vh] flex items-center justify-center text-white text-center overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=1600&q=80" alt="Membership Banner" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative z-10">
+                <h1 class="text-6xl md:text-8xl font-light mb-4">Membership Plans</h1>
+                <p class="text-xs uppercase tracking-[5px] opacity-70">Join our Artisan Community</p>
+            </div>
+        </section>
+
+        <!-- SECTION 2: INTRO -->
+        <section id="intro" class="py-24 px-6 text-center reveal">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-4xl md:text-5xl mb-8 font-light italic">Refine Your Craft</h2>
+                <p class="text-lg opacity-60 leading-relaxed mb-6">
+                    Membership at Clay&Craft is more than studio access; it's an invitation to a shared pursuit of mastery. Choose the plan that best fits your artistic journey and gain access to world-class facilities.
+                </p>
+                <p class="text-lg opacity-60 leading-relaxed">
+                    All plans include basic equipment, initial kiln credit, and access to our digital resource library.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PRICING CARDS -->
+        <section id="pricing" class="py-24 px-6 md:px-12 bg-black/[0.02] dark:bg-white/[0.02] reveal">
+            <div class="container mx-auto">
+                <div class="row g-5 align-items-center">
+                    <!-- Basic -->
+                    <div class="col-lg-4">
+                        <div class="price-card p-12 text-center border-earth-tone/20">
+                            <div class="aspect-video overflow-hidden mb-8">
+                                <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=600&q=80" class="w-full h-full object-cover" alt="Basic">
+                            </div>
+                            <h3 class="text-2xl mb-2 font-light">Basic</h3>
+                            <div class="display-font text-5xl mb-8">$29<span class="text-xs opacity-50">/mo</span></div>
+                            <ul class="list-none p-0 mb-12 space-y-4 text-sm opacity-70 tracking-wide text-md-start">
+                                <li>15 Studio Hours / Mo</li>
+                                <li>Basic Tool Kit Access</li>
+                                <li>Shared Shelf Space</li>
+                                <li>Quarterly Firing Credit</li>
+                                <li>Member Directory Entry</li>
+                                <li>Tea & Coffee Service</li>
+                            </ul>
+                            <button class="btn-luxury w-full">Select Plan</button>
+                        </div>
+                    </div>
+                    <!-- Premium (Featured) -->
+                    <div class="col-lg-4">
+                        <div class="price-card featured p-12 text-center shadow-2xl">
+                            <div class="aspect-video overflow-hidden mb-8">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" class="w-full h-full object-cover" alt="Premium">
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[3px] mb-4 block bg-white/20 py-1">Most Popular</span>
+                            <h3 class="text-2xl mb-2 font-light">Premium</h3>
+                            <div class="display-font text-5xl mb-8">$59<span class="text-xs opacity-50">/mo</span></div>
+                            <ul class="list-none p-0 mb-12 space-y-4 text-sm opacity-90 tracking-wide text-md-start">
+                                <li>Unlimited Studio Access</li>
+                                <li>Full Equipment Usage</li>
+                                <li>Dedicated Drying Shelf</li>
+                                <li>Preferred Glaze Access</li>
+                                <li>Monthly Masterclass</li>
+                                <li>Early Workshop Booking</li>
+                            </ul>
+                            <button class="btn-luxury w-full">Select Plan</button>
+                        </div>
+                    </div>
+                    <!-- Pro -->
+                    <div class="col-lg-4">
+                        <div class="price-card dark-plan p-12 text-center">
+                            <div class="aspect-video overflow-hidden mb-8">
+                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80" class="w-full h-full object-cover" alt="Pro">
+                            </div>
+                            <h3 class="text-2xl mb-2 font-light">Pro</h3>
+                            <div class="display-font text-5xl mb-8">$99<span class="text-xs opacity-50">/mo</span></div>
+                            <ul class="list-none p-0 mb-12 space-y-4 text-sm opacity-70 tracking-wide text-md-start">
+                                <li>24/7 Key Access</li>
+                                <li>Private Locker & Shelf</li>
+                                <li>Priority Kiln Booking</li>
+                                <li>Retail Stall Priority</li>
+                                <li>Glaze Lab Access</li>
+                                <li>Annual Solo Launch</li>
+                            </ul>
+                            <button class="btn-luxury border-white text-white hover:bg-white hover:text-black w-full">Select Plan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: COMPARISON TABLE -->
+        <section id="comparison" class="py-24 px-6 md:px-12 reveal">
+            <div class="container mx-auto max-w-5xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-light italic">Plan Details</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr class="display-font text-xl">
+                                <th class="text-start">Feature</th>
+                                <th>Basic</th>
+                                <th>Premium</th>
+                                <th>Pro</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm opacity-70">
+                            <tr>
+                                <td class="text-start">Studio Access</td>
+                                <td>15 hrs</td>
+                                <td>Unlimited</td>
+                                <td>24/7</td>
+                            </tr>
+                            <tr>
+                                <td class="text-start">Dedicated Shelving</td>
+                                <td>—</td>
+                                <td>✓</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td class="text-start">Kiln Priority</td>
+                                <td>Standard</td>
+                                <td>Standard</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td class="text-start">Masterclasses</td>
+                                <td>10% Discount</td>
+                                <td>1 Included</td>
+                                <td>All Included</td>
+                            </tr>
+                            <tr>
+                                <td class="text-start">Glaze Lab</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: BENEFITS -->
+        <section id="benefits" class="py-24 px-6 md:px-12 bg-earth-tone/5 reveal">
+            <div class="container mx-auto">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Benefits" class="w-full h-[600px] object-cover rounded-sm">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ps-lg-12">
+                            <h2 class="text-4xl md:text-5xl mb-12 font-light italic">Why Join Clay&Craft?</h2>
+                            <div class="space-y-10">
+                                <div class="benefit-item">
+                                    <h4 class="text-xl mb-4 font-bold flex items-center">
+                                        <span class="w-8 h-[1px] bg-earth-tone mr-4"></span>Professional Environment
+                                    </h4>
+                                    <p class="opacity-60 text-sm leading-relaxed">Work with industrial-grade Shimpo wheels and computer-controlled kilns designed for high-precision firing.</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <h4 class="text-xl mb-4 font-bold flex items-center">
+                                        <span class="w-8 h-[1px] bg-earth-tone mr-4"></span>Curated Community
+                                    </h4>
+                                    <p class="opacity-60 text-sm leading-relaxed">Connect with a diverse network of dedicated artists, from hobbyists to full-time professionals.</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <h4 class="text-xl mb-4 font-bold flex items-center">
+                                        <span class="w-8 h-[1px] bg-earth-tone mr-4"></span>Continuous Growth
+                                    </h4>
+                                    <p class="opacity-60 text-sm leading-relaxed">Regular critiques and masterclasses ensure your technical skills evolve alongside your creative vision.</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <h4 class="text-xl mb-4 font-bold flex items-center">
+                                        <span class="w-8 h-[1px] bg-earth-tone mr-4"></span>Tactile Sanctuary
+                                    </h4>
+                                    <p class="opacity-60 text-sm leading-relaxed">A peaceful, beautifully designed space focused entirely on the meditative practice of ceramics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: TESTIMONIALS -->
+        <section id="testimonials" class="py-24 px-6 reveal">
+            <div class="container mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-light">Member Voices</h2>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="p-12 border border-current/10 text-center">
+                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" class="w-20 h-20 rounded-full mx-auto mb-8 grayscale" alt="Member 1">
+                            <p class="text-2xl font-serif italic mb-8">"Since joining the Premium tier, my production quality has doubled. Having a dedicated drying shelf is a game changer."</p>
+                            <h4 class="text-xs uppercase tracking-[3px] font-bold">Daniel Row - Member since 2018</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-12 border border-current/10 text-center">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" class="w-20 h-20 rounded-full mx-auto mb-8 grayscale" alt="Member 2">
+                            <p class="text-2xl font-serif italic mb-8">"The community here is so generous with their knowledge. It's the most supportive studio I've ever worked in."</p>
+                            <h4 class="text-xs uppercase tracking-[3px] font-bold">Lydia V. - Member since 2021</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: FAQ -->
+        <section id="faq" class="py-24 px-6 md:px-12 bg-black/[0.02] dark:bg-white/[0.02] reveal">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-light italic">Common Inquiries</h2>
+                </div>
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>How do I start my membership?</span>
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-sm">Simply select a plan and complete the registration. After verification, we'll schedule a mandatory 30-minute studio induction to walk you through our safety protocols and equipment usage.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Are materials included in the fee?</span>
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-sm">Members have access to our house glazes. Clay and specific specialty materials can be purchased from our on-site shop at member-only rates.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Can I change my plan later?</span>
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-sm">Yes, you can upgrade or downgrade your membership at the beginning of any billing cycle through your member portal.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Is there a contract?</span>
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-sm">Our 24/7 Pro access requires a 3-month commitment. Basic and Premium plans are month-to-month with no long-term contracts.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>What tools should I bring?</span>
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="text-sm">Basic tools are provided. However, most members prefer to build their own professional kit over time. Storage lockers are available for Premium and Pro members.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: CTA -->
+        <section id="membership-cta" class="relative py-48 px-6 text-white text-center overflow-hidden reveal">
+            <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=1400&q=80" alt="CTA BG" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10">
+                <h2 class="text-5xl md:text-7xl mb-12 font-light italic">Start Your Membership Today.</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <button class="btn-luxury border-white text-white hover:bg-white hover:text-black w-64">Join Now</button>
+                    <button class="btn-luxury border-white/50 text-white/70 hover:border-white hover:text-white w-64">View Demo</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-night-bg text-night-text py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="container mx-auto text-center lg:text-start">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
+                    <p class="opacity-60 font-light max-w-xs mx-auto lg:mx-0">Refining life through the slow craft of pottery. Join the collective.</p>
+                </div>
+                <div class="col-lg-2">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Plans</h4>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 uppercase tracking-[2px]">
+                        <li><a href="#" class="no-underline text-current">Basic</a></li>
+                        <li><a href="#" class="no-underline text-current">Premium</a></li>
+                        <li><a href="#" class="no-underline text-current">Pro</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
+                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 uppercase tracking-[2px]">
+                        <li><a href="about.html" class="no-underline text-current">About</a></li>
+                        <li><a href="team.html" class="no-underline text-current">Team</a></li>
+                        <li><a href="contact.html" class="no-underline text-current">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
+                    <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-white/5 opacity-40 text-[10px] tracking-[2px] uppercase text-center">
+                <p>© 2026 Clay&Craft Studio.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+        const body = document.body;
+
+        function setTheme(isDark) {
+            body.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') setTheme(true);
+        else if (storedTheme === 'light') setTheme(false);
+
+        themeToggles.forEach(btn => btn.addEventListener('click', () => setTheme(!body.classList.contains('dark'))));
+
+        const rtlToggles = [document.getElementById('rtl-toggle'), document.getElementById('rtl-toggle-mobile')];
+        const html = document.documentElement;
+
+        function setRTL(isRTL) {
+            html.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+            localStorage.setItem('rtl', isRTL ? 'true' : 'false');
+        }
+
+        if (localStorage.getItem('rtl') === 'true') setRTL(true);
+        rtlToggles.forEach(btn => btn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl')));
+
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+                nav.classList.remove('py-4'); nav.classList.add('py-2');
+                if (!body.classList.contains('dark')) nav.classList.add('text-black');
+                else nav.classList.add('text-white');
+            } else {
+                nav.classList.remove('nav-scrolled');
+                nav.classList.remove('text-black'); nav.classList.add('text-white');
+                nav.classList.add('py-4'); nav.classList.remove('py-2');
+            }
+        });
+        if (window.scrollY < 50) nav.classList.add('text-white');
+
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileClose = document.getElementById('mobile-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+        // Accordion Logic
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+                
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        };
+        const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

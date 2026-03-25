@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Clay&Craft</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'clay-main': '#8B4513',
+                        'clay-light': '#ffffff',
+                        'clay-dark': '#1a1208',
+                        'night-bg': '#0f172a',
+                        'night-text': '#f1ece6',
+                    },
+                    fontFamily: {
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'sans': ['"Jost"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1208;
+            --clay-accent: #8B4513;
+        }
+        .dark {
+            --bg-color: #0f172a;
+            --text-color: #f1ece6;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Jost', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        .display-font { font-family: 'Cormorant Garamond', serif; }
+        
+        .split-image {
+            background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .clay-btn {
+            background-color: var(--clay-accent);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .clay-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .social-pill {
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .social-pill {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .social-pill:hover {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .plan-card {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .dark .plan-card { border-color: rgba(255,255,255,0.1); }
+        
+        .plan-card.active {
+            border-color: var(--clay-accent);
+            background: rgba(139, 69, 19, 0.05);
+        }
+        .plan-card input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+            display: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--clay-accent) !important;
+        }
+
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
+    </style>
+</head>
+<body class="light overflow-x-hidden">
+
+    <div class="flex flex-col lg:flex-row min-h-screen w-full relative">
+        
+        <!-- Theme Toggle -->
+        <div class="absolute top-8 left-8 z-50 flex items-center space-x-4">
+            <button id="theme-toggle" class="p-2 border border-current rounded-full transition-all hover:scale-110" title="Toggle Theme">
+               <div class="w-4 h-4 rounded-full bg-current"></div>
+            </button>
+            <button id="rtl-toggle" class="text-[10px] border border-current px-2 py-1 rounded hover:bg-current hover:text-white transition-all uppercase tracking-widest font-bold" title="Toggle RTL">RTL</button>
+        </div>
+
+        <!-- Left half: Form -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-clay-light dark:bg-night-bg transition-colors duration-500 py-24 lg:py-12">
+            <div class="w-full max-w-[460px] reveal">
+                
+                <!-- Logo -->
+                <div class="text-center mb-10">
+                    <a href="index.html" class="display-font text-4xl font-bold no-underline text-current tracking-tight">
+                        Clay<span class="text-clay-main">&</span>Craft
+                    </a>
+                </div>
+
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl display-font font-bold mb-2">Create Account</h2>
+                    <p class="text-sm opacity-50 uppercase tracking-[2px]">Join our pottery community today</p>
+                </div>
+
+                <!-- Social Buttons -->
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <button class="social-pill flex items-center justify-center py-3 rounded-full text-xs font-bold tracking-widest uppercase">
+                        <span class="text-[#4285F4] mr-2">G</span> Google
+                    </button>
+                    <button class="social-pill flex items-center justify-center py-3 rounded-full text-xs font-bold tracking-widest uppercase">
+                        <span class="text-[#1877F2] mr-2">F</span> Facebook
+                    </button>
+                </div>
+
+                <div class="flex items-center my-8 opacity-20">
+                    <div class="flex-grow border-t border-current"></div>
+                    <span class="px-4 text-[10px] uppercase font-bold tracking-[3px]">or register with email</span>
+                    <div class="flex-grow border-t border-current"></div>
+                </div>
+
+                <!-- Registration Form -->
+                <form id="register-form" novalidate>
+                    <div class="row g-4 mb-6">
+                        <div class="col-md-6">
+                            <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">First Name</label>
+                            <input type="text" id="firstname" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="Jane" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">Last Name</label>
+                            <input type="text" id="lastname" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">Email Address</label>
+                        <input type="email" id="email" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="artist@claycraft.com" required>
+                    </div>
+
+                    <div class="row g-4 mb-8">
+                        <div class="col-md-6">
+                            <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">Password</label>
+                            <input type="password" id="password" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="••••••••" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">Confirm</label>
+                            <input type="password" id="confirm-password" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-4">Select Membership</label>
+                    <div class="grid grid-cols-3 gap-3 mb-10">
+                        <label class="plan-card active" id="plan-basic">
+                            <input type="radio" name="plan" value="basic" checked>
+                            <span class="block text-xs font-bold uppercase tracking-widest mb-1">Basic</span>
+                            <span class="block text-lg display-font italic">$29</span>
+                        </label>
+                        <label class="plan-card" id="plan-premium">
+                            <input type="radio" name="plan" value="premium">
+                            <span class="block text-xs font-bold uppercase tracking-widest mb-1">Premium</span>
+                            <span class="block text-lg display-font italic">$59</span>
+                        </label>
+                        <label class="plan-card" id="plan-pro">
+                            <input type="radio" name="plan" value="pro">
+                            <span class="block text-xs font-bold uppercase tracking-widest mb-1">Pro</span>
+                            <span class="block text-lg display-font italic">$99</span>
+                        </label>
+                    </div>
+
+                    <div class="mb-10">
+                        <label class="flex items-center cursor-pointer group">
+                            <input type="checkbox" id="terms" class="hidden" required>
+                            <div class="w-5 h-5 border border-current flex items-center justify-center rounded-sm mr-4 transition-all group-hover:border-clay-main">
+                                <div id="check-icon" class="w-2 h-2 bg-clay-main hidden"></div>
+                            </div>
+                            <span class="text-xs opacity-60">I agree to the <a href="#" class="underline">Terms & Conditions</a></span>
+                        </label>
+                        <div id="terms-error" class="error-msg">You must agree to the terms.</div>
+                    </div>
+
+                    <div id="form-error" class="error-msg mb-6 text-center">Please fill all fields correctly.</div>
+
+                    <button type="submit" class="w-full clay-btn py-4 uppercase text-xs font-bold tracking-[4px] rounded-sm mb-8">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="text-center">
+                    <p class="text-xs opacity-60">Already have an account? 
+                        <a href="login.html" class="font-bold underline text-current ml-1">Sign In</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right half: Image (Desktop only) -->
+        <div class="hidden lg:flex w-1/2 split-image relative items-center justify-center p-24">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 text-center text-white max-w-sm">
+                <h2 class="text-5xl display-font italic leading-tight mb-8">"Every great artist began with a lump of clay."</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // --- THEME & RTL LOGIC ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const rtlBtn = document.getElementById('rtl-toggle');
+        const body = document.body;
+        const html = document.documentElement;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') setTheme(true);
+        else if (storedTheme === 'light') setTheme(false);
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+
+        themeBtn.addEventListener('click', () => setTheme(!body.classList.contains('dark')));
+
+        function setRTL(isRTL) {
+            if (isRTL) {
+                html.setAttribute('dir', 'rtl');
+                localStorage.setItem('rtl', 'true');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                localStorage.setItem('rtl', 'false');
+            }
+        }
+
+        if (localStorage.getItem('rtl') === 'true') setRTL(true);
+        rtlBtn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl'));
+
+        // --- PLAN SELECTION ---
+        const planCards = document.querySelectorAll('.plan-card');
+        planCards.forEach(card => {
+            card.addEventListener('click', () => {
+                planCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+
+        // --- CHECKBOX CUSTOM ---
+        const termsCheckbox = document.getElementById('terms');
+        const checkIcon = document.getElementById('check-icon');
+        const termsContainer = termsCheckbox.parentElement;
+
+        termsContainer.addEventListener('click', () => {
+            termsCheckbox.checked = !termsCheckbox.checked;
+            checkIcon.classList.toggle('hidden', !termsCheckbox.checked);
+        });
+
+        // --- FORM VALIDATION ---
+        const form = document.getElementById('register-form');
+        const formError = document.getElementById('form-error');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            formError.style.display = 'none';
+
+            const fields = ['firstname', 'lastname', 'email', 'password', 'confirm-password'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el.value) isValid = false;
+            });
+
+            if (document.getElementById('password').value !== document.getElementById('confirm-password').value) {
+                isValid = false;
+                alert('Passwords do not match.');
+            }
+
+            if (!termsCheckbox.checked) {
+                isValid = false;
+                document.getElementById('terms-error').style.display = 'block';
+            } else {
+                document.getElementById('terms-error').style.display = 'none';
+            }
+
+            if (!isValid) {
+                formError.style.display = 'block';
+            } else {
+                alert('Account created! Welcome to the circle.');
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Reveal
+        window.addEventListener('load', () => {
+            document.querySelector('.reveal').classList.add('opacity-0', 'transition-all', 'duration-1000', 'translate-y-4');
+            setTimeout(() => {
+                document.querySelector('.reveal').classList.remove('opacity-0', 'translate-y-4');
+                document.querySelector('.reveal').classList.add('opacity-100', 'translate-y-0');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

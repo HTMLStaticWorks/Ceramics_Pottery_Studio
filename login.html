@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Clay&Craft</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'clay-main': '#8B4513',
+                        'clay-light': '#ffffff',
+                        'clay-dark': '#1a1208',
+                        'night-bg': '#0f172a',
+                        'night-text': '#f1ece6',
+                    },
+                    fontFamily: {
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'sans': ['"Jost"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1208;
+            --clay-accent: #8B4513;
+        }
+        .dark {
+            --bg-color: #0f172a;
+            --text-color: #f1ece6;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Jost', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        .display-font { font-family: 'Cormorant Garamond', serif; }
+        
+        .split-image {
+            background-image: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .clay-btn {
+            background-color: var(--clay-accent);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .clay-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .social-pill {
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .social-pill {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .social-pill:hover {
+            background: rgba(0,0,0,0.02);
+            transform: translateY(-1px);
+        }
+        .dark .social-pill:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--clay-accent) !important;
+        }
+
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
+    </style>
+</head>
+<body class="light">
+
+    <div class="flex h-screen w-full relative">
+        
+        <!-- Theme Toggle (Top Right) -->
+        <div class="absolute top-8 right-8 z-50 flex items-center space-x-4">
+            <button id="theme-toggle" class="p-2 border border-current rounded-full transition-all hover:scale-110" title="Toggle Theme">
+               <div class="w-4 h-4 rounded-full bg-current"></div>
+            </button>
+            <button id="rtl-toggle" class="text-[10px] border border-current px-2 py-1 rounded hover:bg-current hover:text-white transition-all uppercase tracking-widest font-bold" title="Toggle RTL">RTL</button>
+        </div>
+
+        <!-- Left half: Image (Desktop only) -->
+        <div class="hidden lg:flex w-1/2 split-image relative items-center justify-center p-24">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 text-center text-white">
+                <h2 class="text-5xl display-font italic leading-tight">"Shape your world, one piece at a time."</h2>
+            </div>
+        </div>
+
+        <!-- Right half: Form -->
+        <div class="w-full lg:w-1/2 overflow-y-auto bg-clay-light dark:bg-night-bg transition-colors duration-500">
+            <div class="min-h-screen flex flex-col items-center justify-center p-8 py-20">
+                
+                <!-- Logo -->
+                <div class="text-center mb-10">
+                    <a href="index.html" class="display-font text-4xl font-bold no-underline text-current tracking-tight hover:opacity-70 transition-opacity">
+                        Clay<span class="text-clay-main">&</span>Craft
+                    </a>
+                </div>
+
+                <div class="w-full max-w-[420px] reveal">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl display-font font-bold mb-2">Welcome Back</h2>
+                        <p class="text-sm opacity-50 uppercase tracking-[2px]">Sign in to continue your craft journey</p>
+                    </div>
+
+                    <!-- Social Buttons -->
+                    <div class="grid grid-cols-1 gap-4 mb-8">
+                        <button class="social-pill flex items-center justify-center py-3 rounded-full text-sm font-medium tracking-wide">
+                            <span class="text-[#4285F4] font-bold mr-3">G</span> Continue with Google
+                        </button>
+                        <button class="social-pill flex items-center justify-center py-3 rounded-full text-sm font-medium tracking-wide">
+                            <span class="text-[#1877F2] font-bold mr-3">F</span> Continue with Facebook
+                        </button>
+                    </div>
+
+                    <div class="flex items-center my-8 opacity-20">
+                        <div class="flex-grow border-t border-current"></div>
+                        <span class="px-4 text-[10px] uppercase font-bold tracking-[3px]">or sign in with email</span>
+                        <div class="flex-grow border-t border-current"></div>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="login-form" novalidate>
+                        <div class="mb-6">
+                            <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40 mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="artist@claycraft.com" required>
+                            <div id="email-error" class="error-msg">Please enter a valid email address.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-[10px] font-bold uppercase tracking-[3px] opacity-40">Password</label>
+                                <button type="button" id="toggle-password" class="text-[10px] uppercase font-bold tracking-[2px] opacity-60 hover:opacity-100 transition-opacity">Show</button>
+                            </div>
+                            <input type="password" id="password" class="w-full bg-transparent border-b border-current/20 py-3 text-sm transition-all focus:border-clay-main" placeholder="••••••••" required>
+                            <div id="password-error" class="error-msg">Password is required.</div>
+                        </div>
+
+                        <div class="text-right mb-8">
+                            <a href="#" class="text-[10px] uppercase font-bold tracking-[2px] opacity-40 hover:opacity-100 transition-opacity no-underline text-current">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="w-full clay-btn py-4 uppercase text-xs font-bold tracking-[4px] rounded-sm mb-6">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-xs opacity-60">Don't have an account? 
+                            <a href="register.html" class="font-bold underline text-current ml-1">Register</a>
+                        </p>
+                    </div>
+                </div> <!-- End reveal -->
+            </div> <!-- End inner flex -->
+        </div> <!-- End right container -->
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // --- THEME & RTL LOGIC ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const rtlBtn = document.getElementById('rtl-toggle');
+        const body = document.body;
+        const html = document.documentElement;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') setTheme(true);
+        else if (storedTheme === 'light') setTheme(false);
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+
+        themeBtn.addEventListener('click', () => setTheme(!body.classList.contains('dark')));
+
+        function setRTL(isRTL) {
+            if (isRTL) {
+                html.setAttribute('dir', 'rtl');
+                localStorage.setItem('rtl', 'true');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                localStorage.setItem('rtl', 'false');
+            }
+        }
+
+        if (localStorage.getItem('rtl') === 'true') setRTL(true);
+        rtlBtn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl'));
+
+        // --- PASSWORD TOGGLE ---
+        const passwordInput = document.getElementById('password');
+        const toggleBtn = document.getElementById('toggle-password');
+        
+        toggleBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleBtn.textContent = type === 'password' ? 'Show' : 'Hide';
+        });
+
+        // --- FORM VALIDATION ---
+        const form = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Reset errors
+            emailError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!passwordInput.value) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Mock Success
+                alert('Sign in successful! Redirecting to dashboard...');
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Reveal effect
+        window.addEventListener('load', () => {
+            document.querySelector('.reveal').classList.add('opacity-0', 'transition-all', 'duration-1000', 'translate-y-4');
+            setTimeout(() => {
+                document.querySelector('.reveal').classList.remove('opacity-0', 'translate-y-4');
+                document.querySelector('.reveal').classList.add('opacity-100', 'translate-y-0');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

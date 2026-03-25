@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Clay&Craft</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'clay-main': '#8B4513',
+                        'clay-light': '#ffffff',
+                        'clay-dark': '#1a1208',
+                        'night-bg': '#0f172a',
+                        'night-text': '#f1ece6',
+                    },
+                    fontFamily: {
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'sans': ['"Jost"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #1a1208;
+            --clay-accent: #8B4513;
+            --sidebar-width: 260px;
+        }
+        .dark {
+            --bg-color: #020617;
+            --card-bg: #0f172a;
+            --text-color: #f1ece6;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Jost', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+        .display-font { font-family: 'Cormorant Garamond', serif; }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #1a1208;
+            color: white;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link-custom {
+            padding: 1rem 2rem;
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .nav-link-custom:hover, .nav-link-custom.active {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-left-color: var(--clay-accent);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            padding: 32px;
+            transition: all 0.4s ease;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .dark .dashboard-card { border-color: rgba(255,255,255,0.05); }
+
+        .stat-card { border-top-width: 4px; border-top-style: solid; }
+
+        .badge-pending { color: #f59e0b; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        .badge-confirmed { color: #10b981; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .progress-bar-custom {
+            height: 4px;
+            background: rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .dark .progress-bar-custom { background: rgba(255,255,255,0.1); }
+        .progress-fill {
+            height: 100%;
+            background: var(--clay-accent);
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); position: fixed; height: 100vh; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; }
+        }
+
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
+        [dir="rtl"] .sidebar { left: auto; right: 0; transform: translateX(100%); border-left: none; border-right: 4px solid transparent; }
+        [dir="rtl"] .sidebar.open { transform: translateX(0); }
+        [dir="rtl"] .nav-link-custom { border-left: none; border-right: 4px solid transparent; }
+        [dir="rtl"] .nav-link-custom.active { border-right-color: var(--clay-accent); }
+    </style>
+</head>
+<body class="light">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full flex flex-col pt-12 pb-8">
+        <div class="px-8 mb-16">
+            <a href="index.html" class="display-font text-3xl font-bold text-white no-underline tracking-tighter">
+                Clay<span class="text-clay-main">&</span>Craft
+            </a>
+        </div>
+
+        <nav class="flex-grow">
+            <a href="#" class="nav-link-custom active">Dashboard</a>
+            <a href="#" class="nav-link-custom">My Classes</a>
+            <a href="#" class="nav-link-custom">Schedule</a>
+            <a href="#" class="nav-link-custom">Gallery</a>
+            <a href="#" class="nav-link-custom">Membership</a>
+            <a href="#" class="nav-link-custom">Progress</a>
+            <a href="#" class="nav-link-custom">Settings</a>
+        </nav>
+
+        <div class="px-8 flex flex-col space-y-4">
+            <a href="index.html" class="text-xs uppercase font-black tracking-[4px] py-4 bg-clay-main text-white text-center rounded-sm no-underline hover:opacity-90 transition-all">Logout</a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        
+        <!-- TOP BAR -->
+        <header class="sticky top-0 z-40 bg-white/80 dark:bg-night-bg/80 backdrop-blur-md px-8 py-6 flex items-center justify-between mb-8 border-b border-current/5">
+            <div class="flex items-center">
+                <button id="sidebar-toggle" class="lg:hidden mr-4 p-2 border border-current/20" title="Toggle Sidebar">
+                    <div class="w-6 h-0.5 bg-current mb-1.5"></div>
+                    <div class="w-6 h-0.5 bg-current mb-1.5"></div>
+                    <div class="w-6 h-0.5 bg-current"></div>
+                </button>
+                <h1 class="text-xl font-black uppercase tracking-[5px]">Dashboard</h1>
+            </div>
+
+            <div class="flex items-center space-x-8">
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-1" title="Toggle Theme">
+                       <div class="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center">
+                           <div class="w-2 h-2 rounded-full bg-current"></div>
+                       </div>
+                    </button>
+                    <button id="rtl-toggle" class="text-[10px] font-bold uppercase tracking-widest border-b border-current">RTL</button>
+                </div>
+                <div class="flex items-center space-x-3 border-l border-current/10 pl-8">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-current">Jane Doe</p>
+                        <p class="text-[8px] uppercase font-bold opacity-40">Artisan Member</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-clay-main flex items-center justify-center text-white font-bold">JD</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ROW 1: STAT CARDS -->
+        <div class="row g-4 mb-8">
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card stat-card border-clay-main">
+                    <p class="text-6xl display-font italic mb-2">24</p>
+                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Classes Attended</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card stat-card border-clay-dark dark:border-night-text">
+                    <p class="text-6xl display-font italic mb-2">86</p>
+                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Hours in Studio</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card stat-card border-clay-main">
+                    <p class="text-6xl display-font italic mb-2">12</p>
+                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Works Completed</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card stat-card border-clay-dark dark:border-night-text">
+                    <p class="text-3xl display-font font-bold mt-4 mb-4 uppercase tracking-widest">Premium</p>
+                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Membership Tier</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: UPCOMING CLASSES -->
+        <div class="dashboard-card mb-8 p-0 overflow-hidden">
+            <div class="p-8 border-b border-current/5 flex justify-between items-center">
+                <h3 class="text-xl font-serif italic">Upcoming Studio Sessions</h3>
+                <button class="text-[10px] uppercase font-black tracking-[3px] opacity-60 hover:opacity-100 transition-opacity">View Full Schedule</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle mb-0 text-current">
+                    <thead class="bg-current/5">
+                        <tr class="text-[10px] uppercase font-black tracking-[3px]">
+                            <th class="p-4 pl-8">Class Name</th>
+                            <th class="p-4">Instructor</th>
+                            <th class="p-4">Date</th>
+                            <th class="p-4">Time</th>
+                            <th class="p-4 text-right pr-8">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-current/5">
+                            <td class="p-4 pl-8 font-bold">Wheel Throwing 101</td>
+                            <td class="p-4">Sarah Vost</td>
+                            <td class="p-4">Mar 28, 2026</td>
+                            <td class="p-4">10:00 AM</td>
+                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
+                        </tr>
+                        <tr class="border-b border-current/5">
+                            <td class="p-4 pl-8 font-bold">Decorative Glazing</td>
+                            <td class="p-4">Marcus Row</td>
+                            <td class="p-4">Apr 02, 2026</td>
+                            <td class="p-4">02:30 PM</td>
+                            <td class="p-4 text-right pr-8"><span class="badge-pending">Pending</span></td>
+                        </tr>
+                        <tr class="border-b border-current/5">
+                            <td class="p-4 pl-8 font-bold">Hand Building Advanced</td>
+                            <td class="p-4">Elena Vo</td>
+                            <td class="p-4">Apr 05, 2026</td>
+                            <td class="p-4">09:00 AM</td>
+                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
+                        </tr>
+                        <tr class="border-b border-current/5">
+                            <td class="p-4 pl-8 font-bold">Kiln Management</td>
+                            <td class="p-4">Sarah Vost</td>
+                            <td class="p-4">Apr 10, 2026</td>
+                            <td class="p-4">04:00 PM</td>
+                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 pl-8 font-bold">Sculptural Form Study</td>
+                            <td class="p-4">Marcus Row</td>
+                            <td class="p-4">Apr 15, 2026</td>
+                            <td class="p-4">11:30 AM</td>
+                            <td class="p-4 text-right pr-8"><span class="badge-pending">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-8">
+            <!-- ROW 3 LEFT: RECENT WORKS -->
+            <div class="col-lg-7">
+                <div class="dashboard-card h-full">
+                    <h3 class="text-xl font-serif italic mb-8">My Recent Works</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="aspect-square overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 1">
+                        </div>
+                        <div class="aspect-square overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 2">
+                        </div>
+                        <div class="aspect-square overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 3">
+                        </div>
+                        <div class="aspect-square overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1519710164239-da123dc3e57f?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3 RIGHT: MEMBERSHIP CARD -->
+            <div class="col-lg-5">
+                <div class="dashboard-card bg-clay-dark text-white flex flex-col justify-between h-full relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10">
+                         <span class="display-font italic text-[15rem]">C&C</span>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="text-[10px] uppercase font-black tracking-[4px] bg-clay-main px-3 py-1 mb-6 inline-block">Pro Level</span>
+                        <h3 class="text-5xl display-font mb-2">Premium Member</h3>
+                        <p class="text-xs opacity-60 mb-12">Renews on August 24, 2026</p>
+                        
+                        <div class="mb-12">
+                            <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-2">
+                                <span>Monthly Usage</span>
+                                <span>86%</span>
+                            </div>
+                            <div class="progress-bar-custom bg-white/10">
+                                <div class="progress-fill bg-white w-[86%]"></div>
+                            </div>
+                        </div>
+
+                        <button class="w-full border-2 border-white py-4 uppercase text-[10px] font-black tracking-[4px] hover:bg-white hover:text-black transition-all">Upgrade Plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 4: PROGRESS SECTION -->
+        <div class="dashboard-card mb-8">
+            <h3 class="text-xl font-serif italic mb-8">Skill Proficiency</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
+                        <span>Wheel Throwing</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" data-width="75%"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
+                        <span>Hand Building</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" data-width="60%"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
+                        <span>Glazing</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" data-width="85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 5: QUICK ACTIONS -->
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
+                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Book a Bench</h4>
+                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Reserve your studio hour now</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
+                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Request Kiln</h4>
+                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Schedule a firing for your works</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
+                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Contact Instructor</h4>
+                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Get expert feedback on your form</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script>
+        // --- THEME & RTL LOGIC ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const rtlBtn = document.getElementById('rtl-toggle');
+        const body = document.body;
+        const html = document.documentElement;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark') setTheme(true);
+        else if (storedTheme === 'light') setTheme(false);
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+
+        themeBtn.addEventListener('click', () => setTheme(!body.classList.contains('dark')));
+
+        function setRTL(isRTL) {
+            if (isRTL) {
+                html.setAttribute('dir', 'rtl');
+                localStorage.setItem('rtl', 'true');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                localStorage.setItem('rtl', 'false');
+            }
+        }
+
+        if (localStorage.getItem('rtl') === 'true') setRTL(true);
+        rtlBtn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl'));
+
+        // --- SIDEBAR TOGGLE ---
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar on outer click
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024 && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // --- PROGRESS ANIMATION ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(fill => {
+                    if (fill.dataset.width) {
+                        fill.style.width = fill.dataset.width;
+                    }
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
