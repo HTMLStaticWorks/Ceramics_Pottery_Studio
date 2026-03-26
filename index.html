@@ -219,7 +219,7 @@
             z-index: -1;
         }
         .btn-luxury:hover {
-            color: var(--bg-color);
+            color: var(--bg-color) !important;
         }
         .btn-luxury:hover::before {
             width: 100%;
@@ -259,7 +259,7 @@
             <a href="home2.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home 2</a>
             <a href="team.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Team</a>
             <a href="membership.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Membership</a>
-            <a href="media.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Media</a>
+
             <a href="contact.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Contact</a>
             <a href="about.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Studio</a>
             <a href="register.html" class="px-2 xl:px-5 py-2 border border-gray-900 dark:border-white text-gray-900 dark:text-white no-underline text-[8px] xl:text-[10px] tracking-wide xl:tracking-[2px] hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-night-bg transition-all uppercase font-bold">Join</a>
@@ -287,14 +287,14 @@
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu">
+    <div id="mobile-menu" class="text-clay-dark dark:text-night-text">
         <button id="mobile-close" class="absolute top-8 right-8 text-4xl display-font">&times;</button>
         <div class="flex flex-col items-center space-y-4 text-2xl display-font">
             <a href="index.html" class="no-underline text-current font-bold">Home</a>
             <a href="home2.html" class="no-underline text-current">Home 2</a>
             <a href="team.html" class="no-underline text-current">Team</a>
             <a href="membership.html" class="no-underline text-current">Membership</a>
-            <a href="media.html" class="no-underline text-current">Media</a>
+
             <a href="contact.html" class="no-underline text-current">Contact</a>
             <a href="about.html" class="no-underline text-current">Studio</a>
             <a href="register.html" class="w-full py-4 border border-current no-underline text-current text-center uppercase text-sm tracking-[3px] font-bold">Join</a>
@@ -321,8 +321,8 @@
                 <p class="text-xs uppercase tracking-[5px] opacity-70 dark:text-white dark:opacity-90 mb-8">We believe clay is the language of the soul.</p>
                 <p class="text-lg md:text-xl font-light tracking-widest opacity-90 mb-10 mx-auto max-w-2xl">A sanctuary for traditional craftsmanship and contemporary ceramics in the heart of the city.</p>
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-                    <a href="#membership" class="btn-luxury-solid border-white bg-white text-black hover:bg-transparent hover:text-white">View Tiers</a>
-                    <a href="#workshops" class="btn-luxury border-white text-white hover:bg-white hover:text-black">Book Workshop</a>
+                    <a href="#membership" class="btn-luxury-solid border-white bg-white text-black hover:bg-transparent hover:text-white w-64">View Tiers</a>
+                    <a href="#workshops" class="btn-luxury border-white text-white w-64">Book Workshop</a>
                 </div>
             </div>
         </section>
@@ -404,7 +404,7 @@
                                 <li>15% off workshops</li>
                                 <li>Standard glaze library</li>
                             </ul>
-                            <button class="btn-luxury border-white text-white hover:bg-white hover:text-black w-full" style="margin-top:auto;">Select Plan</button>
+                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
                         </div>
                     </div>
                     <!-- Premium -->
@@ -421,7 +421,7 @@
                                 <li>Premium glaze collection</li>
                                 <li>Kiln firing credits</li>
                             </ul>
-                            <button class="btn-luxury border-white text-white hover:bg-white hover:text-black w-full" style="margin-top:auto;">Select Plan</button>
+                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
                         </div>
                     </div>
                     <!-- Pro -->
@@ -437,7 +437,7 @@
                                 <li>Exhibition opportunities</li>
                                 <li>Guest passes</li>
                             </ul>
-                            <button class="btn-luxury border-white text-white hover:bg-white hover:text-black w-full" style="margin-top:auto;">Select Plan</button>
+                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
                         </div>
                     </div>
                 </div>
@@ -639,36 +639,48 @@
     <footer class="bg-night-bg text-night-text py-20 px-6 md:px-12 border-t border-white/5">
         <div class="container mx-auto">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-12 text-md-center">
+                <!-- Column 1: Logo & Mission -->
+                <div class="col-lg-3 col-12 text-center md:text-left">
                     <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
-                    <p class="opacity-60 max-w-xs mx-md-auto leading-relaxed mb-8">
+                    <p class="opacity-60 max-w-xs mx-auto md:mx-0 leading-relaxed mb-8">
                         A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994.
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6 text-md-center">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 col-6 text-md-center">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Members</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60">
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 col-12 text-md-center mt-md-5 mt-lg-0">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
-                    <p class="text-xs opacity-60 mb-2">122 Artisan Alley, Creative District</p>
-                    <p class="text-xs opacity-60 mb-8">San Francisco, CA 94103</p>
-                    <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
-                    <p class="text-xl display-font font-light">+1 (555) 234-9088</p>
+                
+                <!-- Column 2: Studio, Members, Contact (Flexible Grid) -->
+                <div class="col-lg-9 col-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left items-start">
+                        <!-- STUDIO -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
+                            <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- MEMBERS -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Members</h4>
+                            <ul class="list-none p-0 space-y-4 text-xs opacity-60">
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- CONTACT -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
+                            <p class="text-xs opacity-60 mb-2">122 Artisan Alley, Creative District</p>
+                            <p class="text-xs opacity-60 mb-8">San Francisco, CA 94103</p>
+                            <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
+                            <p class="text-xl display-font font-light">+1 (555) 234-9088</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 opacity-40 text-[10px] tracking-[2px] uppercase">

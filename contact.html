@@ -120,7 +120,7 @@
         input, textarea, select {
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.3);
             padding: 1rem 0;
             width: 100%;
             outline: none;
@@ -128,7 +128,13 @@
             color: var(--text-color);
         }
         .dark input, .dark textarea, .dark select {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            background: var(--night-bg);
+            color: white;
+        }
+        .dark select option {
+            background: #0f172a;
+            color: white;
         }
         input:focus, textarea:focus, select:focus {
             border-bottom-color: var(--clay-accent);
@@ -167,7 +173,7 @@
             content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
             background: var(--text-color); transition: all 0.3s ease; z-index: -1;
         }
-        .btn-luxury:hover { color: var(--bg-color); }
+        .btn-luxury:hover { color: var(--bg-color) !important; }
         .btn-luxury:hover::before { width: 100%; }
 
         .success-overlay {
@@ -213,7 +219,7 @@
             <a href="home2.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home 2</a>
             <a href="team.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Team</a>
             <a href="membership.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Membership</a>
-            <a href="media.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Media</a>
+
             <a href="contact.html" class="nav-link-custom no-underline text-gray-900 dark:text-white border-b border-current font-bold">Contact</a>
             <a href="about.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Studio</a>
             <a href="register.html" class="px-2 xl:px-5 py-2 border border-gray-900 dark:border-white text-gray-900 dark:text-white no-underline text-[8px] xl:text-[10px] tracking-wide xl:tracking-[2px] hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-night-bg transition-all uppercase font-bold">Join</a>
@@ -240,14 +246,14 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu">
+    <div id="mobile-menu" class="text-clay-dark dark:text-night-text">
         <button id="mobile-close" class="absolute top-8 right-8 text-4xl display-font">&times;</button>
         <div class="flex flex-col items-center space-y-4 text-2xl display-font">
             <a href="index.html" class="no-underline text-current">Home</a>
             <a href="home2.html" class="no-underline text-current">Home 2</a>
             <a href="team.html" class="no-underline text-current">Team</a>
             <a href="membership.html" class="no-underline text-current">Membership</a>
-            <a href="media.html" class="no-underline text-current">Media</a>
+
             <a href="contact.html" class="no-underline text-current font-bold">Contact</a>
             <a href="about.html" class="no-underline text-current">Studio</a>
             <a href="register.html" class="w-full py-4 border border-current no-underline text-current text-center uppercase text-sm tracking-[3px] font-bold">Join</a>
@@ -263,7 +269,7 @@
     <div id="success-overlay" class="success-overlay">
         <div>
             <h2 class="text-6xl font-serif italic mb-6">Message Sent</h2>
-            <p class="text-sm uppercase tracking-[4px] opacity-70">We'll get back to you shortly.</p>
+            <p class="text-sm uppercase tracking-[4px] opacity-90">We'll get back to you shortly.</p>
             <button onclick="document.getElementById('success-overlay').style.display='none'" class="mt-12 btn-luxury border-white text-white dark:text-white">Close</button>
         </div>
     </div>
@@ -286,15 +292,15 @@
                 <h2 class="text-4xl md:text-5xl mb-12 font-light italic">Reach Our Studio</h2>
                 <div class="row g-5">
                     <div class="col-12 col-md-6 col-lg-4">
-                        <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Location</span>
+                        <span class="text-[10px] uppercase tracking-[3px] opacity-80 block mb-4">Location</span>
                         <p class="text-sm font-bold tracking-widest">123 POTTERY LANE<br>ARTISAN QUARTER</p>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Inquiries</span>
+                        <span class="text-[10px] uppercase tracking-[3px] opacity-80 block mb-4">Inquiries</span>
                         <p class="text-sm font-bold tracking-widest">HELLO@CLAYANDCRAFT.COM<br>+1 (555) 829-3049</p>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <span class="text-[10px] uppercase tracking-[3px] opacity-50 block mb-4">Hours</span>
+                        <span class="text-[10px] uppercase tracking-[3px] opacity-80 block mb-4">Hours</span>
                         <p class="text-sm font-bold tracking-widest">MON — FRI: 09:00 - 21:00<br>SAT — SUN: 10:00 - 18:00</p>
                     </div>
                 </div>
@@ -311,15 +317,15 @@
                             <h3 class="text-3xl mb-12 italic">Send a Message</h3>
                             <form id="main-contact-form" class="space-y-10">
                                 <div>
-                                    <label class="text-[10px] uppercase tracking-[3px] opacity-60 dark:opacity-80">Your Name</label>
-                                    <input type="text" required placeholder="Full Name" class="placeholder-gray-400 dark:placeholder-gray-500">
+                                    <label class="text-[10px] uppercase tracking-[3px] opacity-90">Your Name</label>
+                                    <input type="text" required placeholder="Full Name" class="placeholder-gray-500 dark:placeholder-gray-300">
                                 </div>
                                 <div>
-                                    <label class="text-[10px] uppercase tracking-[3px] opacity-60 dark:opacity-80">Email Address</label>
-                                    <input type="email" required placeholder="email@example.com" class="placeholder-gray-400 dark:placeholder-gray-500">
+                                    <label class="text-[10px] uppercase tracking-[3px] opacity-90">Email Address</label>
+                                    <input type="email" required placeholder="email@example.com" class="placeholder-gray-500 dark:placeholder-gray-300">
                                 </div>
                                 <div>
-                                    <label class="text-[10px] uppercase tracking-[3px] opacity-60 dark:opacity-80">Subject</label>
+                                    <label class="text-[10px] uppercase tracking-[3px] opacity-90">Subject</label>
                                     <select required title="Select Inquiry Subject" class="dark:text-white">
                                         <option value="" disabled selected>Select Membership Inquiry</option>
                                         <option>General Membership</option>
@@ -329,8 +335,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="text-[10px] uppercase tracking-[3px] opacity-60 dark:opacity-80">Message</label>
-                                    <textarea rows="4" required placeholder="How can we help you?" class="placeholder-gray-400 dark:placeholder-gray-500"></textarea>
+                                    <label class="text-[10px] uppercase tracking-[3px] opacity-90">Message</label>
+                                    <textarea rows="4" required placeholder="How can we help you?" class="placeholder-gray-500 dark:placeholder-gray-300"></textarea>
                                 </div>
                                 <div class="pt-6">
                                     <button type="submit" class="btn-luxury">Send Enquiry</button>
@@ -416,21 +422,21 @@
             <div class="container mx-auto">
                 <div class="row g-5">
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="p-8 border border-current/10 h-full text-center">
+                        <div class="p-8 border border-current/20 h-full text-center">
                             <h4 class="text-xl mb-4 italic">Is there parking?</h4>
-                            <p class="text-sm opacity-60">Yes, members have access to our private yard. Public parking is available on Pottery Lane.</p>
+                            <p class="text-sm opacity-90">Yes, members have access to our private yard. Public parking is available on Pottery Lane.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="p-8 border border-current/10 h-full text-center">
+                        <div class="p-8 border border-current/20 h-full text-center">
                             <h4 class="text-xl mb-4 italic">Can I tour the studio?</h4>
-                            <p class="text-sm opacity-60">Absolutely. Tours are available every Friday at 16:00. No booking required.</p>
+                            <p class="text-sm opacity-90">Absolutely. Tours are available every Friday at 16:00. No booking required.</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="p-8 border border-current/10 h-full text-center">
+                        <div class="p-8 border border-current/20 h-full text-center">
                             <h4 class="text-xl mb-4 italic">Do you ship pieces?</h4>
-                            <p class="text-sm opacity-60">We provide professional packing and international shipping services for all formed pieces.</p>
+                            <p class="text-sm opacity-90">We provide professional packing and international shipping services for all formed pieces.</p>
                         </div>
                     </div>
                 </div>
@@ -441,7 +447,7 @@
         <section id="contact-cta" class="py-32 px-6 bg-earth-tone text-white text-center reveal">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-5xl md:text-7xl mb-12 font-light italic">We'd Love to Hear From You.</h2>
-                <a href="membership.html" class="btn-luxury border-white text-white hover:bg-white hover:text-earth-tone">View Membership Plans</a>
+                <a href="membership.html" class="btn-luxury border-white text-white">View Membership Plans</a>
             </div>
         </section>
 
@@ -451,36 +457,48 @@
     <footer class="bg-night-bg text-night-text dark:text-white py-20 px-6 md:px-12 border-t border-white/5">
         <div class="container mx-auto">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-12 text-md-center">
+                <!-- Column 1: Logo & Mission -->
+                <div class="col-lg-3 col-12 text-center md:text-left">
                     <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
-                    <p class="opacity-60 max-w-xs mx-md-auto leading-relaxed mb-8 dark:text-white">
+                    <p class="opacity-60 max-w-xs mx-auto md:mx-0 leading-relaxed mb-8 dark:text-white">
                         A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994.
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6 text-md-center">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Studio</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 dark:text-white">
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 col-6 text-md-center">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Members</h4>
-                    <ul class="list-none p-0 space-y-4 text-xs opacity-60 dark:text-white">
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
-                        <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 col-12 text-md-center mt-md-5 mt-lg-0">
-                    <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Contact</h4>
-                    <p class="text-xs opacity-60 mb-2 dark:text-white">122 Artisan Alley, Creative District</p>
-                    <p class="text-xs opacity-60 mb-8 dark:text-white">San Francisco, CA 94103</p>
-                    <p class="text-xl display-font font-light dark:text-white">hello@clayandcraft.com</p>
-                    <p class="text-xl display-font font-light dark:text-white">+1 (555) 234-9088</p>
+                
+                <!-- Column 2: Studio, Members, Contact (Flexible Grid) -->
+                <div class="col-lg-9 col-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left items-start">
+                        <!-- STUDIO -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Studio</h4>
+                            <ul class="list-none p-0 space-y-4 text-xs opacity-60 dark:text-white">
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- MEMBERS -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Members</h4>
+                            <ul class="list-none p-0 space-y-4 text-xs opacity-60 dark:text-white">
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
+                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- CONTACT -->
+                        <div>
+                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold dark:text-white">Contact</h4>
+                            <p class="text-xs opacity-60 mb-2 dark:text-white">122 Artisan Alley, Creative District</p>
+                            <p class="text-xs opacity-60 mb-8 dark:text-white">San Francisco, CA 94103</p>
+                            <p class="text-xl display-font font-light dark:text-white">hello@clayandcraft.com</p>
+                            <p class="text-xl display-font font-light dark:text-white">+1 (555) 234-9088</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 opacity-40 text-[10px] tracking-[2px] uppercase dark:text-white">
