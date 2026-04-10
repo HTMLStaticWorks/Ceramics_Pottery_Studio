@@ -1,835 +1,250 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clay&Craft | Luxury Ceramics & Pottery Studio</title>
-    
-    <!-- Favicon: Pottery emoji -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Tailwind CSS (Play CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'clay-light': '#ffffff',
-                        'clay-dark': '#1a1208',
-                        'night-bg': '#0f172a',
-                        'night-text': '#f1ece6',
-                        'earth-tone': '#4a3728',
-                    },
-                    fontFamily: {
-                        'serif': ['"Cormorant Garamond"', 'serif'],
-                        'sans': ['Jost', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root {
-            --bg-color: #ffffff;
-            --nav-bg-rgb: 255, 255, 255;
-            --text-color: #1a1208;
-            --transition-speed: 0.5s;
-        }
-
-        .dark {
-            --bg-color: #0f172a;
-            --nav-bg-rgb: 15, 23, 42;
-            --text-color: #f1ece6;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Jost', sans-serif;
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, h5, h6, .display-font {
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        /* Navbar Refinements */
-        #main-nav {
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease-in-out;
-            background-color: transparent;
-        }
-
-        .nav-scrolled {
-            background-color: rgba(var(--nav-bg-rgb), 0.8) !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            padding-top: 0.75rem !important;
-            padding-bottom: 0.75rem !important;
-        }
-        
-        .dark .nav-scrolled {
-            background-color: rgba(15, 23, 42, 0.8) !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Nav Link Hover Effects */
-        .nav-link-custom {
-            position: relative;
-            transition: opacity 0.3s ease;
-        }
-        .nav-link-custom::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: currentColor;
-            transition: width 0.3s ease;
-        }
-        .nav-link-custom:hover::after {
-            width: 100%;
-        }
-        .nav-link-custom:hover {
-            opacity: 0.7;
-        }
-
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile Menu Overlay */
-        #mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: var(--bg-color);
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-        }
-
-        #mobile-menu.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Membership Card Hover */
-        .membership-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .membership-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        /* Masonry Grid Simulation */
-        .masonry-grid {
-            column-count: 3;
-            column-gap: 1.5rem;
-        }
-        @media (max-width: 1024px) {
-            .masonry-grid { column-count: 2; }
-        }
-        @media (max-width: 768px) {
-            .masonry-grid { column-count: 1; }
-        }
-        .masonry-item {
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Text Alignment Overrides */
-        @media (max-width: 1024px) {
-            .text-md-center { text-align: center !important; }
-            .mx-md-auto { margin-left: auto !important; margin-right: auto !important; }
-            .flex-md-center { justify-content: center !important; }
-        }
-
-        /* RTL support */
-        [dir="rtl"] { text-align: right; }
-
-        @media (max-width: 767px) {
-            .row > [class*="col-"] {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            .card, .membership-card, .team-card, .price-card, .testimonial-card {
-                margin-left: auto;
-                margin-right: auto;
-                text-align: center;
-            }
-        }
-        [dir="rtl"] .ms-auto { margin-left: 0 !important; margin-right: auto !important; }
-        [dir="rtl"] .me-auto { margin-right: 0 !important; margin-left: auto !important; }
-
-        /* Custom Buttons */
-        .btn-luxury {
-            background: transparent;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 0.75rem 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        .btn-luxury::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: var(--text-color);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-        .btn-luxury:hover {
-            color: var(--bg-color) !important;
-        }
-        .btn-luxury:hover::before {
-            width: 100%;
-        }
-
-        .btn-luxury-solid {
-            background: var(--text-color);
-            border: 1px solid var(--text-color);
-            color: var(--bg-color);
-            padding: 0.75rem 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        .btn-luxury-solid:hover {
-            background: transparent;
-            color: var(--text-color);
-        }
-
-        /* Hero Overlay */
-        .hero-overlay {
-            background: rgba(0,0,0,0.4);
-        }
-    </style>
-</head>
-<body class="light">
-
-    <!-- NAVIGATION -->
-    <nav id="main-nav" class="fixed-top w-100 py-6 px-6 md:px-6 xl:px-12 flex items-center justify-between z-[1550]">
-        <div class="flex items-center">
-            <a href="index.html" class="display-font text-xl xl:text-3xl font-semibold no-underline text-gray-900 dark:text-white">Clay&Craft</a>
-        </div>
-
-        <div class="hidden lg:flex items-center lg:space-x-2 xl:space-x-8 uppercase lg:text-[9px] xl:text-xs lg:tracking-wider xl:tracking-[2.5px] font-medium">
-            <a href="index.html" class="nav-link-custom no-underline text-gray-900 dark:text-white border-b border-current font-bold">Home</a>
-            <a href="home2.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Home 2</a>
-            <a href="team.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Team</a>
-            <a href="membership.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Membership</a>
-
-           
-            <a href="about.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Studio</a>  <a href="contact.html" class="nav-link-custom no-underline text-gray-900 dark:text-white">Contact</a>
-            <a href="register.html" class="px-2 xl:px-5 py-2 border border-gray-900 dark:border-white text-gray-900 dark:text-white no-underline text-[8px] xl:text-[10px] tracking-wide xl:tracking-[2px] hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-night-bg transition-all uppercase font-bold">Join</a>
-            <div class="flex items-center space-x-1 xl:space-x-4 border-l border-gray-300 dark:border-gray-600 lg:pl-2 xl:pl-8 lg:ml-1 xl:ml-4">
-                <a href="dashboard.html" title="Dashboard" class="p-2 border border-gray-300 dark:border-gray-700 rounded-full transition-all hover:scale-110">
-                    <svg class="w-4 h-4 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                    </svg>
-                </a>
-                <button id="theme-toggle" class="p-2 border border-gray-300 dark:border-gray-600 rounded-full transition-all hover:scale-110" title="Toggle Theme">
-                   <div class="w-4 h-4 rounded-full bg-gray-900 dark:bg-white"></div>
-                </button>
-                <button id="rtl-toggle" class="text-[10px] border border-gray-300 dark:border-gray-600 px-2 py-1 rounded hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all">RTL</button>
-            </div>
-        </div>
-
-        <!-- Mobile Toggle -->
-        <div class="lg:hidden flex items-center space-x-4">
-            <button id="mobile-toggle" class="flex flex-col space-y-1 p-2" title="Menu">
-                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
-                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
-                <span class="w-6 h-[1px] bg-gray-800 dark:bg-white"></span>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Where Clay Meets Community | Ceramics &amp; Pottery Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo">
+          <span class="logo__mark" aria-hidden="true">⌘</span>
+          Clay &amp; Kiln
+        </a>
+        <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-expanded="false" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <nav class="nav" data-nav-panel>
+          <ul class="nav__list">
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="instructors.html">Instructors</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+          <div class="nav__actions">
+            <a class="btn btn--secondary" href="login.html">Login</a>
+            <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
             </button>
-        </div>
-    </nav>
+            <button type="button" class="icon-btn" data-rtl-toggle aria-pressed="false" aria-label="Toggle RTL">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25v13.5m8.5-13.5v13.5" /></svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="text-clay-dark dark:text-night-text">
-        <button id="mobile-close" class="absolute top-8 right-8 text-4xl display-font">&times;</button>
-        <div class="flex flex-col items-center space-y-2 text-2xl display-font">
-            <a href="index.html" class="no-underline text-current font-bold">Home</a>
-            <a href="home2.html" class="no-underline text-current">Home 2</a>
-            <a href="team.html" class="no-underline text-current">Team</a>
-            <a href="membership.html" class="no-underline text-current">Membership</a>
-            <a href="dashboard.html" class="no-underline text-current">Dashboard</a>
-            <a href="contact.html" class="no-underline text-current">Contact</a>
-            <a href="about.html" class="no-underline text-current">Studio</a>
-            <a href="register.html" class="w-full py-4 border border-current no-underline text-current text-center uppercase text-sm tracking-[3px] font-bold">Join</a>
-            <div class="flex space-x-6 pt-6">
-                <button id="theme-toggle-mobile" class="p-3 border border-current rounded-full flex items-center justify-center">
-                    <span class="text-xs uppercase tracking-widest">Theme</span>
-                </button>
-                <button id="rtl-toggle-mobile" class="p-3 border border-current rounded px-4">
-                    <span class="text-xs uppercase tracking-widest">RTL</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
     <main>
-        
-        <!-- SECTION 1: HERO -->
-        <section id="hero" class="relative h-screen w-full overflow-hidden flex items-center justify-center text-center text-white pt-24">
-            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt="Pottery Hero" class="absolute inset-0 w-full h-full object-cover">
-            <div class="absolute inset-0 hero-overlay"></div>
-            <div class="relative z-10 px-6 max-w-4xl fade-up-init">
-                <h1 class="text-5xl md:text-8xl mb-6 font-light leading-tight tracking-tight">Where Clay<br>Becomes Art</h1>
-                <p class="text-xs uppercase tracking-[5px] opacity-70 dark:text-white dark:opacity-90 mb-8">We believe clay is the language of the soul.</p>
-                <p class="text-lg md:text-xl font-light tracking-widest opacity-90 mb-10 mx-auto max-w-2xl">A sanctuary for traditional craftsmanship and contemporary ceramics in the heart of the city.</p>
-                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-                    <a href="#membership" class="btn-luxury-solid border-white bg-white text-black hover:bg-transparent hover:text-white w-64">View Tiers</a>
-                    <a href="#workshops" class="btn-luxury border-white text-white w-64">Book Workshop</a>
-                </div>
-            </div>
-        </section>
+      <section class="hero" aria-label="Hero">
+        <div class="hero__bg">
+          <img src="image/WhatsApp Image 2026-04-11 at 12.03.54 AM.jpeg" alt="Hands shaping clay on a wheel in warm studio light" width="1600" height="900" />
+        </div>
+        <div class="hero__overlay" aria-hidden="true"></div>
+        <div class="hero__content container">
+          <h1>Where Clay Meets Community</h1>
+          <p>A shared studio space for potters of all levels — book kiln time, join classes, and create together.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="membership.html">Join the Studio</a>
+            <a class="btn btn--secondary" href="classes.html" style="border-color: rgba(255,255,255,0.5); color: #fdfaf6">Explore Classes</a>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 2: ABOUT PREVIEW -->
-        <section id="about" class="py-24 md:py-32 px-6 md:px-12 bg-transparent reveal">
-            <div class="container mx-auto">
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-6">
-                        <div class="overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="About Studio" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 text-md-center">
-                        <div class="ps-lg-5">
-                            <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">The Foundation</span>
-                            <h2 class="text-4xl md:text-6xl mb-8 font-light">Elegance in Every Epoch</h2>
-                            <p class="text-lg opacity-80 leading-relaxed mb-10 max-w-lg mx-md-auto">
-                                Founded in 1994, Clay&Craft has been a beacon for artists and enthusiasts alike. We believe pottery is more than just an art form; it is a grounding experience that connects us to the earth and our own creative intuition.
-                            </p>
-                            <a href="#" class="btn-luxury mx-md-auto inline-block">Discover Our Story</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- SECTION 2.5: FEATURED SPECIALTY -->
-        <section id="specialty" class="py-24 md:py-32 px-6 md:px-12 reveal">
-            <div class="container mx-auto">
-                <div class="row items-center g-5">
-                    <div class="col-12 col-lg-6">
-                        <div class="relative group overflow-hidden">
-                            <img src="https://cornwallclay.co.uk/ceramic-glazing-pottery-decoration-techniques.jpg" alt="Experimental Glazing" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 border-2 border-current m-4 opacity-20"></div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="ps-lg-12">
-                            <span class="uppercase tracking-[6px] text-xs mb-6 block opacity-50">Advanced Techniques</span>
-                            <h2 class="text-5xl md:text-7xl mb-10 font-serif italic">Experimental Glazing</h2>
-                            <p class="text-xl opacity-80 leading-relaxed mb-12">
-                                Push the boundaries of color and texture with our proprietary reactive chemicals. Our dedicated glaze lab allows members to experiment with rare minerals and high-fire atmospheres, producing pieces that are impossible to replicate.
-                            </p>
-                            <div class="flex space-x-12 pt-8 border-t border-current/20">
-                                <div>
-                                    <span class="text-3xl font-serif">40+</span>
-                                    <p class="text-[10px] uppercase tracking-widest opacity-50">Custom Bases</p>
-                                </div>
-                                <div>
-                                    <span class="text-3xl font-serif">Reactive</span>
-                                    <p class="text-[10px] uppercase tracking-widest opacity-50">Chemistry</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="section container">
+        <h2>Studio Highlights</h2>
+        <p style="text-align: center; max-width: 52ch; margin-inline: auto">Everything you need to learn, fire, and connect — in one warm, well-equipped space.</p>
+        <div class="grid grid--4" style="margin-top: 2rem">
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.34 AM.jpeg" alt="Ceramic pieces glowing inside a kiln during firing" width="800" height="600" />
+            <h3 class="card__title">Kiln Time Booking</h3>
+            <p>Reserve electric kiln slots and track firings with clear studio guidelines.</p>
+          </article>
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.32 AM.jpeg" alt="Potter trimming a bowl on the wheel" width="800" height="600" />
+            <h3 class="card__title">Expert-Led Classes</h3>
+            <p>Wheel throwing, hand building, and glazing with patient instructors.</p>
+          </article>
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.31 AM.jpeg" alt="Shelves of glazed mugs and bowls in the studio" width="800" height="600" />
+            <h3 class="card__title">Flexible Membership Tiers</h3>
+            <p>Choose access that fits your schedule — from starter hours to unlimited firing.</p>
+          </article>
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.04.24 AM.jpeg" alt="Members laughing together in the ceramics studio" width="800" height="600" />
+            <h3 class="card__title">Community Events</h3>
+            <p>Open studios, critique nights, and seasonal firings with fellow makers.</p>
+          </article>
+        </div>
+      </section>
 
-        <!-- SECTION 3: MEMBERSHIP CARDS -->
-        <section id="membership" class="py-24 md:py-32 px-6 md:px-12 bg-black/[0.02] dark:bg-white/[0.02] reveal">
-            <div class="container mx-auto">
-                <div class="text-center mb-16 md:mb-24">
-                    <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">Join the Circle</span>
-                    <h2 class="text-4xl md:text-6xl font-light">Studio Memberships</h2>
-                </div>
-                
-                <div class="row g-4 flex-md-center" style="display:flex; flex-wrap:wrap; align-items:stretch;">
-                    <!-- Basic -->
-                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
-                        <div class="membership-card h-full bg-black text-white p-8 md:p-12 text-center border border-white/10" style="display:flex; flex-direction:column; width:100%;">
-                            <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=600&q=80" alt="Basic" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
-                            <h3 class="text-3xl mb-4">Artisan Basic</h3>
-                            <div class="text-5xl font-light mb-6">$29<span class="text-sm opacity-60">/mo</span></div>
-                            <ul class="list-none p-0 mb-10 space-y-4 text-sm opacity-80">
-                                <li>5 hours studio access</li>
-                                <li>Community shelf space</li>
-                                <li>15% off workshops</li>
-                                <li>Standard glaze library</li>
-                            </ul>
-                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
-                        </div>
-                    </div>
-                    <!-- Premium -->
-                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
-                        <div class="membership-card h-full bg-black text-white p-8 md:p-12 text-center border-2 border-white shadow-xl relative mt-4 lg:mt-[-20px]" style="display:flex; flex-direction:column; width:100%;">
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black px-4 py-1 text-[10px] tracking-[3px] uppercase">Most Popular</span>
-                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Premium" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
-                            <h3 class="text-3xl mb-4">Studio Premium</h3>
-                            <div class="text-5xl font-light mb-6">$59<span class="text-sm opacity-60">/mo</span></div>
-                            <ul class="list-none p-0 mb-10 space-y-4 text-sm opacity-80 font-medium">
-                                <li>Unlimited studio access</li>
-                                <li>Dedicated personal shelf</li>
-                                <li>30% off workshops</li>
-                                <li>Premium glaze collection</li>
-                                <li>Kiln firing credits</li>
-                            </ul>
-                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
-                        </div>
-                    </div>
-                    <!-- Pro -->
-                    <div class="col-12 col-md-6 col-lg-4" style="display:flex;">
-                        <div class="membership-card h-full bg-black text-white p-8 md:p-12 text-center border border-white/10" style="display:flex; flex-direction:column; width:100%;">
-                            <img src="https://www.researchdive.com/blogImages/lHxISWlW62.jpeg" alt="Pro" class="w-full object-cover mb-8" style="height:200px; object-fit:cover;">
-                            <h3 class="text-3xl mb-4">Master Pro</h3>
-                            <div class="text-5xl font-light mb-6">$99<span class="text-sm opacity-60">/mo</span></div>
-                            <ul class="list-none p-0 mb-10 space-y-4 text-sm opacity-80">
-                                <li>24/7 keycard access</li>
-                                <li>Private studio workspace</li>
-                                <li>Free workshops</li>
-                                <li>Exhibition opportunities</li>
-                                <li>Guest passes</li>
-                            </ul>
-                            <button class="btn-luxury border-white text-white w-full" style="margin-top:auto;">Select Plan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="section container">
+        <h2>How It Works</h2>
+        <div class="steps" style="margin-top: 2rem">
+          <div class="step">
+            <img class="step__thumb" src="image/WhatsApp Image 2026-04-11 at 12.03.30 AM (1).jpeg" alt="Artist refining a large hand-built vessel" width="640" height="400" />
+            <div class="step__num">1</div>
+            <h3 class="card__title">Choose Your Membership</h3>
+            <p>Pick a tier that matches your goals and studio time.</p>
+          </div>
+          <div class="step">
+            <img class="step__thumb" src="image/WhatsApp Image 2026-04-11 at 12.04.04 AM.jpeg" alt="Pottery tools and clay on the work table" width="640" height="400" />
+            <div class="step__num">2</div>
+            <h3 class="card__title">Book Your Studio Slot</h3>
+            <p>Reserve wheels, tables, or kiln space in a few clicks.</p>
+          </div>
+          <div class="step">
+            <img class="step__thumb" src="image/WhatsApp Image 2026-04-11 at 12.03.58 AM (2).jpeg" alt="Collaborative work at the pottery wheel" width="640" height="400" />
+            <div class="step__num">3</div>
+            <h3 class="card__title">Create &amp; Fire Your Work</h3>
+            <p>Bisque and glaze firings with staff support when you need it.</p>
+          </div>
+          <div class="step">
+            <img class="step__thumb" src="image/WhatsApp Image 2026-04-11 at 12.04.09 AM.jpeg" alt="Hands centering clay on the pottery wheel" width="640" height="400" />
+            <div class="step__num">4</div>
+            <h3 class="card__title">Connect with the Community</h3>
+            <p>Share progress, swap tips, and celebrate openings together.</p>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 4: STUDIO GALLERY -->
-        <section id="gallery" class="py-24 md:py-32 px-6 md:px-12 reveal">
-            <div class="container mx-auto">
-                <div class="text-center mb-16 md:mb-24">
-                    <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">Visual Narrative</span>
-                    <h2 class="text-4xl md:text-6xl font-light">The Gallery</h2>
-                </div>
-                
-                <div class="row g-4">
-                    <div class="col-12 col-md-4">
-                        <div class="relative group overflow-hidden h-[400px]">
-                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Gallery 1">
-                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6">
-                                <div class="text-center text-white">
-                                    <h4 class="text-2xl mb-2">Morning Light</h4>
-                                    <p class="text-xs uppercase tracking-widest opacity-80">Wheel Throwing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="relative group overflow-hidden h-[400px]">
-                            <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=700&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Gallery 2">
-                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6">
-                                <div class="text-center text-white">
-                                    <h4 class="text-2xl mb-2">The Texture</h4>
-                                    <p class="text-xs uppercase tracking-widest opacity-80">Hand Building</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="relative group overflow-hidden h-[400px]">
-                            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Gallery 3">
-                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6">
-                                <div class="text-center text-white">
-                                    <h4 class="text-2xl mb-2">Quiet Moments</h4>
-                                    <p class="text-xs uppercase tracking-widest opacity-80">Glazing Station</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="section container">
+        <h2>Member Testimonials</h2>
+        <div class="grid grid--3" style="margin-top: 2rem">
+          <blockquote class="quote">
+            <div class="quote__avatar" aria-hidden="true">A</div>
+            <p class="quote__text">“The kiln booking system is clear and the community nights are the highlight of my week.”</p>
+            <footer class="quote__name">Ananya · Studio Member</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <div class="quote__avatar" aria-hidden="true">R</div>
+            <p class="quote__text">“Instructors meet you where you are — I went from wobbly cylinders to confident bowls.”</p>
+            <footer class="quote__name">Rahul · Clay Starter</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <div class="quote__avatar" aria-hidden="true">M</div>
+            <p class="quote__text">“Premium membership pays for itself in firing credits and locker peace of mind.”</p>
+            <footer class="quote__name">Mira · Master Potter</footer>
+          </blockquote>
+        </div>
+      </section>
 
-        <!-- SECTION 5: WHY CHOOSE US -->
-        <section id="why-us" class="py-24 md:py-32 px-6 md:px-12 bg-transparent reveal">
-            <div class="container mx-auto">
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-5 text-md-center">
-                        <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">The Advantage</span>
-                        <h2 class="text-4xl md:text-6xl mb-8 font-light">Why Our Studio?</h2>
-                        <p class="text-lg opacity-80 mb-12 max-w-sm mx-md-auto">
-                            Beyond tools and kilns, we provide a curated environment designed to foster inspiration and growth for every ceramicist.
-                        </p>
-                        <div class="hidden lg:block">
-                            <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=900&q=80" alt="Studio Detail" class="w-full h-80 object-cover grayscale">
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="bg-slate-100 dark:bg-slate-800 p-8 md:p-12 h-full flex flex-col justify-end group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 min-h-[300px]">
-                                    <h3 class="text-3xl mb-4 font-bold">24/7</h3>
-                                    <p class="text-sm tracking-widest uppercase opacity-60 font-bold">UNRESTRICTED ACCESS</p>
-                                    <p class="mt-4 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Create whenever inspiration strikes, night or day.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="bg-slate-100 dark:bg-slate-800 p-8 md:p-12 h-full flex flex-col justify-end group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 min-h-[300px]">
-                                    <h3 class="text-3xl mb-4 font-bold">PRO</h3>
-                                    <p class="text-sm tracking-widest uppercase opacity-60 font-bold">MASTER EQUIPMENT</p>
-                                    <p class="mt-4 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Shimpo wheels and large capacity digital kilns.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="bg-slate-100 dark:bg-slate-800 p-8 md:p-12 h-full flex flex-col justify-end group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 min-h-[300px]">
-                                    <h3 class="text-3xl mb-4 font-bold">PURE</h3>
-                                    <p class="text-sm tracking-widest uppercase opacity-60 font-bold">PREMIUM MATERIALS</p>
-                                    <p class="mt-4 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Sourced porcelain and stoneware clays of the highest grade.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="bg-slate-100 dark:bg-slate-800 p-8 md:p-12 h-full flex flex-col justify-end group hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 min-h-[300px]">
-                                    <h3 class="text-3xl mb-4 font-bold">GLOW</h3>
-                                    <p class="text-sm tracking-widest uppercase opacity-60 font-bold">EXPERT FIRING</p>
-                                    <p class="mt-4 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Professional technicians ensuring your pieces are fired to perfection.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="section container">
+        <h2>Class Schedule Preview</h2>
+        <div class="grid grid--3" style="margin-top: 2rem">
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.04.02 AM (1).jpeg" alt="Glazing and finishing work in the studio" width="800" height="600" />
+            <h3 class="card__title">Foundations: Wheel</h3>
+            <p>Sat · 10:00–12:30 · 4 seats left</p>
+            <a class="btn btn--primary" href="classes.html" style="margin-top: 0.75rem">View classes</a>
+          </article>
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.04.04 AM (1).jpeg" alt="Studio tools and in-progress pieces" width="800" height="600" />
+            <h3 class="card__title">Hand Building &amp; Texture</h3>
+            <p>Thu · 18:00–20:30 · 6 seats left</p>
+            <a class="btn btn--primary" href="classes.html" style="margin-top: 0.75rem">View classes</a>
+          </article>
+          <article class="card">
+            <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.04.04 AM (2).jpeg" alt="Clay preparation and wedging" width="800" height="600" />
+            <h3 class="card__title">Glaze Lab</h3>
+            <p>Sun · 14:00–16:00 · 5 seats left</p>
+            <a class="btn btn--primary" href="classes.html" style="margin-top: 0.75rem">View classes</a>
+          </article>
+        </div>
+        <table class="schedule" style="margin-top: 2rem">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Wheel Foundations</td>
+              <td>Saturday</td>
+              <td>10:00–12:30</td>
+              <td>Beginner</td>
+            </tr>
+            <tr>
+              <td>Hand Building</td>
+              <td>Thursday</td>
+              <td>18:00–20:30</td>
+              <td>All levels</td>
+            </tr>
+            <tr>
+              <td>Glaze Lab</td>
+              <td>Sunday</td>
+              <td>14:00–16:00</td>
+              <td>Intermediate</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-        <!-- SECTION 6: TESTIMONIALS -->
-        <section id="testimonials" class="py-24 md:py-32 px-6 md:px-12 bg-black/[0.02] dark:bg-white/[0.02] reveal">
-            <div class="container mx-auto">
-                <div class="text-center mb-16 md:mb-24">
-                    <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">Testimonials</span>
-                    <h2 class="text-4xl md:text-6xl font-light">Voices from the Wheel</h2>
-                </div>
-                
-                <div class="row g-5 flex-md-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="text-center p-8 border border-current/20 hover:border-current transition-colors duration-500">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah" class="w-20 h-20 rounded-full mx-auto mb-8 object-cover">
-                            <p class="text-xl italic mb-6 leading-relaxed">"The atmosphere here is unlike any other studio. It's a place where I've found true artistic community and soul-filling quiet."</p>
-                            <h4 class="text-sm uppercase tracking-[3px] font-bold">SARAH JENKINS</h4>
-                            <p class="text-[10px] opacity-60">Member since 2021</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="text-center p-8 border border-current/20 hover:border-current transition-colors duration-500">
-                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" alt="James" class="w-20 h-20 rounded-full mx-auto mb-8 object-cover">
-                            <p class="text-xl italic mb-6 leading-relaxed">"As a beginner, I felt so welcomed. The workshops are thorough and the advanced members are always happy to share tips."</p>
-                            <h4 class="text-sm uppercase tracking-[3px] font-bold">JAMES MILLER</h4>
-                            <p class="text-[10px] opacity-60">Member since 2023</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="text-center p-8 border border-current/20 hover:border-current transition-colors duration-500">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Elena" class="w-20 h-20 rounded-full mx-auto mb-8 object-cover">
-                            <p class="text-xl italic mb-6 leading-relaxed">"Pure luxury meets raw earth. The equipment is top-tier and the 24/7 access has transformed my practice entirely."</p>
-                            <h4 class="text-sm uppercase tracking-[3px] font-bold">ELENA VOST</h4>
-                            <p class="text-[10px] opacity-60">Member since 2018</p>
-                        </div>
-                    </div>
-                </div>
+      <section class="section">
+        <div class="cta-band">
+          <div class="cta-band__bg">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.03.33 AM.jpeg" alt="" width="1600" height="600" decoding="async" />
+          </div>
+          <div class="cta-band__overlay" aria-hidden="true"></div>
+          <div class="cta-band__inner container">
+            <h2>Start your pottery journey today</h2>
+            <p>Join a warm studio community with flexible membership and room to grow.</p>
+            <div class="btn-row" style="margin-top: 1rem">
+              <a class="btn btn--primary" href="membership.html">Join the Studio</a>
+              <a class="btn btn--secondary" href="contact.html" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.35); color: #fdfaf6">Contact us</a>
             </div>
-        </section>
-
-        <!-- SECTION 7: WORKSHOPS -->
-        <section id="workshops" class="py-24 md:py-32 px-6 md:px-12 reveal">
-            <div class="container mx-auto">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 order-lg-2">
-                        <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=900&q=80" alt="Workshop" class="w-full h-[600px] object-cover rounded-none">
-                    </div>
-                    <div class="col-lg-6 order-lg-1 text-md-center">
-                        <span class="uppercase tracking-[4px] text-xs mb-4 block opacity-60">Education</span>
-                        <h2 class="text-4xl md:text-6xl mb-12 font-light">Upcoming Workshops</h2>
-                        
-                        <div class="space-y-8 mb-12">
-                            <div class="flex items-center justify-between border-b border-current/10 pb-4 flex-md-center flex-col md:flex-row space-y-2 md:space-y-0 text-md-center">
-                                <div class="text-left w-full md:w-auto text-md-center">
-                                    <h4 class="text-xl">Wheel Throwing Essentials</h4>
-                                    <p class="text-xs opacity-60 uppercase tracking-widest">Starts April 12 • 4 Sessions</p>
-                                </div>
-                                <span class="text-xl font-light">$180</span>
-                            </div>
-                            <div class="flex items-center justify-between border-b border-current/10 pb-4 flex-md-center flex-col md:flex-row space-y-2 md:space-y-0 text-md-center">
-                                <div class="text-left w-full md:w-auto text-md-center">
-                                    <h4 class="text-xl">Advanced Glaze Chemistry</h4>
-                                    <p class="text-xs opacity-60 uppercase tracking-widest">Starts April 15 • 2 Sessions</p>
-                                </div>
-                                <span class="text-xl font-light">$120</span>
-                            </div>
-                            <div class="flex items-center justify-between border-b border-current/10 pb-4 flex-md-center flex-col md:flex-row space-y-2 md:space-y-0 text-md-center">
-                                <div class="text-left w-full md:w-auto text-md-center">
-                                    <h4 class="text-xl">Handbuilding: Tableware</h4>
-                                    <p class="text-xs opacity-60 uppercase tracking-widest">Starts May 02 • 3 Sessions</p>
-                                </div>
-                                <span class="text-xl font-light">$150</span>
-                            </div>
-                        </div>
-                        
-                        <button class="btn-luxury mx-md-auto">Request Custom Private Session</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 8: CTA BANNER -->
-        <section id="banner" class="relative py-32 md:py-48 px-6 text-center text-white overflow-hidden">
-            <div class="absolute inset-0 bg-slate-900">
-                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600" class="absolute inset-0 w-full h-full object-cover opacity-20" alt="Texture">
-                <div class="absolute inset-0 bg-gradient-to-b from-[#4a3728]/80 to-black/80"></div>
-            </div>
-            <div class="relative z-10 max-w-3xl mx-auto reveal">
-                <h2 class="text-5xl md:text-8xl mb-12 font-light">Start Your Clay<br>Journey Today.</h2>
-                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
-                    <button class="btn-luxury-solid border-white bg-white text-black w-64">Join Now</button>
-                    <button class="btn-luxury border-white text-white w-64">Contact Studio</button>
-                </div>
-            </div>
-        </section>
-
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-night-bg text-night-text py-20 px-6 md:px-12 border-t border-white/5">
-        <div class="container mx-auto">
-            <div class="row g-5">
-                <!-- Column 1: Logo & Mission -->
-                <div class="col-lg-3 col-12 text-center md:text-left">
-                    <h2 class="display-font text-4xl mb-6">Clay&Craft</h2>
-                    <p class="opacity-60 max-w-xs mx-auto md:mx-0 leading-relaxed mb-8">
-                        A sanctuary for the creative spirit. Dedicated to the timeless art of ceramics since 1994.
-                    </p>
-                </div>
-                
-                <!-- Column 2: Studio, Members, Contact (Flexible Grid) -->
-                <div class="col-lg-9 col-12">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left items-start">
-                        <!-- STUDIO -->
-                        <div>
-                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Studio</h4>
-                            <ul class="list-none p-0 space-y-4 text-xs opacity-60">
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Philosophy</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Equipment</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Gallery</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Events</a></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- MEMBERS -->
-                        <div>
-                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Members</h4>
-                            <ul class="list-none p-0 space-y-4 text-xs opacity-60">
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Benefits</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Pricing</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Portal</a></li>
-                                <li><a href="#" class="no-underline text-current hover:opacity-100 transition-opacity">Kilns Calendar</a></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- CONTACT -->
-                        <div>
-                            <h4 class="text-xs uppercase tracking-[3px] mb-8 font-bold">Contact</h4>
-                            <p class="text-xs opacity-60 mb-2">122 Artisan Alley, Creative District</p>
-                            <p class="text-xs opacity-60 mb-8">San Francisco, CA 94103</p>
-                            <p class="text-xl display-font font-light">hello@clayandcraft.com</p>
-                            <p class="text-xl display-font font-light">+1 (555) 234-9088</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 opacity-40 text-[10px] tracking-[2px] uppercase">
-                <p>© 2026 Clay&Craft Studio. All Rights Reserved.</p>
-                <div class="flex space-x-8">
-                    <a href="#" class="no-underline text-current">Privacy</a>
-                    <a href="#" class="no-underline text-current">Terms</a>
-                    <a href="#" class="no-underline text-current">Cookies</a>
-                </div>
-            </div>
+    <footer class="site-footer">
+      <div class="container site-footer__grid">
+        <div>
+          <div class="logo" style="margin-bottom: 0.75rem">
+            <span class="logo__mark" aria-hidden="true">⌘</span>
+            Clay &amp; Kiln
+          </div>
+          <p>Warm, artisan studio space for members and guests. Book kiln time, join classes, and create together.</p>
         </div>
+        <div>
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="instructors.html">Instructors</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="home2.html">Home (Premium)</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Social</h3>
+          <div class="social">
+            <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.75-2.25a1.25 1.25 0 11-.001 2.5 1.25 1.25 0 01.001-2.5z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c.2.8.2 2.4.2 2.4s0 1.6-.2 2.4c-.1.7-.5 1.2-1.1 1.4C18.9 14 12 14 12 14s-6.9 0-8.5-.6c-.6-.2-1-.8-1.1-1.4-.2-.8-.2-2.4-.2-2.4s0-1.6.2-2.4c.1-.7.5-1.2 1.1-1.4C5.1 4 12 4 12 4s6.9 0 8.5.6c.6.2 1 .8 1.1 1.4zM10 9.5v5l4.5-2.5L10 9.5z"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.2h2.7l.4-3.2h-3.1V8.9c0-.9.3-1.5 1.6-1.5H17V4.4c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.6v2.6H7v3.2h2.9V22h3.6z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p class="container" style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--color-muted)">© <span id="y"></span> Clay &amp; Kiln. All rights reserved.</p>
     </footer>
-
-    <!-- SCRIPTS -->
     <script>
-        // --- THEME MANAGEMENT ---
-        const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
-        const html = document.documentElement;
-
-        function setTheme(isDark) {
-            if (isDark) {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Initialize theme
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark') setTheme(true);
-        else if (storedTheme === 'light') setTheme(false);
-        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
-
-        themeToggles.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setTheme(!html.classList.contains('dark'));
-            });
-        });
-
-        // --- RTL MANAGEMENT ---
-        const rtlToggles = [document.getElementById('rtl-toggle'), document.getElementById('rtl-toggle-mobile')];
-
-        function setRTL(isRTL) {
-            if (isRTL) {
-                html.setAttribute('dir', 'rtl');
-                localStorage.setItem('rtl', 'true');
-                if (window.tailwind) {
-                    // Update text alignment classes for RTL if needed
-                }
-            } else {
-                html.setAttribute('dir', 'ltr');
-                localStorage.setItem('rtl', 'false');
-            }
-        }
-
-        // Initialize RTL
-        const storedRTL = localStorage.getItem('rtl');
-        if (storedRTL === 'true') setRTL(true);
-
-        rtlToggles.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setRTL(html.getAttribute('dir') !== 'rtl');
-            });
-        });
-
-        // --- NAVBAR SCROLL EFFECT ---
-        const nav = document.getElementById('main-nav');
-        function updateNavStyles() {
-            const isScrolled = window.scrollY > 50;
-            const isDark = html.classList.contains('dark');
-            
-            nav.classList.toggle('nav-scrolled', isScrolled);
-            nav.classList.toggle('bg-white', !isDark);
-            nav.classList.toggle('bg-night-bg', isDark);
-            nav.classList.toggle('text-gray-900', !isDark);
-            nav.classList.toggle('text-white', isDark);
-            
-            if (isScrolled) {
-                nav.classList.remove('py-6');
-                nav.classList.add('py-4');
-            } else {
-                nav.classList.remove('py-4');
-                nav.classList.add('py-6');
-            }
-        }
-        
-        window.addEventListener('scroll', updateNavStyles);
-        
-        // Listen for theme changes to update nav colors
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    updateNavStyles();
-                }
-            });
-        });
-        observer.observe(html, { attributes: true });
-        
-        // Initial call
-        updateNavStyles();
-
-        // --- MOBILE MENU ---
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const mobileClose = document.getElementById('mobile-close');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-
-        mobileToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
-        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        });
-
-        // --- SCROLL REVEAL ---
-        const revealCallback = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    // observer.unobserve(entry.target); // keep it for repeated effect if desired, but request says "on scroll"
-                }
-            });
-        };
-
-        const revealObserver = new IntersectionObserver(revealCallback, {
-            threshold: 0.1
-        });
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
-        });
-
-        // Initial Fade-up for Hero
-        window.addEventListener('load', () => {
-            document.querySelector('.fade-up-init').style.opacity = '1';
-            document.querySelector('.fade-up-init').style.transform = 'translateY(0)';
-        });
-        
-        // CSS for fade-up-init
-        const style = document.createElement('style');
-        style.textContent = `
-            .fade-up-init {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-            }
-        `;
-        document.head.appendChild(style);
+      document.getElementById("y").textContent = new Date().getFullYear();
     </script>
-</body>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

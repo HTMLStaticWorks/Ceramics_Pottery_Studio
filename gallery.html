@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery | Ceramics &amp; Pottery Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo">
+          <span class="logo__mark" aria-hidden="true">⌘</span>
+          Clay &amp; Kiln
+        </a>
+        <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-expanded="false" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <nav class="nav" data-nav-panel>
+          <ul class="nav__list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="instructors.html">Instructors</a></li>
+            <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+          <div class="nav__actions">
+            <a class="btn btn--secondary" href="login.html">Login</a>
+            <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+            </button>
+            <button type="button" class="icon-btn" data-rtl-toggle aria-pressed="false" aria-label="Toggle RTL">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25v13.5m8.5-13.5v13.5" /></svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="page-head container">
+        <h1>Gallery</h1>
+        <p>Member and instructor work — every image below appears once in the site, curated by process and finish.</p>
+      </div>
+
+      <section class="section container section--tight">
+        <div class="filter-bar" data-gallery-filters>
+          <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="wheel">Wheel thrown</button>
+          <button type="button" class="filter-btn" data-filter="hand">Hand built</button>
+          <button type="button" class="filter-btn" data-filter="sculptural">Sculptural</button>
+          <button type="button" class="filter-btn" data-filter="glazing">Glazing</button>
+        </div>
+
+        <div class="gallery-masonry">
+          <figure class="gallery-item" data-gallery-item data-category="wheel">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.03.32 AM (1).jpeg" alt="Pottery class scene at the wheel" width="800" height="600" loading="lazy" />
+            <figcaption>Wheel · Studio session</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="glazing">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.03.34 AM (1).jpeg" alt="Kiln interior with glowing ware" width="800" height="600" loading="lazy" />
+            <figcaption>Glazing · Firing glow</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="wheel">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.00 AM (1).jpeg" alt="Overhead view of pottery demonstration" width="800" height="600" loading="lazy" />
+            <figcaption>Wheel · Class demo</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="sculptural">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.01 AM (1).jpeg" alt="Interior lounge scene" width="800" height="600" loading="lazy" />
+            <figcaption>Sculptural · Studio lounge</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="sculptural">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.01 AM (2).jpeg" alt="Warm interior with decorative details" width="800" height="600" loading="lazy" />
+            <figcaption>Sculptural · Quiet corner</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="sculptural">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.01 AM.jpeg" alt="Cozy living space with warm lighting" width="800" height="600" loading="lazy" />
+            <figcaption>Sculptural · Ambient space</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="wheel">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.02 AM (2).jpeg" alt="Clay preparation and wedging" width="800" height="600" loading="lazy" />
+            <figcaption>Wheel · Clay prep</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="hand">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.02 AM.jpeg" alt="Hand building on the table" width="800" height="600" loading="lazy" />
+            <figcaption>Hand built · Table work</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="hand">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.03 AM (1).jpeg" alt="Sculpting and shaping clay forms" width="800" height="600" loading="lazy" />
+            <figcaption>Hand built · Forming</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="glazing">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.03 AM.jpeg" alt="Glazed ceramics on display" width="800" height="600" loading="lazy" />
+            <figcaption>Glazing · Finished display</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="glazing">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.25 AM (1).jpeg" alt="Ceramic surfaces and glaze detail" width="800" height="600" loading="lazy" />
+            <figcaption>Glazing · Surface study</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="wheel">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.25 AM (2).jpeg" alt="Throwing motion on the wheel" width="800" height="600" loading="lazy" />
+            <figcaption>Wheel · Motion blur</figcaption>
+          </figure>
+          <figure class="gallery-item" data-gallery-item data-category="wheel">
+            <img src="image/WhatsApp Image 2026-04-11 at 12.04.09 AM (1).jpeg" alt="Hands centering clay" width="800" height="600" loading="lazy" />
+            <figcaption>Wheel · Centering</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section container">
+        <h2>Submitting work for the wall</h2>
+        <div class="content-band" style="margin-top: 1rem">
+          <p>
+            We rotate the gallery every six weeks. Members can submit up to three pieces per rotation with a short artist statement (150 words max). Work must be fired at ⌘ Clay &amp; Kiln or approved
+            partner studios. Email photos and dimensions to <a href="mailto:gallery@clayklin.studio">gallery@clayklin.studio</a> by the 15th of the month before each hang.
+          </p>
+        </div>
+      </section>
+
+      <section class="section container">
+        <h2>Visiting the gallery</h2>
+        <div class="grid grid--2" style="margin-top: 1.5rem">
+          <article class="card" style="text-align: start">
+            <h3 class="card__title" style="text-align: start">Public hours</h3>
+            <p style="margin: 0">Tuesday–Sunday · 11:00–19:00</p>
+            <p style="margin: 0">No ticket required — enter through the main studio lobby and follow signs to the gallery nook.</p>
+          </article>
+          <article class="card" style="text-align: start">
+            <h3 class="card__title" style="text-align: start">Artist talks</h3>
+            <p style="margin: 0">Opening receptions on the first Sunday after each rotation (17:00–19:00). RSVP via the events list in your dashboard.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container">
+        <h2>Filter tips</h2>
+        <div class="content-band" style="margin-top: 1rem">
+          <p>
+            Use <strong>Wheel thrown</strong> for cups, bowls, and vases; <strong>Hand built</strong> for slabs and coils; <strong>Sculptural</strong> for figurative or abstract work; <strong>Glazing</strong> for
+            close-ups of surface and color. Mixed pieces appear under “All.”
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__grid">
+        <div>
+          <div class="logo" style="margin-bottom: 0.75rem">
+            <span class="logo__mark" aria-hidden="true">⌘</span>
+            Clay &amp; Kiln
+          </div>
+          <p>Warm, artisan studio space for members and guests. Book kiln time, join classes, and create together.</p>
+        </div>
+        <div>
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="instructors.html">Instructors</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Social</h3>
+          <div class="social">
+            <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.75-2.25a1.25 1.25 0 11-.001 2.5 1.25 1.25 0 01.001-2.5z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c.2.8.2 2.4.2 2.4s0 1.6-.2 2.4c-.1.7-.5 1.2-1.1 1.4C18.9 14 12 14 12 14s-6.9 0-8.5-.6c-.6-.2-1-.8-1.1-1.4-.2-.8-.2-2.4-.2-2.4s0-1.6.2-2.4c.1-.7.5-1.2 1.1-1.4C5.1 4 12 4 12 4s6.9 0 8.5.6c.6.2 1 .8 1.1 1.4zM10 9.5v5l4.5-2.5L10 9.5z"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.2h2.7l.4-3.2h-3.1V8.9c0-.9.3-1.5 1.6-1.5H17V4.4c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.6v2.6H7v3.2h2.9V22h3.6z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p class="container" style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--color-muted)">© <span id="y"></span> Clay &amp; Kiln. All rights reserved.</p>
+    </footer>
+    <script>
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+    <script src="js/main.js" defer></script>
+  </body>
+</html>

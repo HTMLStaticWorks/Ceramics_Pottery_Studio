@@ -1,638 +1,300 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Clay&Craft</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏺</text></svg>"/>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Tailwind CSS (Play CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'clay-main': '#8B4513',
-                        'clay-light': '#ffffff',
-                        'clay-dark': '#1a1208',
-                        'night-bg': '#0f172a',
-                        'night-text': '#f1ece6',
-                    },
-                    fontFamily: {
-                        'serif': ['"Cormorant Garamond"', 'serif'],
-                        'sans': ['"Jost"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-color: #1a1208;
-            --clay-accent: #8B4513;
-            --sidebar-width: 260px;
-        }
-        .dark {
-            --bg-color: #020617;
-            --card-bg: #0f172a;
-            --text-color: #f1ece6;
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Jost', sans-serif;
-            transition: background-color 0.5s ease, color 0.5s ease;
-            overflow-x: hidden;
-        }
-        .display-font { font-family: 'Cormorant Garamond', serif; }
-        
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: #1a1208;
-            color: white;
-            z-index: 1000;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .dark .sidebar {
-            color: white;
-        }
-
-        /* Sidebar toggle button styles */
-        #sidebar-toggle {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 24px;
-            height: 18px;
-            background: transparent;
-            border: 1px solid currentColor;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        #sidebar-toggle:hover {
-            background: currentColor;
-        }
-
-        #sidebar-toggle:hover div {
-            background: white;
-        }
-
-        #sidebar-toggle div {
-            width: 12px;
-            height: 2px;
-            background: currentColor;
-            margin: 0 auto;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link-custom {
-            padding: 1rem 2rem;
-            display: block;
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-left: 4px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .nav-link-custom:hover, .nav-link-custom.active {
-            color: white;
-            background: rgba(255,255,255,0.05);
-            border-left-color: var(--clay-accent);
-        }
-        .dark .nav-link-custom:hover, .dark .nav-link-custom.active {
-            color: white;
-        }
-
-        .main-content {
-            margin-left: var(--sidebar-width);
-            width: calc(100% - var(--sidebar-width));
-            min-height: 100vh;
-            padding: 32px;
-            transition: all 0.4s ease;
-        }
-
-        .dashboard-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0,0,0,0.05);
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-        .dark .dashboard-card { border-color: rgba(255,255,255,0.05); }
-
-        .stat-card { border-top-width: 4px; border-top-style: solid; }
-
-        .badge-pending { color: #f59e0b; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-        .badge-confirmed { color: #10b981; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        .progress-bar-custom {
-            height: 4px;
-            background: rgba(0,0,0,0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        .dark .progress-bar-custom { background: rgba(255,255,255,0.1); }
-        .progress-fill {
-            height: 100%;
-            background: var(--clay-accent);
-            width: 0;
-            transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); position: fixed; height: 100vh; }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; }
-        }
-
-        /* Mobile responsive fixes */
-        @media (max-width: 768px) {
-            body {
-                overflow-x: hidden;
-            }
-            
-            .main-content {
-                padding: 0 1rem;
-                max-width: 100vw;
-                overflow-x: hidden;
-            }
-            
-            /* Ensure sidebar toggle is visible on mobile */
-            #sidebar-toggle {
-                display: flex !important;
-                visibility: visible !important;
-                position: relative;
-                z-index: 1001;
-            }
-            
-            .main-content > header {
-                padding: 1rem;
-                margin-bottom: 1rem;
-                text-align: center;
-            }
-            
-            .main-content > header > div:first-child {
-                justify-content: center;
-                width: 100%;
-                display: flex;
-                align-items: center;
-            }
-            
-            .main-content > header > div:first-child h1 {
-                font-size: 1rem;
-                text-align: center;
-                width: 100%;
-            }
-            
-            .main-content > header > div:last-child {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                width: 100%;
-            }
-            
-            .main-content > header > div:last-child > div:first-child {
-                border-left: none;
-                padding-left: 0;
-                text-align: center;
-                width: 100%;
-            }
-            
-            .dashboard-card {
-                text-align: center;
-                margin-bottom: 1rem;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 100%;
-            }
-            
-            .stat-card {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 120px;
-                width: 100%;
-            }
-            
-            .table-responsive {
-                margin: 0 -1rem;
-                padding: 0 1rem;
-            }
-            
-            .row {
-                justify-content: center;
-                margin: 0 auto;
-                max-width: 100%;
-            }
-            
-            .col-md-4, .col-md-6, .col-lg-3 {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 1rem;
-                padding: 0 0.5rem;
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            
-            .container, .container-fluid {
-                padding: 0 1rem;
-                max-width: 100%;
-                margin: 0 auto;
-            }
-        }
-
-        /* Tablet responsive fixes */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .main-content {
-                padding: 0 2rem;
-                max-width: 100vw;
-                overflow-x: hidden;
-            }
-            
-            .main-content > header {
-                padding: 1.5rem 2rem;
-                text-align: center;
-            }
-            
-            .main-content > header > div:first-child {
-                justify-content: center;
-            }
-            
-            .main-content > header > div:last-child {
-                justify-content: center;
-                gap: 2rem;
-            }
-            
-            .dashboard-card {
-                text-align: center;
-                margin-bottom: 1.5rem;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .row {
-                justify-content: center;
-                margin: 0 auto;
-            }
-            
-            .col-md-4, .col-md-6, .col-lg-3 {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 1.5rem;
-                padding: 0 1rem;
-            }
-            
-            .container, .container-fluid {
-                padding: 0 2rem;
-                max-width: 100%;
-                margin: 0 auto;
-            }
-        }
-
-        [dir="rtl"] { text-align: right; }
-        [dir="rtl"] .ms-auto { margin-right: auto !important; margin-left: 0 !important; }
-        [dir="rtl"] .sidebar { left: auto; right: 0; transform: translateX(100%); border-left: none; border-right: 4px solid transparent; }
-        [dir="rtl"] .sidebar.open { transform: translateX(0); }
-        [dir="rtl"] .nav-link-custom { border-left: none; border-right: 4px solid transparent; }
-        [dir="rtl"] .nav-link-custom.active { border-right-color: var(--clay-accent); }
-    </style>
-</head>
-<body class="light">
-
-    <!-- SIDEBAR -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full flex flex-col pt-12 pb-8">
-        <div class="px-8 mb-16">
-            <a href="index.html" class="display-font text-3xl font-bold text-white dark:text-white no-underline tracking-tighter">
-                Clay<span class="text-clay-main">&</span>Craft
-            </a>
-        </div>
-
-        <nav class="flex-grow">
-            <a href="#" class="nav-link-custom active">Dashboard</a>
-            <a href="#" class="nav-link-custom">My Classes</a>
-            <a href="#" class="nav-link-custom">Schedule</a>
-            <a href="#" class="nav-link-custom">Gallery</a>
-            <a href="#" class="nav-link-custom">Membership</a>
-            <a href="#" class="nav-link-custom">Progress</a>
-            <a href="#" class="nav-link-custom">Settings</a>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | ⌘ Clay &amp; Kiln</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="dash-page">
+    <div class="dash">
+      <aside class="dash__sidebar">
+        <a href="index.html" class="logo">
+          <span class="logo__mark" aria-hidden="true">⌘</span>
+          Clay &amp; Kiln
+        </a>
+        <nav aria-label="Member">
+          <ul class="dash__nav">
+            <li>
+              <a href="dashboard.html#overview"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg> Dashboard</a>
+            </li>
+            <li>
+              <a href="membership.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg> My membership</a>
+            </li>
+            <li>
+              <a href="dashboard.html#kiln"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Book kiln time</a>
+            </li>
+            <li>
+              <a href="classes.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 0022.94-.91l.01-.01c.95-.45 1.75-1.15 2.35-2.05l.01-.01a47.88 47.88 0 00-5.07-5.07l-.01.01c-.9-.6-1.9-1.05-2.95-1.35" /></svg> My classes</a>
+            </li>
+            <li>
+              <a href="dashboard.html#payments"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Payments &amp; invoices</a>
+            </li>
+            <li>
+              <a href="dashboard.html#messages"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg> Messages</a>
+            </li>
+            <li>
+              <a href="dashboard.html#settings"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Settings</a>
+            </li>
+            <li>
+              <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg> Logout</a>
+            </li>
+          </ul>
         </nav>
-
-        <div class="px-8 flex flex-col space-y-4">
-            <a href="index.html" class="text-xs uppercase font-black tracking-[4px] py-4 bg-clay-main text-white dark:text-white text-center rounded-sm no-underline hover:opacity-90 transition-all">Logout</a>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-        
-        <!-- TOP BAR -->
-        <header class="sticky top-0 z-40 bg-white/80 dark:bg-night-bg/80 backdrop-blur-md px-8 py-6 flex items-center justify-between mb-8 border-b border-current/5">
-            <div class="flex items-center">
-                <button id="sidebar-toggle" class="lg:hidden mr-4 p-2 border border-current/20" title="Toggle Sidebar">
-                    <div class="w-6 h-0.5 bg-current mb-1.5"></div>
-                    <div class="w-6 h-0.5 bg-current mb-1.5"></div>
-                    <div class="w-6 h-0.5 bg-current"></div>
-                </button>
-                <h1 class="text-xl font-black uppercase tracking-[5px]">Dashboard</h1>
-            </div>
-
-            <div class="flex items-center space-x-8">
-                <div class="flex items-center space-x-4">
-                    <button id="theme-toggle" class="p-1" title="Toggle Theme">
-                       <div class="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center">
-                           <div class="w-2 h-2 rounded-full bg-current"></div>
-                       </div>
-                    </button>
-                    <button id="rtl-toggle" class="text-[10px] font-bold uppercase tracking-widest border-b border-current">RTL</button>
-                </div>
-            </div>
+      </aside>
+      <div class="dash__main">
+        <header class="dash__top">
+          <p class="dash__welcome">Welcome back, Surya 👋</p>
+          <div class="dash__icons">
+            <button type="button" class="icon-btn" aria-label="Notifications">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
+            </button>
+            <a class="icon-btn" href="dashboard.html#settings" aria-label="Profile"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg></a>
+            <button type="button" class="icon-btn" data-rtl-toggle aria-label="Toggle RTL">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25v13.5m8.5-13.5v13.5" /></svg>
+            </button>
+            <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle dark mode">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+            </button>
+          </div>
         </header>
+        <div class="dash__content">
+          <section id="overview" class="dash-section" style="border-top: none; margin-top: 0; padding-top: 0">
+            <h2 class="sr-only">Overview</h2>
+            <div class="dash-grid">
+              <article class="card" style="text-align: center">
+                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM.jpeg" alt="Pottery class overhead" width="600" height="375" />
+                <h3 class="card__title">Membership status</h3>
+                <p style="margin: 0"><strong>Studio Member</strong></p>
+                <p style="font-size: 0.9rem; margin: 0">Renews <time datetime="2026-05-01">1 May 2026</time></p>
+              </article>
+              <article class="card" style="text-align: center">
+                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (1).jpeg" alt="Studio work in progress" width="600" height="375" />
+                <h3 class="card__title">Upcoming kiln bookings</h3>
+                <p style="margin: 0">Bisque · Sat 08:00</p>
+                <p style="font-size: 0.9rem; margin: 0">Glaze · Wed 19:00</p>
+              </article>
+              <article class="card" style="text-align: center">
+                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (2).jpeg" alt="Hands on clay" width="600" height="375" />
+                <h3 class="card__title">Classes enrolled</h3>
+                <p style="margin: 0">Wheel Foundations</p>
+                <p style="font-size: 0.9rem; margin: 0">Glaze Lab · waitlisted</p>
+              </article>
+            </div>
 
-        <!-- ROW 1: STAT CARDS -->
-        <div class="row g-4 mb-8">
-            <div class="col-lg-3 col-md-6">
-                <div class="dashboard-card stat-card border-clay-main">
-                    <p class="text-6xl display-font italic mb-2">24</p>
-                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Classes Attended</p>
-                </div>
+            <div class="grid grid--2" style="margin: 1rem 0">
+              <article class="card">
+                <h3 class="card__title">Recent activity</h3>
+                <ul style="text-align: start; color: var(--color-muted); margin: 0; padding-left: 1.1rem; font-size: 0.95rem">
+                  <li>Kiln load checked in · 2 days ago</li>
+                  <li>Class reminder · Wheel Foundations</li>
+                  <li>Invoice #1042 paid</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3 class="card__title">Notes &amp; reminders</h3>
+                <p style="text-align: start; margin: 0; font-size: 0.95rem; color: var(--color-muted)">Label greenware for Saturday bisque before 18:00. Ask desk for cone 5 test tiles.</p>
+              </article>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="dashboard-card stat-card border-clay-dark dark:border-night-text">
-                    <p class="text-6xl display-font italic mb-2">86</p>
-                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Hours in Studio</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="dashboard-card stat-card border-clay-main">
-                    <p class="text-6xl display-font italic mb-2">12</p>
-                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Works Completed</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="dashboard-card stat-card border-clay-dark dark:border-night-text">
-                    <p class="text-3xl display-font font-bold mt-4 mb-4 uppercase tracking-widest">Premium</p>
-                    <p class="text-[10px] uppercase font-black tracking-[3px] opacity-40">Membership Tier</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- ROW 2: UPCOMING CLASSES -->
-        <div class="dashboard-card mb-8 p-0 overflow-hidden">
-            <div class="p-8 border-b border-current/5 flex justify-between items-center">
-                <h3 class="text-xl font-serif italic">Upcoming Studio Sessions</h3>
-                <button class="text-[10px] uppercase font-black tracking-[3px] opacity-60 hover:opacity-100 transition-opacity">View Full Schedule</button>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-borderless align-middle mb-0 text-current">
-                    <thead class="bg-current/5">
-                        <tr class="text-[10px] uppercase font-black tracking-[3px]">
-                            <th class="p-4 pl-8">Class Name</th>
-                            <th class="p-4">Instructor</th>
-                            <th class="p-4">Date</th>
-                            <th class="p-4">Time</th>
-                            <th class="p-4 text-right pr-8">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm">
-                        <tr class="border-b border-current/5">
-                            <td class="p-4 pl-8 font-bold">Wheel Throwing 101</td>
-                            <td class="p-4">Sarah Vost</td>
-                            <td class="p-4">Mar 28, 2026</td>
-                            <td class="p-4">10:00 AM</td>
-                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr class="border-b border-current/5">
-                            <td class="p-4 pl-8 font-bold">Decorative Glazing</td>
-                            <td class="p-4">Marcus Row</td>
-                            <td class="p-4">Apr 02, 2026</td>
-                            <td class="p-4">02:30 PM</td>
-                            <td class="p-4 text-right pr-8"><span class="badge-pending">Pending</span></td>
-                        </tr>
-                        <tr class="border-b border-current/5">
-                            <td class="p-4 pl-8 font-bold">Hand Building Advanced</td>
-                            <td class="p-4">Elena Vo</td>
-                            <td class="p-4">Apr 05, 2026</td>
-                            <td class="p-4">09:00 AM</td>
-                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr class="border-b border-current/5">
-                            <td class="p-4 pl-8 font-bold">Kiln Management</td>
-                            <td class="p-4">Sarah Vost</td>
-                            <td class="p-4">Apr 10, 2026</td>
-                            <td class="p-4">04:00 PM</td>
-                            <td class="p-4 text-right pr-8"><span class="badge-confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 pl-8 font-bold">Sculptural Form Study</td>
-                            <td class="p-4">Marcus Row</td>
-                            <td class="p-4">Apr 15, 2026</td>
-                            <td class="p-4">11:30 AM</td>
-                            <td class="p-4 text-right pr-8"><span class="badge-pending">Pending</span></td>
-                        </tr>
-                    </tbody>
+            <div class="grid grid--2">
+              <article class="card">
+                <h3 class="card__title">Upcoming classes &amp; kiln slots</h3>
+                <table class="schedule" style="margin-top: 0.75rem">
+                  <thead>
+                    <tr>
+                      <th>When</th>
+                      <th>What</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Sat 10:00</td>
+                      <td>Wheel Foundations</td>
+                    </tr>
+                    <tr>
+                      <td>Sat 08:00</td>
+                      <td>Bisque kiln</td>
+                    </tr>
+                  </tbody>
                 </table>
+              </article>
+              <article class="card">
+                <h3 class="card__title">Payment snapshot</h3>
+                <p style="text-align: start; margin: 0 0 0.5rem; font-size: 0.95rem"><strong>Next:</strong> ₹4,900 · due 1 May 2026</p>
+                <p style="text-align: start; margin: 0; font-size: 0.9rem; color: var(--color-muted)">Last: ₹4,900 paid · 1 Apr 2026</p>
+                <p style="text-align: start; margin-top: 0.75rem; font-size: 0.9rem"><a href="dashboard.html#payments">View all invoices →</a></p>
+              </article>
             </div>
+          </section>
+
+          <section id="kiln" class="dash-section" tabindex="-1">
+            <h2>Book kiln time</h2>
+            <p>Reserve electric kiln slots for bisque or glaze. Loads are reviewed by staff before firing — greenware must be bone dry and signed in at the desk.</p>
+            <div class="grid grid--2" style="margin-top: 1rem">
+              <article class="card">
+                <h3 class="card__title">Request a slot</h3>
+                <form action="#" method="post">
+                  <div class="field">
+                    <label for="kiln-type">Firing type</label>
+                    <select id="kiln-type" name="kiln-type" style="width: 100%; min-height: 48px; border-radius: 10px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); padding: 0 0.85rem">
+                      <option>Bisque (cone 5)</option>
+                      <option>Glaze (cone 5)</option>
+                      <option>Test tiles only</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="kiln-date">Preferred date</label>
+                    <input id="kiln-date" name="kiln-date" type="date" />
+                  </div>
+                  <div class="field">
+                    <label for="kiln-notes">Shelf notes (optional)</label>
+                    <textarea id="kiln-notes" name="kiln-notes" rows="3" placeholder="e.g. tall vase, handle fragile"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--block">Submit request</button>
+                </form>
+              </article>
+              <article class="card">
+                <h3 class="card__title">Upcoming kiln calendar</h3>
+                <table class="schedule" style="margin-top: 0.5rem">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Load</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>12 Apr</td>
+                      <td>Bisque A</td>
+                      <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                      <td>16 Apr</td>
+                      <td>Glaze B</td>
+                      <td>Pending</td>
+                    </tr>
+                    <tr>
+                      <td>22 Apr</td>
+                      <td>Bisque A</td>
+                      <td>Open</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin: 1rem 0 0; font-size: 0.9rem">Peak weeks (festivals, holidays) may limit slots — we email you if we need to move your load.</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="payments" class="dash-section" tabindex="-1">
+            <h2>Payments &amp; invoices</h2>
+            <p>Download PDF receipts, update payment method, or see credit notes from class cancellations.</p>
+            <div class="grid grid--2" style="margin-top: 1rem">
+              <article class="card">
+                <h3 class="card__title">Next invoice</h3>
+                <p style="margin: 0"><strong>₹4,900</strong> · Studio Member · Monthly</p>
+                <p style="margin: 0.5rem 0 0; font-size: 0.9rem">Due 1 May 2026 · Auto-pay on file (Visa ending 4242)</p>
+                <button type="button" class="btn btn--secondary btn--block" style="margin-top: 1rem">Update payment method</button>
+              </article>
+              <article class="card">
+                <h3 class="card__title">History</h3>
+                <table class="schedule" style="margin-top: 0.5rem">
+                  <thead>
+                    <tr>
+                      <th>Invoice</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#1042</td>
+                      <td>₹4,900</td>
+                      <td><a href="#">PDF</a></td>
+                    </tr>
+                    <tr>
+                      <td>#1031</td>
+                      <td>₹4,900</td>
+                      <td><a href="#">PDF</a></td>
+                    </tr>
+                    <tr>
+                      <td>#1018</td>
+                      <td>₹2,400</td>
+                      <td><a href="#">PDF</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </article>
+            </div>
+          </section>
+
+          <section id="messages" class="dash-section" tabindex="-1">
+            <h2>Messages</h2>
+            <p>Studio announcements, instructor notes, and billing alerts appear here. Reply threads are archived after 90 days.</p>
+            <div class="card" style="margin-top: 1rem">
+              <ul style="list-style: none; margin: 0; padding: 0">
+                <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--color-border); text-align: start">
+                  <strong style="color: var(--color-text)">Kiln · Staff</strong> — “Bisque load A moved to 08:30 Saturday. Please label shelves before 7:45.” <span style="color: var(--color-muted); font-size: 0.85rem">· 2 days ago</span>
+                </li>
+                <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--color-border); text-align: start">
+                  <strong style="color: var(--color-text)">Classes · Priya N.</strong> — “Bring a small sketch for lidded forms next week.” <span style="color: var(--color-muted); font-size: 0.85rem">· 5 days ago</span>
+                </li>
+                <li style="padding: 0.85rem 0; text-align: start">
+                  <strong style="color: var(--color-text)">Billing</strong> — “Receipt #1042 sent to your email.” <span style="color: var(--color-muted); font-size: 0.85rem">· 1 Apr</span>
+                </li>
+              </ul>
+            </div>
+            <div class="field" style="margin-top: 1rem">
+              <label for="msg-reply">Reply to staff</label>
+              <textarea id="msg-reply" rows="3" placeholder="Type a message…"></textarea>
+            </div>
+            <button type="button" class="btn btn--primary" style="margin-top: 0.5rem">Send</button>
+          </section>
+
+          <section id="settings" class="dash-section" tabindex="-1">
+            <h2>Settings</h2>
+            <p>Manage profile, notifications, and security for your ⌘ Clay &amp; Kiln account.</p>
+            <div class="grid grid--2" style="margin-top: 1rem">
+              <article class="card">
+                <h3 class="card__title">Profile</h3>
+                <div class="field">
+                  <label for="set-name">Display name</label>
+                  <input id="set-name" type="text" value="Surya" />
+                </div>
+                <div class="field">
+                  <label for="set-email">Email</label>
+                  <input id="set-email" type="email" value="surya@example.com" />
+                </div>
+                <button type="button" class="btn btn--primary btn--block">Save profile</button>
+              </article>
+              <article class="card">
+                <h3 class="card__title">Notifications</h3>
+                <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; cursor: pointer; text-align: start">
+                  <input type="checkbox" checked /> Email · kiln reminders
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; cursor: pointer; text-align: start">
+                  <input type="checkbox" checked /> SMS · class cancellations
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; text-align: start">
+                  <input type="checkbox" /> Marketing · workshops &amp; events
+                </label>
+                <button type="button" class="btn btn--secondary btn--block" style="margin-top: 1rem">Save preferences</button>
+              </article>
+            </div>
+            <article class="card" style="margin-top: 1rem">
+              <h3 class="card__title">Security</h3>
+              <p style="margin: 0 0 1rem; font-size: 0.95rem">Last password change · 3 months ago</p>
+              <button type="button" class="btn btn--secondary">Change password</button>
+            </article>
+          </section>
         </div>
+      </div>
+    </div>
 
-        <div class="row g-4 mb-8">
-            <!-- ROW 3 LEFT: RECENT WORKS -->
-            <div class="col-lg-7">
-                <div class="dashboard-card h-full">
-                    <h3 class="text-xl font-serif italic mb-8">My Recent Works</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="aspect-square overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 1">
-                        </div>
-                        <div class="aspect-square overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 2">
-                        </div>
-                        <div class="aspect-square overflow-hidden group">
-                            <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=400&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 3">
-                        </div>
-                        <div class="aspect-square overflow-hidden group">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1-tZpIqD-SfJmSUvVF1l0kDJHFdkJ_f0n4g&s" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Work 4">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 3 RIGHT: MEMBERSHIP CARD -->
-            <div class="col-lg-5">
-                <div class="dashboard-card bg-clay-dark text-white flex flex-col justify-between h-full relative overflow-hidden">
-                    <div class="absolute -right-10 -bottom-10 opacity-10">
-                         <span class="display-font italic text-[15rem]">C&C</span>
-                    </div>
-                    <div class="relative z-10">
-                        <span class="text-[10px] uppercase font-black tracking-[4px] bg-clay-main px-3 py-1 mb-6 inline-block">Pro Level</span>
-                        <h3 class="text-5xl display-font mb-2">Premium Member</h3>
-                        <p class="text-xs opacity-60 mb-12">Renews on August 24, 2026</p>
-                        
-                        <div class="mb-12">
-                            <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-2">
-                                <span>Monthly Usage</span>
-                                <span>86%</span>
-                            </div>
-                            <div class="progress-bar-custom bg-white/10">
-                                <div class="progress-fill bg-white w-[86%]"></div>
-                            </div>
-                        </div>
-
-                        <button class="w-full border-2 border-white py-4 uppercase text-[10px] font-black tracking-[4px] hover:bg-white hover:text-black transition-all">Upgrade Plan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ROW 4: PROGRESS SECTION -->
-        <div class="dashboard-card mb-8">
-            <h3 class="text-xl font-serif italic mb-8">Skill Proficiency</h3>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
-                        <span>Wheel Throwing</span>
-                        <span>75%</span>
-                    </div>
-                    <div class="progress-bar-custom">
-                        <div class="progress-fill" data-width="75%"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
-                        <span>Hand Building</span>
-                        <span>60%</span>
-                    </div>
-                    <div class="progress-bar-custom">
-                        <div class="progress-fill" data-width="60%"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="flex justify-between text-[10px] uppercase font-black tracking-widest mb-3">
-                        <span>Glazing</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="progress-bar-custom">
-                        <div class="progress-fill" data-width="85%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ROW 5: QUICK ACTIONS -->
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Book a Bench</h4>
-                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Reserve your studio hour now</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Request Kiln</h4>
-                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Schedule a firing for your works</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dashboard-card text-center hover:bg-clay-main hover:text-white cursor-pointer group transition-all">
-                    <h4 class="text-xs uppercase font-black tracking-[4px] mb-4">Contact Instructor</h4>
-                    <p class="text-xs opacity-60 group-hover:opacity-100 italic">Get expert feedback on your form</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- SCRIPTS -->
-    <script>
-        // --- THEME & RTL LOGIC ---
-        const themeBtn = document.getElementById('theme-toggle');
-        const rtlBtn = document.getElementById('rtl-toggle');
-        const body = document.body;
-        const html = document.documentElement;
-
-        function setTheme(isDark) {
-            if (isDark) {
-                body.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark') setTheme(true);
-        else if (storedTheme === 'light') setTheme(false);
-        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
-
-        themeBtn.addEventListener('click', () => setTheme(!body.classList.contains('dark')));
-
-        function setRTL(isRTL) {
-            if (isRTL) {
-                html.setAttribute('dir', 'rtl');
-                localStorage.setItem('rtl', 'true');
-            } else {
-                html.setAttribute('dir', 'ltr');
-                localStorage.setItem('rtl', 'false');
-            }
-        }
-
-        if (localStorage.getItem('rtl') === 'true') setRTL(true);
-        rtlBtn.addEventListener('click', () => setRTL(html.getAttribute('dir') !== 'rtl'));
-
-        // --- SIDEBAR TOGGLE ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-
-        // Close sidebar on outer click
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024 && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                sidebar.classList.remove('open');
-            }
-        });
-
-        // Close sidebar when a link is clicked (mobile)
-        sidebar.querySelectorAll('.nav-link-custom').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    sidebar.classList.remove('open');
-                }
-            });
-        });
-
-        // --- PROGRESS ANIMATION ---
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelectorAll('.progress-fill').forEach(fill => {
-                    if (fill.dataset.width) {
-                        fill.style.width = fill.dataset.width;
-                    }
-                });
-            }, 500);
-        });
-    </script>
-</body>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>
