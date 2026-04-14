@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard | ⌘ Clay &amp; Kiln</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
@@ -11,7 +12,7 @@
   </head>
   <body class="dash-page">
     <div class="dash">
-      <aside class="dash__sidebar">
+      <aside class="dash__sidebar" data-dash-sidebar>
         <a href="index.html" class="logo">
           <span class="logo__mark" aria-hidden="true">⌘</span>
           Clay &amp; Kiln
@@ -19,7 +20,7 @@
         <nav aria-label="Member">
           <ul class="dash__nav">
             <li>
-              <a href="dashboard.html#overview"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg> Dashboard</a>
+              <a href="dashboard.html#overview" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg> Dashboard</a>
             </li>
             <li>
               <a href="membership.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg> My membership</a>
@@ -47,7 +48,10 @@
       </aside>
       <div class="dash__main">
         <header class="dash__top">
-          <p class="dash__welcome">Welcome back, Surya 👋</p>
+          <button type="button" class="icon-btn dash-menu-toggle" data-dash-menu-toggle aria-expanded="false" aria-label="Open dashboard menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+          </button>
+          <p class="dash__welcome">Welcome back, Artisan 👋</p>
           <div class="dash__icons">
             <button type="button" class="icon-btn" aria-label="Notifications">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
@@ -62,23 +66,23 @@
           </div>
         </header>
         <div class="dash__content">
-          <section id="overview" class="dash-section" style="border-top: none; margin-top: 0; padding-top: 0">
+          <section id="overview" class="dash-section is-active" style="border-top: none; margin-top: 0; padding-top: 0">
             <h2 class="sr-only">Overview</h2>
             <div class="dash-grid">
               <article class="card" style="text-align: center">
-                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM.jpeg" alt="Pottery class overhead" width="600" height="375" />
+                <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM.jpeg" alt="Pottery class overhead" width="600" height="375" />
                 <h3 class="card__title">Membership status</h3>
                 <p style="margin: 0"><strong>Studio Member</strong></p>
                 <p style="font-size: 0.9rem; margin: 0">Renews <time datetime="2026-05-01">1 May 2026</time></p>
               </article>
               <article class="card" style="text-align: center">
-                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (1).jpeg" alt="Studio work in progress" width="600" height="375" />
+                <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (1).jpeg" alt="Studio work in progress" width="600" height="375" />
                 <h3 class="card__title">Upcoming kiln bookings</h3>
                 <p style="margin: 0">Bisque · Sat 08:00</p>
                 <p style="font-size: 0.9rem; margin: 0">Glaze · Wed 19:00</p>
               </article>
               <article class="card" style="text-align: center">
-                <img class="card__img" style="aspect-ratio: 16/10; max-height: 140px; object-fit: cover" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (2).jpeg" alt="Hands on clay" width="600" height="375" />
+                <img class="card__img" src="image/WhatsApp Image 2026-04-11 at 12.03.59 AM (2).jpeg" alt="Hands on clay" width="600" height="375" />
                 <h3 class="card__title">Classes enrolled</h3>
                 <p style="margin: 0">Wheel Foundations</p>
                 <p style="font-size: 0.9rem; margin: 0">Glaze Lab · waitlisted</p>
@@ -252,7 +256,7 @@
               <label for="msg-reply">Reply to staff</label>
               <textarea id="msg-reply" rows="3" placeholder="Type a message…"></textarea>
             </div>
-            <button type="button" class="btn btn--primary" style="margin-top: 0.5rem">Send</button>
+            <button type="button" class="btn btn--primary" style="margin: 1.5rem auto 0; display: block; min-width: 200px">Send message</button>
           </section>
 
           <section id="settings" class="dash-section" tabindex="-1">
@@ -263,11 +267,11 @@
                 <h3 class="card__title">Profile</h3>
                 <div class="field">
                   <label for="set-name">Display name</label>
-                  <input id="set-name" type="text" value="Surya" />
+                  <input id="set-name" type="text" placeholder="Enter your display name" />
                 </div>
                 <div class="field">
                   <label for="set-email">Email</label>
-                  <input id="set-email" type="email" value="surya@example.com" />
+                  <input id="set-email" type="email" placeholder="Enter your email" />
                 </div>
                 <button type="button" class="btn btn--primary btn--block">Save profile</button>
               </article>
